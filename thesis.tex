@@ -1,0 +1,254 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                  Thesis Main Document                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{thesisclass}
+% as defined in thesisclass.cls
+
+% ----------------------------------------------------------------------------------------------
+%|                                  General Information                                         |
+% ----------------------------------------------------------------------------------------------
+% ---------------------------------------------------------------
+%|                    Infos about thesis                         |
+% ---------------------------------------------------------------
+\newcommand{\myname}{Kalle der Wilde}
+\newcommand{\mytitle}{Komm in die WhatsApp Gruppe und werde Reich!}
+
+\newcommand{\reviewerone}{Prof. Dr. Dr.-Ing. Sebastian Vettel}
+\newcommand{\advisor}{Präsident Donald Trump}
+
+\newcommand{\timeandplace}{Karlsruhe, Oktober 2020}
+
+\newcommand{\frontmatterhint}{Draft! / Vorl\"aufige Fassung!}
+\newcommand{\textphi}{\ensuremath{\varphi}}
+
+% ---------------------------------------------------------------
+%|                    Infos for PDF file                         |
+% ---------------------------------------------------------------
+\hypersetup{
+ pdfauthor={\myname},
+ pdftitle={\mytitle},
+ pdfsubject={Thesis},
+ pdfkeywords={Donald, Wild, rigged2020}
+}
+
+%\usepackage[english]{babel}  	% English
+\usepackage[ngerman]{babel}  	% German
+\usepackage[ngerman]{translator} 
+
+
+% ----------------------------------------------------------------------------------------------
+%|                                My packages/commands                                          |
+% ----------------------------------------------------------------------------------------------
+% track changes
+    %\usepackage{changes} 		% highlight changes
+	\usepackage[final]{changes}	% don't highlight changes
+
+% tables
+	\usepackage{array,multirow,graphicx}
+
+% pseudocode
+	\usepackage[ruled,vlined]{algorithm2e}
+
+% for forcing positions of tables, figures, ...
+	\usepackage{float}
+
+% units
+	\usepackage{siunitx}
+	\usepackage{dcolumn}
+
+
+% ----------------------------------------------------------------------------------------------
+%|                                       Glossaries                                             |
+% ----------------------------------------------------------------------------------------------
+% In order to make use glossaries work:
+% 	* the latex installation folder musst be added to `$PATH`
+%	* perl must be installed and added to `$PATH`
+%	* Document Build: pdflatex thesis / makeglosseries thesis / pdflatex thesis / pdflatex thesis
+% Adding something to `$PATH`:
+% Windows: 	1. Copie path to latex installation folder
+%			2. Search for "Umgebunsvariablen für dieses Konto bearbeiten"
+%			3. Path -> Bearbeiten -> paste in path to latex installation folder (\bin)
+%			4. Test in command-line with where <programm_name> (e.g. where latex/ where perl)
+% Linux:  ToDo
+% Mac:    ToDo
+\newif\ifuseglossaries			% as the glossaries package sometimes causes problems, you can switch if of
+								% if switching of, remember to remove all \gls{}/... statements
+								
+\useglossariestrue				% use glossaries (acronyms and online references)
+% \useglossariesfalse			% don't use glossaries
+
+\ifuseglossaries
+	\usepackage[acronym,xindy,toc,nomain,nonumberlist,nopostdot,notranslate]{glossaries}%
+
+	%% Create new glosseries	
+	%Online Referenzen Verzeichnis hinzufügen	
+	\newglossary[onlineref]{onlineref}{onli}{onlo}{Online-Referenzen}
+	
+	%Ein eigenes Symbolverzeichnis erstellen
+	\newglossary[slg]{symbolslist}{syi}{syg}{Symbolverzeichnis}
+ 
+	%Den Punkt am Ende jeder Beschreibung deaktivieren
+	\renewcommand*{\glspostdescription}{}
+	
+	%% Create new styles for glosseries
+	% mylong used for Symbolverzeichnis
+	\newglossarystyle{mylong}{%
+  		\setglossarystyle{long}%
+  		\renewcommand*{\glsnamefont}[1]{\textbf{##1}}%
+  	}%
+  	% mylist used for Online Refernzen
+  	\newglossarystyle{mylist}{%
+  		\setglossarystyle{list}%
+  		\renewcommand*{\glsnamefont}[1]{\textrm{\textmd{##1}}}%
+  	}%
+  	
+  	\makeglossaries
+  	
+	% ordinary acronyms
+	\include{Glosseries/Acronyms} 
+	
+	% symbols	
+	\include{Glosseries/Symbols} 	
+	
+	% online referenzes
+	\include{Glosseries/OnlineRef} 
+\else
+\fi
+
+
+% ----------------------------------------------------------------------------------------------
+%|                     Settings for Draft - Remove for final version                            |
+% ----------------------------------------------------------------------------------------------
+% ---------------------------------------------------------------
+%|                    To Do Marker                               |
+% ---------------------------------------------------------------
+% Remove this section for final version!
+\setlength{\marginparwidth}{20mm}
+
+
+
+% ---------------------------------------------------------------
+%|                    Draft Marker                               |
+% ---------------------------------------------------------------
+% Remove this section for final version!
+%\usepackage{draftwatermark}
+%\SetWatermarkText{\hspace{10pt}-draft-}
+%\SetWatermarkScale{2.3}
+%\SetWatermarkColor[gray]{0.95}
+
+% ---------------------------------------------------------------
+%|                      Old Marker                               |
+% ---------------------------------------------------------------
+% Remove this section for final version!
+\newenvironment{deprecated}
+{\begin{color}{gray}}
+{\end{color}}
+
+
+% ----------------------------------------------------------------------------------------------
+%|                           Settings for word separation                                       |
+% ----------------------------------------------------------------------------------------------
+% Help for separation:
+% In german package the following hints are additionally available:
+% "- = Additional separation
+% "| = Suppress ligation and possible separation (e.g. Schaf"|fell)
+% "~ = Hyphenation without separation (e.g. bergauf und "~ab)
+% "= = Hyphenation with separation before and after
+% "" = Separation without a hyphenation (e.g. und/""oder)
+
+% Describe separation hints here:
+\hyphenation{
+Wort-tren-nung
+% Ma-na-ge-ment  Netz-werk-ele-men-ten
+% Netz-werk Netz-werk-re-ser-vie-rung
+% Netz-werk-adap-ter Fein-ju-stier-ung
+% Da-ten-strom-spe-zi-fi-ka-tion Pa-ket-rumpf
+% Kon-troll-in-stanz
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                Here, main documents begins                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\frontmatter
+
+
+% ----------------------------------------------------------------------------------------------
+%|                                        Preface                                              |
+% ----------------------------------------------------------------------------------------------
+\include{Preface/01_Title}
+%\blankpage
+\include{Preface/02_Declaration}
+%\blankpage
+\include{Preface/03_Acknowledgement}
+%\blankpage
+\include{Preface/04_Abstract}
+\blankpage
+
+\tableofcontents
+
+
+
+% ----------------------------------------------------------------------------------------------
+%|                                      Main Part                                               |
+% ----------------------------------------------------------------------------------------------
+\mainmatter
+\pagenumbering{arabic}
+\include{Main/1_Introduction}      
+\include{Main/2_Fundamentals_Related_Work}
+\include{Main/3_System}
+\include{Main/4_Modelle}
+\include{Main/5_Evaluation}
+\include{Main/6_Conclusion_Future_Work}      
+
+
+% ----------------------------------------------------------------------------------------------
+%|                                    Appendix + Glosseries                                     |
+% ----------------------------------------------------------------------------------------------
+
+
+% Bibliography
+\bibliographystyle{IEEEtranSA}   		                                        % IEEE Alphanumeric
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\bibliography{thesis_bibtex}
+
+% Online References
+\ifuseglossaries
+	\printglossary[type=onlineref, style=mylist]
+\else
+\fi
+
+%Anhang
+%\appendix
+%\include{Appendix/Appendix}
+
+% List of Figures
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+
+% Liste of Tables
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+%Symbole ausgeben
+\ifuseglossaries
+\printglossary[type=symbolslist, style=mylong]
+\else
+\fi
+
+%Acronyms
+\ifuseglossaries
+\newpage
+\thispagestyle{empty}
+%\deftranslation[to=German]{Acronyms}{Abk�rzungsverzeichnis}
+\printglossary[type=\acronymtype,style=long,title={Abk\"urzungsverzeichnis}]
+\else
+\fi
+
+
+\end{document}

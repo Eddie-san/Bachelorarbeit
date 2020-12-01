@@ -1,0 +1,89 @@
+% !TeX root = ../thesis.tex
+%% titlepage.tex
+%%
+
+% coordinates for the bg shape on the titlepage
+\newcommand{\diameter}{20}
+\newcommand{\xone}{-15}
+\newcommand{\xtwo}{160}
+\newcommand{\yone}{15}
+\newcommand{\ytwo}{-253}
+
+\begin{titlepage}
+% bg shape
+\begin{tikzpicture}[overlay]
+\draw[color=gray]
+ 		 (\xone mm, \yone mm)
+  -- (\xtwo mm, \yone mm)
+ arc (90:0:\diameter pt)
+  -- (\xtwo mm + \diameter pt , \ytwo mm)
+	-- (\xone mm + \diameter pt , \ytwo mm)
+ arc (270:180:\diameter pt)
+	-- (\xone mm, \yone mm);
+\end{tikzpicture}
+
+	\begin{textblock}{10}[0,0](4,2.5)
+		\includegraphics[width=.3\textwidth]{Graphics/Logos/Hska_logo.png}
+	\end{textblock}
+
+	\begin{textblock}{10}[0,0](12,2.5)
+		\includegraphics[width=.4\textwidth]{Graphics/Logos/Hska_EIT_logo.png}
+	\end{textblock}
+
+	\changefont{phv}{m}{n}	% helvetica
+	\vspace*{3.5cm}
+	\begin{center}
+		\Huge{\mytitle}
+		\vspace*{2cm}\\
+		\Large{
+			\iflanguage{english}{Bachelor Thesis of}
+												  {Bachelorarbeit\\von}
+		}\\
+		\vspace*{1cm}
+		\huge{\myname}\\
+		\vspace*{1cm}
+		\Large{
+			\iflanguage{english}{Institute of Measurement and Control Systems}
+			{Fakultät für Elektro- und Informationstechnik}
+			\\
+      \iflanguage{english}{Hochschule Karlsruhe Technik und Wirtschaft}
+			{Hochschule Karlsruhe Technik und Wirtschaft}
+		}
+	\end{center}
+	\vspace*{1cm}
+\Large{
+\begin{center}
+\begin{tabular}[ht]{l c l}
+  \iflanguage{english}{Reviewer}{Betreuer}: & \hfill  & \reviewerone\\
+  \iflanguage{english}{Advisor}{Ko-Betreuer}: & \hfill  & \advisor\\
+\end{tabular}
+\end{center}
+}
+
+\vspace{1cm}
+
+\begin{center}
+%{\color{red} \frontmatterhint}
+\end{center}
+
+\vspace{2cm}
+\begin{center}
+\large{\timeandplace}
+\end{center}
+
+
+\begin{textblock}{10}[0,0](4,16.8)
+\tiny{
+	\iflanguage{english}
+		{HSKA -- University of applied sciences}
+		{HSKA -- Hochschule Karlsruhe Technik und Wirtschaft}
+}
+\end{textblock}
+
+\begin{textblock}{10}[0,0](14,16.75)
+\tiny{
+	\textbf{https://www.hs-karlsruhe.de/fk-eit}
+}
+\end{textblock}
+
+\end{titlepage}
