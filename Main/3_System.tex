@@ -5,6 +5,57 @@
 
 \section{Analoge Signalverarbeitung}
 \label{sec:Signalverarbeitung}
+Für die Übertragung von Signalen mithilfe einer LED müssen vorerst ein paar
+grundlegende Überlegungen gemacht werden. Aus dem Kapitel Leuchtdiode sind
+die grundsätzlichen Eigenschaften der LED, sowie ihre Kennlinie bekannt. Aus
+diesen Erkenntnissen lässt sich direkt ausschließen, dass ein negativer Signalanteil
+übertragen werden kann. Ebenso sollte man den stark nichtlinearen Teilbereich der
+Kennlinie nicht nutzen, was dazu führt, dass die LED mit einem Offset betrieben
+werden muss.Abbildung 6 zeigt die verschiedenen Stadien der Signalverarbeitung. Da es sich
+hierbei um ein nichtlineares System handelt, können die Schritte nicht beliebig
+vertauscht werden.Für die Schritte ”Offseterhöhung” und ”Amplitudenverstärkung” würde eine Schaltung
+wie in Abbildung 7 gezeigt ausreichen. Hierbei wird der Offset über den Spannungsteiler
+der DC-Quelle und dem Potentiometer P2 eingestellt. Die Verstärkung
+der Amplitude erfolgt über die Verstärkung zwischen P1 und R3.
+
+
+
+
+Treiber (https://wiki.analog.com/university/courses/electronics/text/chapter-4) ....
+
+Die Spannungs-/Stromwandlung erfolgt mit der Schaltung aus Abbildung 9. Der
+Operationsverstärker (OP) sorgt über eine Gegenkopplung seiner Ausgangsspannung immer dafür, dass zwischen seinen Eingängen kein Spannungsunterschied
+herrscht. Bei anliegendem Signal am + Eingang versucht er daher diese Spannung
+auszugleichen indem er eine Spannung am Ausgang erzeugt. Diese Spannung liegt
+direkt am Gate des Metal Oxide Semiconductor Field Effect Transistors (MosFets)
+an, welcher daraufhin durchschaltet und damit einen Stromfluß über die LED und
+den Leistungswiderstand R2 erzeugt. Dieser Strom wiederum erzeugt über selbigen
+Widerstand eine Anhebung des Potentials am - Eingang des OPs. Auf diese Weise
+versucht der OP seine beiden Eingänge auf das gleiche Potential anzuheben. Da es
+sich beim Leistungswiderstand R2 um einen sehr kleinen Widerstand handelt, wird
+durch die LED, den MosFet und den Leistungswiderstand ein sehr hoher Strom
+fließen welcher für eine hell leuchtende LED sorgt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.6 \textwidth ]{ledtreiber.jpg}
+	\caption[Schaltung des LED- Treibers]{LED- Treiber} \gls{online:Eigen}
+	\label{fig:ledtreiber}
+\end{figure}
+
+3.1.2 Probleme durch das Digitalpotentiometer
+Wie aus dem Datenblatt des Digitalpotentiometers ersichtlich ist, kann dieses nur
+mit Spannungen zwischen -0.6V absolut und +1V, ausgehend von der Versorgungsspannung
+gemessen, arbeiten. Daher müssen die vorhandenen Signalverarbeitungsschritte
+diesen Gegebenheiten angepasst werden.
+Sieht man sich die Schaltung in Abbildung 8 an, fällt auf, dass der kritischste
+Punkt für das Digitalpotentiometer der Einsatz in der Rückkopplung ist, da hier
+auch niedrigere Spannungen als -0,6V am Ausgang des OPs auftreten können. Diese
+Problematik soll Abbildung 10 verdeutlichen. Erhöht man die Amplitude des
+Signals, würde man am Ausgang des OPs ein Signal bekommen, welches unter den
+kritischen -0,6V liegt. Da das Digitalpotentiometer zwischen Ausgang und invertierendem
+Eingang liegt, würde es nicht mehr richtig arbeiten.
+
 
 
 \subsection{Simulation in LT-Spice}
@@ -13,12 +64,79 @@
 \subsection{Platinenlayout in Eagle}
 \label{subsec:Unterabschnitt12}
 
+Beim Platinenlayout des Senders wurde besonders auf die Trennung von Signal und Leistungswege geachtet. Diese ist in Abbildung 14 mit einer Gelben Linie Mittig des Boards markiert.
+Im unteren Bereich der Platine befinden sich Leistungswiderstand, LED, MosFet, Spannungswandler und der Operationsverstärker für die Stromquelle. Da in der Schaltung Ströme bis 1,41A fließen können und es somit zu EMV Störungen kommen kann, wurde der Signalweg in den oberen Bereich der Platine gelegt. Zudem
+wurde die Leiterbahn zwischen Leuchtdiode, Transistor und Leistungswiderstand besonders breit ausgelegt, da hier große Ströme fließen. Auf der Platinen wurden für die Operationsverstärker und den Digitalpotentiometer
+DIP Sockel verlötet. Das ermöglicht nachträglich einen einfachen Austausch der Bauelemente. Da die komplette Schaltung des Visible Light Senders auf die Größe einer kleinen Europlatine entworfen wurde, kam es zu Platzproblemen. Deshalb mussten zwei Leitungen auf der Rückseite der Platine verlegt werden. Diese sind in Abbildung 14 durch die beiden Blauen Linien dargestellt.
+Um die Schaltung zusätzlich noch Störfester zu machen, wurden Freiflächen auf beiden Seiten der Platine mit Masse ausgefüllt. Des weiteren wurden noch zwei Pins an Masse, und ein Pin an 12V für Messungen und Fehlerüberprüfung angebracht. Der im oberen Teil des Boards eingezeichnete AUX Anschluss wurde nicht, wie in
+Abbildung 14 gezeigt, an das Board gelötet, sondern am Deckel angebracht. Grund dafür ist das einfachere Anschließen des AUX Kabels. Um den Arduino stabil zu verbauen, wurde er an zwei Seiten befestigt.
+
 \subsection{Thermisches Management}
 \label{subsub:Unterunterabschnitt1}
 
-\subsubsection{Planung und Aufbau des Gehäuses}
+Um die LED als Lichtquelle nutzen zu können, werden hohe Leistungen benötigt.
+Im hellsten Betrieb der LED fließt ein Strom von 1,41A durch Transistor, LED
+und Leistungswiderstand. Um der dadurch resultierenden Hitzeentwicklung entgegenzuwirken,
+werden Transistor und Diode auf einem Kühlkörper montiert. Der
+Leistungswiderstand liegt nahe am Transistorkühlkörper, darf aber nicht mit dem
+Kühlkörper verbunden werden.
+Ohne einen vorhandenen Kühlkörper würde sich der Transistor lt. Datenblatt um
+62 $\circ$CC/W erhitzen. Da durch den geringen Leistungswiderstand und dem dadurch
+resultierendem hohen Strom eine Leistung von ca. 5W in Hitze umgewandelt wird,
+kann dies zur Zerstörung des Bauteils führen.
+Zur Auslegung der Kühlkörper wurden folgende Berechnungen durchgeführt:
+
+Hierbei ist:
+–j die Maximale Sperrschichttemperatur in $\circ$C des Halbleiters (Herstellerangabe)
+–A die Umgebungstemperatur in $\circ$CC
+Pv die am zu kühlenden Halbleiter maximal anfallende Verlustleistung in
+Watt
+– RJC der Wärmewiderstand zwischen Sperrschicht und Gehäuse (Herstellerangabe)
+– RCH der Wärmewiderstand zwischen Gehäuse und Kühlkörper
+– RK der Wärmewiderstand des Kühlkörpers (Herstellerangabe)
+
+\subsubsection{Kühlkörperberechnung des \gls{acr:MOSFET}s}
+\label{subsub:Unterunterabschnitt1}
+
+Für die Berechnung der Kühlkörper wurden Messungen zur Verlustleistung des
+Transistors und der LED vorgenommen. Die maximalen Verluste werden bei voller
+Helligkeit erzeugt.
+
+– Leuchtdiode: 2,77V · 1,41A = 3,91W
+– Transistor: 3,6V · 1,41A = 5,08W
+
+Dadurch berechnet sich der Wärmewiderstand des Transistorkühlkörpers bei gewünschter
+Chiptemperatur von 55$\circ$CC und einer Außentemperatur von 25$\circ$CC zu:
+R = 55 $\circ$CC − 25$\circ$C5, 08W − (1.15$\circ$C/W + 0.3$\circ$C/W) = 4, 46$\circ$C/W
+Ausgehend von der Gleichung 3 wurde ein Kühlkörper von 4,3 $\circ$CC/W gewählt.
+
+\subsubsection{Kühlkörperberechnung der \gls{acr:LED}}
+\label{subsub:Unterunterabschnitt1}
+
+Bei der LED wurde eine geringere Chiptemperatur vorgesehen, da sie sich außen
+an der Kante des Boards befindet und somit leicht berührbar ist. Zudem wurde
+bei der Berechnung bewusst überdimensioniert. Dazu wird im folgenden mit einem
+Wirkungsgrad der LED von 0 \%, und somit einer Verlustleistung von 100  \%
+gerechnet, was dem Verhalten eines Widerstandes entspricht. LEDs haben jedoch
+tatsächlich einen Wirkungsgrad von ca. 40 - 50 \%.
+Der Kühlkörper für die LED berechnet sich wie folgt:
+
+R = 40$\circ$ − 25$\circ$ 3, 91W − (1.25$\circ$C/W + 0.1$\circ$C/W) = 2, 49$\circ$C/W
+
+Ausgehend von der Gleichung 4 wurde ein Kühlkörper von 2 C/W gewählt.
+
+\subsection{Planung und Aufbau des Gehäuses}
 \label{subsec:Unterabschnitt12}
 
+Beim Entwurf des Gehäuses wurde so Platzsparend wie möglich gearbeitet, weshalb
+der fest verbaute Arduino zwischen Leiterplatte und Deckel angebracht wurde.
+Da sich Leistungswiderstand, Transistor und Leuchtdiode im Betrieb stark erhitzen,
+wurden die zugehörigen Kühlkörper am Boden mithilfe von Abstandsbolzen
+befestigt. Zusätzlich wurden im Deckel Freischnitte über den Kühlkörpern vorgenommen
+um die nach oben steigende Luft möglichst gut abzuleiten. Für die
+Versorgungsspannung der Schaltung gibt es zwei 4mm Anschlüsse, die oben am
+Deckel angebracht wurden. Für die Datenübertragung wurde eine AUX Buchse im
+Deckel verbaut.
 
 \section{Software}
 \label{sec:Software}
@@ -26,18 +144,40 @@
 \label{subsec:Unterabschnitt12}
 
 
+\subsection{Übertragung mit Dream}
+\label{subsec:dream}
 
-\subsection{Dream Transmitter}
-\label{subsec:Unterabschnitt12}
+Das Programm verfügt auf zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus. Zudem bietet Dream umfangreiche Einstellungsoptionen um sowohl Rauschen oder aber auch andere Störungen zu minimieren. Die wichtigsten Parameter für die Korrekte Benutzung werden in dend
+folgenden zwei Kapiteln näher erläutert.
 
-\subsection{Dream Receiver}
+
+
+\subsubsection{Dream Transmitter}
+\label{subsubsec:dreamtx}
+Zum Start der Software ”Dream” im Übertragungsmodus muss das Programm mit dem parameter ”- t” gestartet werden. Die einfachste Möglichkeit für einen Programmstart mit Parameter bietet eine Verknüpfung, welche wie in Abbildung 15 gezeigt, angepasst wird. Das Zielverzeichnis darf dabei nicht verändert werden! Dieser Schritt muss nur einmal gemacht werden und man kann jederzeit den Übertragungsmodus starten indem man die Dream software über diese geänderte Verknüpfung startet.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.5 \textwidth ]{dreamtx.jpg}
+	\caption[Modifizierung für den Sendemodus]{Modifizierung für den Sendemodus} \gls{online:Eigen}
+	\label{fig:dreamtx}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth ]{dreamtxeinstellung.jpg}
+	\caption[Internes Audiorouting]{Internes Audiorouting} \gls{online:Eigen}
+	\label{fig:dreamtxeinstellung}
+\end{figure}
+
+\subsubsection{Dream Receiver}
 \label{subsec:Unterabschnitt12}
 
 Der Evaluation Dialog liefert detaillierte Informationen über die empfangenen DRM-Parameter. Hier können Parameter sowie einige Diagramme eingesehen werden. In den folgenden Tabellen, werden für die Übertragung bedeutende Parameter näher erläutert.
 
 \begin{table}[h]
 	\begin{center}
-		\begin{tabular}{p{0.3\linewidth} | p{0.7\linewidth}}	
+		\begin{tabular}{p{0.3\linewidth} | p{0.7 \linewidth}}	
 			\textbf{Measurements} & \\
 			\hline
 			\textbf{DC Frequency Offset} & Dieser Offset entspricht der resultierenden Soundkarten-Zwischenfrequenz des Frontends. Diese Frequenz ist nicht auf einen bestimmten Wert beschränkt, sondern nur darauf, dass das DRM-Spektrum vollständig innerhalb der Bandbreite der Soundkarte liegen muss.\\

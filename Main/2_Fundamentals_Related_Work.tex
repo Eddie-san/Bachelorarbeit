@@ -311,25 +311,14 @@ Das Ruhepotential zwischen dem invertierenden und nicht-invertierenden Eingang i
 \newpage
 \subsection{Der \gls{acr:MOSFET}}
 \label{subsec:Unterabschnitt12}
-https://wiki.analog.com/university/courses/electronics/text/chapter-4 ....
+Die am häufigsten eingesetzten Leistungsschutzschalter im Spannungsbereich von bis etwa 250V sind \gls{acr:MOSFET}.\gls{online:mosfet}
+
+Sie sind eine Sonderform der Transistoren welche auch unipolare Transistoren genannt werden. Sie besitzen einen Kanal aus Halbleitermaterial, auf dem Horizontal zur Stromrichtung ein elektrisches Feld entsteht, welches den Querschnitt des Kanals verändert. Damit wird der Stromfluss durch das Bauteil geregelt. Im Field-Effect Transistor (FET) steuert eine Spannung den Strom. Es gibt vier Grundbauformen von \gls{acr:MOSFET}. Einen \gls{acr:NMOS} und einen \gls{acr:PMOS} Typus und davon jeweils eine
+selbstsperrende und einen selbstleitende Variante. Im Anwendungsfall dieser Thesis wird ein \gls{acr:NMOS} verwendet. \cite{heringElektrotechnikUndElektronik2018}
 
 
-Beschreibung des \gls{acr:MOSFET}s, ist noch sehr wichtig
-Unterschiedliche Kundenanwendungen erfordern unterschiedliche Anforderung an den
-DC/DC-Wandler und daher ist eine Vielzahl von verschiedenen Gleichspannungswandlern bzw. Schaltreglern mit entsprechenden Schaltungstopologien notwendig.
-Die grundlegende Funktionsweise eines Schaltreglers besteht darin, dass in einem
-Eingangskondensator Energie gespeichert und von dort taktweise in einen Ausgangskondensator transferiert wird. Der Eingangskondensator ist auf die Eingangsspannung aufgeladen. Eine Induktivität wird als Zwischenspeicher der Energie und zur
-Begrenzung des Stromflusses genutzt. Die Taktung wird mithilfe eines elektronisch
-arbeitenden Schalters realisiert und dieser wird mit einem Rechtecksignal periodisch
-angesteuert. Das Verhältnis von Ein- zu Aus-Phase des Schalters bestimmt auch das
-Verhältnis der Eingangs- zu Ausgangsspannung. Die Ausgangsspannung steht am
-Ausgangskondensator zur Verfügung und kann somit die Last speisen.
-Ebenfalls zutreffend ist eine andere vereinfachte Betrachtungsweise der Funktion eines
-Schaltreglers. Aus der Gleichspannung am Eingang des Reglers wird durch Taktung
-eine Wechselspannung erzeugt. Anschließend wird diese mit einem Filter (Induktivität
-+ Ausgangskapazität) in eine Gleichspannung mit anderer Amplitude zurückgewandelt.
-Je nachdem wie die Induktivität in die Schaltung implementiert wurde (Topologie), kann
-die Ausgangsspannung höher oder niedriger als die Eingangsspannung sein.
+
+
 
 
 \newpage
@@ -421,8 +410,7 @@ Der Editor mit integriertem Compiler ist ein weiterer Bestandteil der \gls{acr:I
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = 0.6 \textwidth ]{ide.jpg}
-	\caption[Arduino \gls{acr:IDE}]{Arduino \gls{acr:IDE}}
-	\cite{Eigen}
+	\caption[Arduino \gls{acr:IDE}]{Arduino \gls{acr:IDE}}\gls{online:Eigen}
 	\label{fig:ide}
 \end{figure}
 
@@ -436,4 +424,4 @@ Setup() wird einmalig zu beginn des Programms aufgerufen, während loop() direkt
 Die Software Dream bietet eine alternative Radiosignale auf dem Computer zu empfangen und auch zu senden. Sie war ursprünglich als Forschungsprojekt des Fraunhofer Instituts angesetzt. Signale welche nicht über den PC empfangen werden können, werden über den Mikrofoneingang der Soundkarte empfangen.
 Bei alldem benutzt das Konzept internationale Direktiven für Amateurfunk, Radio und Informationsdienste.
 Diese Eigenschaft ermöglicht es dem User FM, AM und \gls{acr:DRM} zu empfangen. Außerdem visualisiert die Software in Echtzeit zahlreiche Daten, Statistiken und Diagramme des empfangenen Signals.\gls{online:dream}
-Die Modulation und das Senden des OFDM-Signals über die konstruierte Hardware erfolgt durch dieses Programm und wird in folgenden Kapiteln noch intensiviert.
+Die Modulation und das Senden des OFDM-Signals über die konstruierte Hardware erfolgt durch diese Software und wird in Kapiteln ~ref\gls{subsubsec:dreamtx} noch intensiviert.
