@@ -201,8 +201,8 @@ Phase als auch Amplitude des Signals verändert.
 \label{subsec:Unterabschnitt1}
 In diesem Kapitel werden grundlegende Bauteile eines \gls{acr:VLC}-Senders dargestellt und näher erläutert. Diese sind essenziell um die Datenübertragung mittels dem optischen Kanal zu ermöglichen.
 
-\subsection{Die Leuchtdiode (\gls{acr:LED})}
-\label{subsub:Unterunterabschnitt1}
+\subsection{Die Leuchtdiode}
+\label{sub:led}
 
 
 Eine \gls{acr:LED} ist ein licht emittierendes Halbleiter-Bauelement mit einem pn-Übergang. Ihre elektrischen Eigenschaften stimmen mit der einer Standard Diode überein, wodurch sie in nur eine Richtung leitend ist und in die entgegengesetzte Stromrichtung sperrt. Wenn durch einen eingekoppelten elektrischen Strom die \gls{acr:LED} in Durchlassrichtung betrieben wird, findet eine Lichtemission statt.\cite{slabke} 
@@ -262,13 +262,13 @@ An dieser Stelle wird verdeutlicht, dass es zwei außerordentlich nicht-lineare 
 
 „Im Grunde besteht kein Unterschied zwischen einem normalen Verstärker und einem Operationsverstärker. Beide dienen dazu, Spannungen bzw. Ströme zu verstärken. Während die Eigenschaften eines normalen Verstärkers jedoch durch seinen inneren Aufbau vorgegeben sind, ist ein Operationsverstärker so beschaffen, dass seine Wirkungsweise überwiegend durch eine äußere Gegenkopplungs-Beschaltung bestimmt werden kann. Um dies zu ermöglichen, werden Operationsverstärker als gleichspannungsgekoppelte Verstärker mit hoher Verstärkung ausgeführt. Damit keine zusätzlichen Maßnahmen zur Arbeitspunkteinstellung erforderlich werden, verlangt man ein Eingangs- und Ausgangsruhepotential von 0V. Deshalb sind in der Regel zwei Betriebsspannungsquellen erforderlich: eine positive und eine negative.“(\cite{tietzeElectronicCircuits2008},S.491)
 
-Ein \gls{acr:OP} kann also mit einem Differenzverstärker mit einer theoretisch unendlichen Verstärkung verglichen werden. Diese bezeichnet man als Leerlaufverstärkung. Schließlich führt das dazu, dass eine Gesamtverstärkung der Schaltung von einer zusätzlichen externen Verdrahtung abhängt. Diese wird von einem rückgekoppelten Netzwerk hergestellt und nennt sich Schleifenverstärkung.(Halbleiter buch) 
+Ein \gls{acr:OP} kann also mit einem Differenzverstärker mit einer theoretisch unendlichen Verstärkung verglichen werden. Diese bezeichnet man als Leerlaufverstärkung. Schließlich führt das dazu, dass eine Gesamtverstärkung der Schaltung von einer zusätzlichen externen Verdrahtung abhängt. Diese wird von einem rückgekoppelten Netzwerk hergestellt und nennt sich Schleifenverstärkung.\cite{lutzHalbleiterLeistungsbauelemente2012}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7 \textwidth]{OPV.jpg}
 	\caption[Operationsverstärker Anschlussschema]{Operationsverstärker Anschlussschema} 
-	\cite{Eigen}
+	\gls{online:Eigen}
 	\label{fig:OPV}
 \end{figure}
 
@@ -279,47 +279,64 @@ Sie werden im Allgemeinen in Form einer integrierten Schaltung (\gls{acr:IC}) he
 	A = \frac{U_{a}}{U_{e}}
 \end{equation}
 
-Außerdem haben \gls{acr:OP}s einen unendlich großen Widerstand und einen sehr geringen Ausgangswiderstand.
-Das Ruhepotential zwischen dem invertierenden und nicht-invertierenden Eingang ist beinahe Null weshalb zwischen beiden Eingängen keine Spannung abfällt. Zudem fließt kein Steuerstrom, d.h. es fließt kein Strom in die Eingänge des \gls{acr:OP}, da diese einen unendlichen Eingangswiderstand besitzen.[OP Buch]
+Außerdem haben \gls{acr:OP}s einen unendlich großen Eingangswiderstand und einen sehr geringen Ausgangswiderstand.
+Das Ruhepotential zwischen dem invertierenden und nicht-invertierenden Eingang ist beinahe Null weshalb zwischen beiden Eingängen keine Spannung abfällt. Zudem fließt kein Steuerstrom, d.h. es fließt kein Strom in die Eingänge des \gls{acr:OP}, da diese einen unendlichen Eingangswiderstand besitzen.\cite{federauOperationsverstaerker2017}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7 \textwidth]{invOP.jpg}
+	\caption[Invertierender Operationsverstärker]{Invertierender Operationsverstärker} 
+	\gls{online:Eigen}
+	\label{fig:ninvOP}
+\end{figure}
 
+Abbildung ~\ref{fig:ninvOP} zeigt die klassische Schaltung eines invertierenden Operationsverstärkers mit
+Rückkopplungszweig. Dieser definiert über den Widerstand $R_{2}$ die Schleifenverstärkung, indem auf den invertierten Eingang ein Teil des Ausgangssignals zurückgeführt wird.  Bei einem steigenden Ausgangssignal wird so dem steigenden Eingangssignal entgegengewirkt. Dies gewährleistet, dass das Ausgangssignal nicht unendlich verstärkt werden kann. Der invertierende Eingang wird mit Masse verbunden. Zuletzt wird hier die Spannungsverstärkung $A$ der invertierenden Grundschaltung über den Rückkopplungspfad bestimmt. Diese ergibt sich hier also zu: 
+
+\begin{equation}
+	\label{equ:bsp1}
+	A = - \frac{R_{2}}{R_{1}}
+\end{equation}
+
+und das negative Vorzeichen bedeutet, dass hier eine Phasendrehung des Signals um 180$\circ$ stattgefunden hat.Der invertierende Verstärker besitzt zudem die Fähigkeit Signale zu dämpfen. Daher wird er häufig für Filterschaltungen und messtechnische Zwecke benutzt. 
+
+Die folgende Abbildung ~\ref{fig:ninvOP} illustriert den nichtinvertierenden Operationsverstärker in seiner Grundschaltung. Die Spannungsverstärkung berechnet sich anhand der Spannungsteiler Beziehung
+
+\begin{equation}
+	\label{equ:bsp1}
+	U_{a} = U_{e} \cdot \frac{R_{1} + R_{2}}{R_{1}} = U_{e} \cdot (1+ \frac{R_{2}}{R_{1}})
+\end{equation}
+daraus ergibt sich dann
+\begin{equation}
+	\label{equ:bsp1}
+	A = \frac{U_{a}}{U_{e}} = 1+ \frac{R_{2}}{R_{1}}
+\end{equation}
+Wegen seines kleinen Ausgangs- und großen Eingangswiderstandes eignet sich diese \gls{acr:OP}-Schaltung sehr gut als  Wechselspannungsverstärker und Impedanzwandler. Die Übertagungskennlinie ist in Abbildung ~\ref{fig:aussteuer} dargestellt. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7 \textwidth]{ninvOP.jpg}
-	\caption[Operationsverstärker]{Operationsverstärker} 
-	\cite{Eigen}
-	\label{fig:ninvOP}
-\end{figure}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7 \textwidth]{invOP.jpg}
-	\caption[Operationsverstärker]{Operationsverstärker} 
-	\cite{Eigen}
+	\caption[Nichtinvertierender Operationsverstärker]{Nichtinvertierender Operationsverstärker} 
+	\gls{online:Eigen}
 	\label{fig:invOP}
 \end{figure}
 
+Es zeigt auch die maximale Aussteuerbarkeit am Ausgang der \gls{acr:OP}s, welche innerhalb $V-$ < $U_{a}$ < $V+$ liegt. Werden entweder positive oder negative Grenze erreicht, kann $U_{a}$ nicht weiter ansteigen. Dieser Zustand nennt sich Übersteuerung. Die klassischen Aussteuergrenzen liegen in etwa 1V unter der Versorgungsspannung.\cite{federauOperationsverstaerker2017}
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7 \textwidth]{aussteuer.jpg}
+	\includegraphics[width=0.85 \textwidth]{aussteuer.jpg}
 	\caption[Operationsverstärker]{Operationsverstärker} 
-	\cite{Eigen}
+	\gls{online:Eigen}
 	\label{fig:aussteuer}
-\end{figure} (OP Buch S.4)
-
+\end{figure} 
 
 \newpage
-\subsection{Der \gls{acr:MOSFET}}
+\subsection{Der Feldeffekttransistor}
 \label{subsec:Unterabschnitt12}
-Die am häufigsten eingesetzten Leistungsschutzschalter im Spannungsbereich von bis etwa 250V sind \gls{acr:MOSFET}.\gls{online:mosfet}
-
-Sie sind eine Sonderform der Transistoren welche auch unipolare Transistoren genannt werden. Sie besitzen einen Kanal aus Halbleitermaterial, auf dem Horizontal zur Stromrichtung ein elektrisches Feld entsteht, welches den Querschnitt des Kanals verändert. Damit wird der Stromfluss durch das Bauteil geregelt. Im Field-Effect Transistor (FET) steuert eine Spannung den Strom. Es gibt vier Grundbauformen von \gls{acr:MOSFET}. Einen \gls{acr:NMOS} und einen \gls{acr:PMOS} Typus und davon jeweils eine
-selbstsperrende und einen selbstleitende Variante. Im Anwendungsfall dieser Thesis wird ein \gls{acr:NMOS} verwendet. \cite{heringElektrotechnikUndElektronik2018}
+Die am häufigsten eingesetzten Leistungsschutzschalter im Spannungsbereich von bis etwa 250V sind \gls{acr:MOSFET}.\gls{online:mosfet}
 
 
-
-
-
+Sie sind eine Sonderform der Transistoren welche auch unipolare Transistoren genannt werden. Sie besitzen einen Kanal aus Halbleitermaterial, auf dem Horizontal zur Stromrichtung ein elektrisches Feld entsteht, welches den Querschnitt des Kanals verändert. Damit wird der Stromfluss durch das Bauteil geregelt. Im Field-Effect Transistor (FET) steuert eine Spannung den Strom. Es gibt vier Grundbauformen von \gls{acr:MOSFET}. Einen \gls{acr:NMOS} und einen \gls{acr:PMOS} Typus und davon jeweils eine selbstsperrende und einen selbstleitende Variante. Im Anwendungsfall dieser Thesis wird ein \gls{acr:NMOS} verwendet. \cite{heringElektrotechnikUndElektronik2018}
 
 \newpage
 \subsection{Das Digital Potentiometer}
@@ -423,5 +440,4 @@ Setup() wird einmalig zu beginn des Programms aufgerufen, während loop() direkt
 \label{subsec:Unterabschnitt12}
 Die Software Dream bietet eine alternative Radiosignale auf dem Computer zu empfangen und auch zu senden. Sie war ursprünglich als Forschungsprojekt des Fraunhofer Instituts angesetzt. Signale welche nicht über den PC empfangen werden können, werden über den Mikrofoneingang der Soundkarte empfangen.
 Bei alldem benutzt das Konzept internationale Direktiven für Amateurfunk, Radio und Informationsdienste.
-Diese Eigenschaft ermöglicht es dem User FM, AM und \gls{acr:DRM} zu empfangen. Außerdem visualisiert die Software in Echtzeit zahlreiche Daten, Statistiken und Diagramme des empfangenen Signals.\gls{online:dream}
-Die Modulation und das Senden des OFDM-Signals über die konstruierte Hardware erfolgt durch diese Software und wird in Kapiteln ~ref\gls{subsubsec:dreamtx} noch intensiviert.
+Diese Eigenschaft ermöglicht es dem User FM, AM und \gls{acr:DRM} zu empfangen. Außerdem visualisiert die Software in Echtzeit zahlreiche Daten, Statistiken und Diagramme des empfangenen Signals. \gls{online:dream} Die Modulation und das Senden des OFDM-Signals über die konstruierte Hardware erfolgt durch diese Software und wird in folgenden Kapiteln noch weiter intensiviert.

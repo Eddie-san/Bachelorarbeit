@@ -5,58 +5,51 @@
 
 \section{Analoge Signalverarbeitung}
 \label{sec:Signalverarbeitung}
-Für die Übertragung von Signalen mithilfe einer LED müssen vorerst ein paar
-grundlegende Überlegungen gemacht werden. Aus dem Kapitel Leuchtdiode sind
-die grundsätzlichen Eigenschaften der LED, sowie ihre Kennlinie bekannt. Aus
-diesen Erkenntnissen lässt sich direkt ausschließen, dass ein negativer Signalanteil
-übertragen werden kann. Ebenso sollte man den stark nichtlinearen Teilbereich der
-Kennlinie nicht nutzen, was dazu führt, dass die LED mit einem Offset betrieben
-werden muss.Abbildung 6 zeigt die verschiedenen Stadien der Signalverarbeitung. Da es sich
-hierbei um ein nichtlineares System handelt, können die Schritte nicht beliebig
-vertauscht werden.Für die Schritte ”Offseterhöhung” und ”Amplitudenverstärkung” würde eine Schaltung
-wie in Abbildung 7 gezeigt ausreichen. Hierbei wird der Offset über den Spannungsteiler
-der DC-Quelle und dem Potentiometer P2 eingestellt. Die Verstärkung
-der Amplitude erfolgt über die Verstärkung zwischen P1 und R3.
-
-
-
-
-Treiber (https://wiki.analog.com/university/courses/electronics/text/chapter-4) ....
-
-Die Spannungs-/Stromwandlung erfolgt mit der Schaltung aus Abbildung 9. Der
-Operationsverstärker (OP) sorgt über eine Gegenkopplung seiner Ausgangsspannung immer dafür, dass zwischen seinen Eingängen kein Spannungsunterschied
-herrscht. Bei anliegendem Signal am + Eingang versucht er daher diese Spannung
-auszugleichen indem er eine Spannung am Ausgang erzeugt. Diese Spannung liegt
-direkt am Gate des Metal Oxide Semiconductor Field Effect Transistors (MosFets)
-an, welcher daraufhin durchschaltet und damit einen Stromfluß über die LED und
-den Leistungswiderstand R2 erzeugt. Dieser Strom wiederum erzeugt über selbigen
-Widerstand eine Anhebung des Potentials am - Eingang des OPs. Auf diese Weise
-versucht der OP seine beiden Eingänge auf das gleiche Potential anzuheben. Da es
-sich beim Leistungswiderstand R2 um einen sehr kleinen Widerstand handelt, wird
-durch die LED, den MosFet und den Leistungswiderstand ein sehr hoher Strom
-fließen welcher für eine hell leuchtende LED sorgt.
+Bei der Signalübertragung über den optischen Kanal mit dem in dieser Arbeit gewählten Medium Licht, müssen einige grundlegende Dinge beachtet werden. Im Kapitel~\ref{sub:led} der Leuchtdiode wurden ihre grundlegenden Eigenschaften erklärt, die es sich hier nun zu verwenden gilt. Eine bekannte Schwierigkeit ist die Übertragung von negativen Wellen. Diese können nicht Übertragen werden, da Licht keinen negativen Wert annehmen kann. Hinzu ist man bei der Übertragung von Signalen darauf bedacht, nur im linearen Bereich der LED-Kennlinie Daten zu übertragen. Wenn man diese nämlich im nichtlinearen Bereich der LED Überträgt, können Verzerrungen auftreten und somit die Übertragung stark gestört werden. Um jenes Problem zu lösen, wird ein Offset verwendet, welcher das Signal so positiv verschiebt, dass dieses keine negativen Anteile mehr besitzt. Zudem wurde ein Spannungspuffer eingerichtet um zusätzlich die Amplitude zu verstärken. Dies liefert Gewissheit, dass nur positive Spannungsanteile übertragen werden und somit kein Signalverlust verzeichnet werden muss.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.6 \textwidth ]{ledtreiber.jpg}
-	\caption[Schaltung des LED- Treibers]{LED- Treiber} \gls{online:Eigen}
-	\label{fig:ledtreiber}
+	\includegraphics[width = 0.9 \textwidth ]{signalvorgang.jpg}
+	\caption[Signalverarbeitungsschritte]{Signalverarbeitungsschritte} \gls{online:Eigen}
+	\label{fig:signalvorgang}
 \end{figure}
 
-3.1.2 Probleme durch das Digitalpotentiometer
-Wie aus dem Datenblatt des Digitalpotentiometers ersichtlich ist, kann dieses nur
-mit Spannungen zwischen -0.6V absolut und +1V, ausgehend von der Versorgungsspannung
-gemessen, arbeiten. Daher müssen die vorhandenen Signalverarbeitungsschritte
-diesen Gegebenheiten angepasst werden.
-Sieht man sich die Schaltung in Abbildung 8 an, fällt auf, dass der kritischste
-Punkt für das Digitalpotentiometer der Einsatz in der Rückkopplung ist, da hier
-auch niedrigere Spannungen als -0,6V am Ausgang des OPs auftreten können. Diese
-Problematik soll Abbildung 10 verdeutlichen. Erhöht man die Amplitude des
-Signals, würde man am Ausgang des OPs ein Signal bekommen, welches unter den
-kritischen -0,6V liegt. Da das Digitalpotentiometer zwischen Ausgang und invertierendem
-Eingang liegt, würde es nicht mehr richtig arbeiten.
+In Abbildung ~\ref{fig:signalvorgang} werden die Verschiedenen Stufen der Signalübertragung veranschaulicht. Da es sich an dieser Stelle um ein nichtlineares System handelt, dürfen die Signalverarbeitungsstufen nicht beliebig vertauscht werden. Eine solche Veränderung der Reihenfolge könnte zur Verfälschung des Signals führen. 
+
+Die analoge Signalverarbeitungsschaltung wurde in drei Stufen aufgeteilt. Die \gls{acr:OP}- Grundschaltungen wurden hierfür so modifiziert, dass Amplitude und Offset variabel einstellbar sind und möglich auftretende Fehler vermieden werden. In Abbildung ~\ref{fig:stufe1} ist die Eingangssignalverarbeitungsstufe illustriert. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth ]{stufe1.jpg}
+	\caption[Eingangssignalverarbeitungsstufe]{Eingangssignalverarbeitungsstufe} \gls{online:Eigen}
+	\label{fig:stufe1}
+\end{figure}
+
+Der Schlüsselfaktor in der Eingangsstufe ist das variable im Rückkopplungspfad des \gls{acr:OP}s. Hierbei handelt es sich um ein Digitales Potentiometer, welches sich über \gls{acr:SPI} vom Arduino zur Laufzeit beliebig verändern lässt. Die Schwierigkeit in der Implementierung dieses Bauteiles liegt jedoch darin, dass es keine negativen Spannungen verträgt. Aus dem Datenblatt ist ersichtlich, dass es nur mit Spannungen von $-0,6V<U<6V$ sorgfältig arbeiten kann. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth ]{stufe2.jpg}
+	\caption[Signalverarbeitungsstufe 2]{Signalverarbeitungsstufe 2} \gls{online:Eigen}
+	\label{fig:stufe2}
+\end{figure}
 
 
+Die sehr hohe Vorwärtsverstärkung und die differentielle Eingangscharakteristik des \gls{acr:OP}s können genutzt werden, um eine nahezu ideale spannungsgesteuerte Stromquelle oder einen Spannungs-zu-Strom-Wandler zu realisieren. Es ist jedoch zu beachten, dass die umzuwandelnde Eingangsspannung an den nicht invertierenden Eingang des \gls{acr:OP}s angelegt wird. Der invertierende Eingang ist in Rückkopplung mit einem Ende des Widerstands $R{1}$ und der Source des Transistors $M{1}$ verbunden. Dies sorgt dafür, dass zwischen den Eingängen des \gls{acr:OP}s kein Spannungsunterschied herrscht. Der Ausgang des \gls{acr:OP}s steuert also das Gate des \gls{acr:MOSFET}s. Seine hohe Leerlaufverstärkung zwingt das Gate von $M{1}$ auf die erforderliche Spannung. Dadurch wird die Spannung, welche an $OP2-OUT = U_{R1}$ anliegt auf die Source des \gls{acr:MOSFET}s gespiegelt. Draus ergibt sich der Strom zu: 
+
+\begin{equation}
+	\label{equ:bsp1}
+	I_{R1} = \frac{U_{R1}}{R_{1}}
+\end{equation}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth ]{endstufe.jpg}
+	\caption[LED- Treiber als Endstufe]{LED- Treiber als Endstufe} \gls{online:Eigen}
+	\label{fig:endstufe}
+\end{figure}
+
+Durch die Bekanntheit des Stromflusses durch $R_1$ kann nun durch kirchhoffsche Regeln auf den Stromfluss in der \gls{acr:LED} geschlossen werden.\gls{online:vtoi} Dieser Strom wiederum erzeugt über selbigen Widerstand eine Anhebung des Potentials am - Eingang des \gls{acr:OP}s. Auf diese Weise versucht der \gls{acr:OP} seine beiden Eingänge auf das gleiche Potential anzuheben. Beim Leistungswiderstand $R_{9}$ handelt es sich um einen sehr kleinen Widerstand, weshalb durch die \gls{acr:LED}, den \gls{acr:MOSFET} und den Leistungswiderstand ein sehr hoher Strom fließt. Dieser sorgt für eine hell leuchtende \gls{acr:LED} zur Übertragung des Signals.
 
 \subsection{Simulation in LT-Spice}
 \label{subsec:Unterabschnitt1}
@@ -107,7 +100,6 @@ Helligkeit erzeugt.
 
 Dadurch berechnet sich der Wärmewiderstand des Transistorkühlkörpers bei gewünschter
 Chiptemperatur von 55$\circ$CC und einer Außentemperatur von 25$\circ$CC zu:
-R = 55 $\circ$CC − 25$\circ$C5, 08W − (1.15$\circ$C/W + 0.3$\circ$C/W) = 4, 46$\circ$C/W
 Ausgehend von der Gleichung 3 wurde ein Kühlkörper von 4,3 $\circ$CC/W gewählt.
 
 \subsubsection{Kühlkörperberechnung der \gls{acr:LED}}
@@ -119,11 +111,7 @@ bei der Berechnung bewusst überdimensioniert. Dazu wird im folgenden mit einem
 Wirkungsgrad der LED von 0 \%, und somit einer Verlustleistung von 100  \%
 gerechnet, was dem Verhalten eines Widerstandes entspricht. LEDs haben jedoch
 tatsächlich einen Wirkungsgrad von ca. 40 - 50 \%.
-Der Kühlkörper für die LED berechnet sich wie folgt:
-
-R = 40$\circ$ − 25$\circ$ 3, 91W − (1.25$\circ$C/W + 0.1$\circ$C/W) = 2, 49$\circ$C/W
-
-Ausgehend von der Gleichung 4 wurde ein Kühlkörper von 2 C/W gewählt.
+Der Kühlkörper für die LED berechnet sich wie folg
 
 \subsection{Planung und Aufbau des Gehäuses}
 \label{subsec:Unterabschnitt12}
@@ -140,7 +128,7 @@ Deckel verbaut.
 
 \section{Software}
 \label{sec:Software}
-\subsection{Arduino Code zum Ansteuern der Digital Potentiometer}
+\subsection{Automatisierte Amplituden-Regelung}
 \label{subsec:Unterabschnitt12}
 
 
