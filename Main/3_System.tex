@@ -25,12 +25,24 @@ Die analoge Signalverarbeitungsschaltung wurde in drei Stufen aufgeteilt. Die \g
 	\label{fig:stufe1}
 \end{figure}
 
-Der Schlüsselfaktor in der Eingangsstufe ist das variable im Rückkopplungspfad des \gls{acr:OP}s. Hierbei handelt es sich um ein Digitales Potentiometer, welches sich über \gls{acr:SPI} vom Arduino zur Laufzeit beliebig verändern lässt. Die Schwierigkeit in der Implementierung dieses Bauteiles liegt jedoch darin, dass es keine negativen Spannungen verträgt. Aus dem Datenblatt ist ersichtlich, dass es nur mit Spannungen von $-0,6V<U<6V$ sorgfältig arbeiten kann. 
+Der Schlüsselfaktor in der Eingangsstufe ist der variable Widerstand im Rückkopplungspfad des \gls{acr:OP}s. Hierbei handelt es sich um ein Digitales Potentiometer, welches sich über \gls{acr:SPI} vom Arduino zur Laufzeit beliebig verändern lässt. Die Schwierigkeit in der Implementierung dieses Bauteiles liegt jedoch darin, dass es keine negativen Spannungen verträgt. Aus dem Datenblatt ist ersichtlich, dass es nur mit Spannungen von $-0,6V<U<6V$ sorgfältig arbeiten kann. Da es sich bei dem zu verarbeitenden Audiosignal um ein Wechselstromsignal mit einer Amplitude von etwa 1,5V handelt, wurden in dieser Schaltung Vorkehrungen getroffen um die negativen Anteile dieses Signals in positive Anteile zu konvertieren. Um dieses Vorhaben zu realisieren wurde auf den nichtinvertierenden Eingang des \gls{acr:OP}s mithilfe eines Spannungsteilers $R_{3}$ und $R_{2}$ eine Spannung angelegt. Diese soll das Potential des \gls{acr:OP}s so anheben, dass das AC-Signal aus der Soundkarte direkt mit einem Offset addiert wird und somit keine negativen Anteile mehr besitzt. Um die Soundkarte vor der DC-Spannung zu schützen wurde ein DC Abblockkondensator $C_{1}$ am Signaleingang vorgesehen. Dieser ist für AC-Signale komplett durchlässig. Aufgrund der Annahme einer maximalen Amplitude von 1,5V muss also also ein Mindestoffset von 0,9V auf das Signal addiert werden. Um hier jedoch die Amplitude trotz Verstärkung innerhalb des erlaubten Spannungsbereiches von $-0,6V<U<6V$ bleiben wurde ein fester Offset von 2,15V gewählt. Zudem würde eine maximale Verstärkung von $A=2$ hinzugezogen wodurch sich der Spannungsbereich, selbst bei einer maximalen Verstärkung, stets in einem Bereich von $-0,2V<U<5,7V$ befindet. Dies ist in ~\ref{fig:ampoff} illustriert. 
+
 
 \begin{figure}[H]
 	\centering
+	\includegraphics[width = 0.9 \textwidth ]{ampoff.jpg}
+	\caption[Simulation von Offset und Verstärkung]{Simulation von Offset und Verstärkung} \gls{online:Eigen}
+	\label{fig:ampoff}
+\end{figure}
+
+Somit kann gewährleistet werden, dass das Digitale Potentiometer zunehmend in einem legitimen Spannungsbereich betrieben wird.
+
+Der zweite \gls{acr:OP} der Schaltung sorgt in der Signalkette für einen weiteren
+Offset welcher die Grundhelligkeit der \gls{acr:LED} regelt. Da hier keine negative Spannung auftritt, kann das Digitale Potentiometer direkt angeschlossen werden.
+\begin{figure}[H]
+	\centering
 	\includegraphics[width = 0.9 \textwidth ]{stufe2.jpg}
-	\caption[Signalverarbeitungsstufe 2]{Signalverarbeitungsstufe 2} \gls{online:Eigen}
+	\caption[Zweite Signalverarbeitungsstufe]{Zweite Signalverarbeitungsstufe} \gls{online:Eigen}
 	\label{fig:stufe2}
 \end{figure}
 
@@ -53,26 +65,45 @@ Durch die Bekanntheit des Stromflusses durch $R_1$ kann nun durch kirchhoffsche 
 
 \subsection{Simulation in LT-Spice}
 \label{subsec:Unterabschnitt1}
- 
+
+Das vorausgegangene theoretische Wissen wurde zudem mit einer LT-Spice Simulation überprüft. So konnten eventuelle Fehler bei der Dimensionierung ermittelt und verbessert werden werden. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 1 \textwidth ]{spice.jpg}
+	\caption[LT-Spice Simulation der Signalverarbeitung]{LT-Spice Simulation der Signalverarbeitung} \gls{online:Eigen}
+	\label{fig:spice}
+\end{figure}
+
 \subsection{Platinenlayout in Eagle}
 \label{subsec:Unterabschnitt12}
 
-Beim Platinenlayout des Senders wurde besonders auf die Trennung von Signal und Leistungswege geachtet. Diese ist in Abbildung 14 mit einer Gelben Linie Mittig des Boards markiert.
-Im unteren Bereich der Platine befinden sich Leistungswiderstand, LED, MosFet, Spannungswandler und der Operationsverstärker für die Stromquelle. Da in der Schaltung Ströme bis 1,41A fließen können und es somit zu EMV Störungen kommen kann, wurde der Signalweg in den oberen Bereich der Platine gelegt. Zudem
-wurde die Leiterbahn zwischen Leuchtdiode, Transistor und Leistungswiderstand besonders breit ausgelegt, da hier große Ströme fließen. Auf der Platinen wurden für die Operationsverstärker und den Digitalpotentiometer
-DIP Sockel verlötet. Das ermöglicht nachträglich einen einfachen Austausch der Bauelemente. Da die komplette Schaltung des Visible Light Senders auf die Größe einer kleinen Europlatine entworfen wurde, kam es zu Platzproblemen. Deshalb mussten zwei Leitungen auf der Rückseite der Platine verlegt werden. Diese sind in Abbildung 14 durch die beiden Blauen Linien dargestellt.
-Um die Schaltung zusätzlich noch Störfester zu machen, wurden Freiflächen auf beiden Seiten der Platine mit Masse ausgefüllt. Des weiteren wurden noch zwei Pins an Masse, und ein Pin an 12V für Messungen und Fehlerüberprüfung angebracht. Der im oberen Teil des Boards eingezeichnete AUX Anschluss wurde nicht, wie in
-Abbildung 14 gezeigt, an das Board gelötet, sondern am Deckel angebracht. Grund dafür ist das einfachere Anschließen des AUX Kabels. Um den Arduino stabil zu verbauen, wurde er an zwei Seiten befestigt.
+Beim Platinenlayout Entwurf vom Senders wurde ein besonderes Augenmerk auf die Trennung von Signal und Leistungswegen geachtet.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width =0.8 \textwidth ]{eagle.jpg}
+	\caption[Eagle Auszug der Platine]{Eagle Auszug der Platine} \gls{online:Eigen}
+	\label{fig:eagle}
+\end{figure}
+
+Im unteren Bereich der Platine befindet sich der Leistungswiderstand, welcher sich von $R-P-IN$ zu $R-P-OUT$ erstreckt. Zuzüglich befinden sich der DC/DC Spannungswandler, \gls{acr:LED} und \gls{acr:MOSFET}, die signifikanten Bauteile der Stromquelle auf des Rechten Seite der Platine und somit möglichst weit vom Signalverarbeitungspfad entfernt. In der Schaltung fließen teilweise Ströme bis 1,35A. Da es bei solch hohen Strömen zu Problemen mit der   \gls{acr:EMV} kommen kann, wurde der Signalweg linksseitig auf der Platine positioniert. Außerdem wurden die Leiterbahnen im Leistungspfad besonders breit ausgelegt, da hier große Ströme fließen. Genaue Informationen über die Dimensionierung der Leiterbahnen und Abstände ist in Tabelle~\ref{tab:leiterbahnen} zu finden. Auf der Platine wurden für die Operationsverstärker, das Digitalpotentiometer und den DC/DC Spannungswandler IC-Sockel aufgelötet. Das ermöglicht den schnellen Austausch von defekten Bauteilen. Die komplette Schaltung des \gls{acr:VLC}-Senders wurde auf die Größe einer kleinen gefrästen Platine untergebracht. Deshalb wurden Leitungen auf der Rückseite der Platine verlegt. Diese sind in Abbildung ~\ref{fig:eagle} durch die Blauen Leiterbahnen dargestellt. Des weiteren wurden im Signalverarbeitungspfad nach jeder Stufe Pins vorgesehen, um die Fehlersuche zu erleichtern und nachträglich einzelne Funktionsprüfungen durchzuführen. Hinzu ist zu beachten, dass die Bauteile im Leistungspfad durch den hohen Stromfluss eine hohe thermische Abgabe an Energie verzeichnen müssen. Um diese zu reduzieren wurden Kühlkörper vorgesehen. Wie diese Berechnet und Dimensioniert werden wird in Kapitel ~\ref{subsub:thermo} näher erläutert. Um die Schaltung zuletzt noch zusätzlich weniger Störanfällig zu gestalten, wurden die gegebenen freien Flächen auf beiden Seiten der Platine mit dem Masse Potential ausgefüllt. 
 
 \subsection{Thermisches Management}
-\label{subsub:Unterunterabschnitt1}
+\label{subsub:thermo}
+Wie im vorherigen Kapitel schon erwähnt, fließt durch den Leistungsstrang der Schaltung ein sehr hoher Strom. Durch diesen hohen Stromfluss kommt es zu einer immensen Hitzeentwicklung in den Bauteilen. Um jedoch die einwandfreie Funktion von elektronischen Halbleiterbauelementen zu gewährleisten, ist die Einhaltung der vom Hersteller angegebenen maximalen Sperrschichttemperaturen unerlässlich. Solch eine Sperrschichttemperatur lässt sich nur bei geringer Leistungsanforderung ohne Kühlung einhalten. Zudem sind die Einbaulage, der Einbauort, die Geschwindigkeit und Temperatur der Umgebungsluft variable Größen die miteinzukalkulieren sind.\gls{online:thermo}
+Um gegen diese Hitzeentwicklung vorzugehen wird für die kritischen Bauteile somit ein Kühlkörper vorgesehen. Diese sollen die Wärme vom Bauteil weg nach außen hin abführen. In dem hier gegebenen elektrischen Stromkreis, werden zwei Bauteile als kritische und zu kühlende Bauteile betrachtet. Zunächst die\gls{acr:LED} zum Übertragen der Signale und zum zweiten der \gls{acr:MOSFET}.\cite{thermLED}
+
+
+\begin{equation}
+	\label{equ:thermo}
+	R_{K} = \frac{U_{R1}}{R_{1}}
+\end{equation}
+
+
 
 Um die LED als Lichtquelle nutzen zu können, werden hohe Leistungen benötigt.
-Im hellsten Betrieb der LED fließt ein Strom von 1,41A durch Transistor, LED
-und Leistungswiderstand. Um der dadurch resultierenden Hitzeentwicklung entgegenzuwirken,
-werden Transistor und Diode auf einem Kühlkörper montiert. Der
-Leistungswiderstand liegt nahe am Transistorkühlkörper, darf aber nicht mit dem
-Kühlkörper verbunden werden.
+Im hellsten Betrieb der LED fließt ein Strom von etwa 1,35A durch sowohl \gls{acr:MOSFET} und \gls{acr:LED} als ich durch den Leistungswiderstand. Dieser dadurch resultierenden Hitzeentwicklung gilt es entgegenzuwirken. Deshalb werden die \gls{acr:LED} und der \gls{acr:MOSFET} auf einem Kühlkörper montiert. Der Leistungswiderstand liegt nahe am Transistorkühlkörper, darf aber nicht mit dem Kühlkörper verbunden werden.
 Ohne einen vorhandenen Kühlkörper würde sich der Transistor lt. Datenblatt um
 62 $\circ$CC/W erhitzen. Da durch den geringen Leistungswiderstand und dem dadurch
 resultierendem hohen Strom eine Leistung von ca. 5W in Hitze umgewandelt wird,
@@ -88,9 +119,6 @@ Watt
 – RCH der Wärmewiderstand zwischen Gehäuse und Kühlkörper
 – RK der Wärmewiderstand des Kühlkörpers (Herstellerangabe)
 
-\subsubsection{Kühlkörperberechnung des \gls{acr:MOSFET}s}
-\label{subsub:Unterunterabschnitt1}
-
 Für die Berechnung der Kühlkörper wurden Messungen zur Verlustleistung des
 Transistors und der LED vorgenommen. Die maximalen Verluste werden bei voller
 Helligkeit erzeugt.
@@ -101,9 +129,6 @@ Helligkeit erzeugt.
 Dadurch berechnet sich der Wärmewiderstand des Transistorkühlkörpers bei gewünschter
 Chiptemperatur von 55$\circ$CC und einer Außentemperatur von 25$\circ$CC zu:
 Ausgehend von der Gleichung 3 wurde ein Kühlkörper von 4,3 $\circ$CC/W gewählt.
-
-\subsubsection{Kühlkörperberechnung der \gls{acr:LED}}
-\label{subsub:Unterunterabschnitt1}
 
 Bei der LED wurde eine geringere Chiptemperatur vorgesehen, da sie sich außen
 an der Kante des Boards befindet und somit leicht berührbar ist. Zudem wurde

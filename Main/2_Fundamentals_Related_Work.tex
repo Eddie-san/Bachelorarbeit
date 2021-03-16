@@ -258,7 +258,7 @@ An dieser Stelle wird verdeutlicht, dass es zwei außerordentlich nicht-lineare 
 
 
 \subsection{Der Operationsverstärker}
-\label{subsec:Unterabschnitt12}
+\label{subsec:OP}
 
 „Im Grunde besteht kein Unterschied zwischen einem normalen Verstärker und einem Operationsverstärker. Beide dienen dazu, Spannungen bzw. Ströme zu verstärken. Während die Eigenschaften eines normalen Verstärkers jedoch durch seinen inneren Aufbau vorgegeben sind, ist ein Operationsverstärker so beschaffen, dass seine Wirkungsweise überwiegend durch eine äußere Gegenkopplungs-Beschaltung bestimmt werden kann. Um dies zu ermöglichen, werden Operationsverstärker als gleichspannungsgekoppelte Verstärker mit hoher Verstärkung ausgeführt. Damit keine zusätzlichen Maßnahmen zur Arbeitspunkteinstellung erforderlich werden, verlangt man ein Eingangs- und Ausgangsruhepotential von 0V. Deshalb sind in der Regel zwei Betriebsspannungsquellen erforderlich: eine positive und eine negative.“(\cite{tietzeElectronicCircuits2008},S.491)
 
@@ -414,6 +414,27 @@ LT-Spice ist eine SPICE-basierte Computersoftware zur Simulation analoger elektr
 \label{subsec:Unterabschnitt12}
 
 EAGLE ist eine Software zum designen und erstellen von Leiterplattenlayouts. Die Software verfügt über einen Schaltplan- und einen Layouteditor, sowie über eine sehr umfassende Bibliothek an Bauteilen, welche sehr unkompliziert und individuell erweiterbar ist.\gls{online:eagle1}\gls{online:eagle2}
+
+Signifikant für die Dimensionierung des Platinenlayouts ist ~\ref{tab:leiterbahnen}. Hier werden die verschieden Leiterbahnbreiten und Leiterbahnabstände dargestellt, welche für ein funktionierendes Platinenlayout unabdingbar sind.
+
+\begin{table}[htb]
+	\begin{center}
+		\begin{tabular}[h]{cccc}	
+			
+			Spannung [V] & Max. Strombelastung [A]& Leiterbahnbreite [mil] & Leiterbahnabstand[mil] \\
+			\hline
+			5 & 0.6&6 & 8 \\
+			10 & 0.8&8 & 13 \\
+			30 & 2.0&20& 30\\
+			150 &2.7&30 & 50 \\
+			230& 3.5&50 & 100 \\
+			\hline
+		\end{tabular}
+		\caption{Richtlinien zu Leiterbahnbreite und Leiterbahnabständen}
+		\label{tab:leiterbahnen}
+	\end{center}
+\end{table}
+
 
 \subsection{Arduino \gls{acr:IDE}}
 \label{subsec:Unterabschnitt12}
