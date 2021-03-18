@@ -1,109 +1,92 @@
 % !TeX root = ../thesis.tex
 \chapter{Grundlagen}
 \label{chap:fundamentals_related-work}
-In diesem Kapitel werden die Grundlagen eines modernen Übertragungssystems vorgestellt. Da eine Audioübertragung mittels \gls{acr:VLC}-Technik implementiert werden soll, wird zunächst auf die Eigenschaften eines zu Übertragenden Audiosignals eingegangen. Darauf folgend werden einige Grundlagen zur Übertragungstechnik und der verwendeten elektronischen Bauteile erläutert. Hier werden grundlegende Funktionsweisen sowie deren Rolle in der analogen und digitalen Signalverarbeitung thematisiert. 
+In diesem Kapitel werden die Grundlagen eines neuartigen Übertragungssystems vorgestellt. Da eine Audioübertragung mittels \gls{acr:VLC}-Technik implementiert werden soll, wird zunächst auf die Eigenschaften eines zu Übertragenden Audiosignals eingegangen. Darauf folgend werden einige Grundlagen zur Übertragungstechnik und der verwendeten elektronischen Bauteile erläutert. Zuletzt setzt sich dieses Kapitel mit Programmen auseinander, welche signifikant zur Realisierung der Übertragung sind. Hier werden grundlegende Funktionsweisen sowie deren Rolle in der analogen und digitalen Signalverarbeitung thematisiert. 
 
 \section{Audio}
 \label{subsec:Unterabschnitt1}
 
-Ziel der vorliegenden Abschlussarbeit ist die Übertragung eines Echtzeit-Audio-Signals mithilfe des projektierten \gls{acr:VLC}-Senders. Deshalb soll im nachfolgenden Kapitel anfänglich im Allgemeinen auf die Übertragung von Audiosignalen eingegangen werden. Praktische Beispiele zur Übertragung von Audiosignalen über größere Entfernung ergeben sich bei der Übertagung von Sprache und Musik. Hierbei wird zunächst der Hörschall mit Hilfe eines Mikrofon in ein proportionales elektrisches Signal umgewandelt. Dieses Signal wird anschließend auf drahtlosem oder drahtgebundenem Wege dem Empfänger übermittelt. Ein gängiges Beispiel für die drahtlose Übertragung ist die Rundfunkübertragung. Mit Telefon und Kabelrundfunk ergeben sich Beispiele für eine drahtgebundene Übertragung. Häufig kommt jedoch eine Kombination aus beidem zum Einsatz. Am Empfangsort wird das elektrische Signal mittels eines Wiedergabegerätes, wie zum Beispiel einem Lautsprecher, wieder in ein akustisches Signal überführt.
+Ziel der vorliegenden Abschlussarbeit ist die Übertragung eines Echtzeit-Audio-Signals mithilfe des projektierten \gls{acr:VLC}-Senders. Deshalb soll im nachfolgenden Kapitel anfänglich im Allgemeinen auf die Übertragung von Audiosignalen eingegangen werden. Praktische Beispiele zur Übertragung von Audiosignalen über größere Entfernung ergeben sich bei der Übertragung von Sprache und Musik. Hierbei wird zunächst der Hörschall mit Hilfe eines Mikrofon in ein proportionales elektrisches Signal umgewandelt. Dieses Signal wird anschließend auf in dieser Arbeit drahtlosem  Wege dem Empfänger übermittelt. Gängige Beispiele für die drahtlose Übertragung sind \gls{acr:WLAN} und der klassische Rundfunk. Am Empfangsort wird das elektrische Signal mittels eines Lautsprechers wieder in ein akustisches Signal umgesetzt.\cite{plassmannHandbuchElektrotechnik2016} Der Lautsprecher erzeugt eine mechanische Welle die in Hörschall resultiert. Hierbei definiert die Frequenz eine Tonlage und die Amplitude in diesem Fall die Lautstärke des Audiosignals. Beim auftreffen dieser mechanische Welle auf das menschliche Trommelfell, wird dieses in Schwingung versetzt und regt somit die menschlichen Nerven an. Das Signal wird im Ohr von einer mechanischen Welle in ein elektrisches Signal gewandelt, das über die Nervenbahnen zum Gehirn gelangt. Im Gehirn wird das elektrische Signal verarbeitet und mit semantischen Informationen verbunden. Diese ermöglichen das menschliche Hören.\cite{stotzComputergestuetzteAudioUnd2019} Die Wahrnehmung von Tönen bei Menschen hängt jedoch nicht nur von der Amplitude und der Frequenz des Tones ab, sondern auch von der wahrnehmenden Person selbst. Demnach können Menschen nur Töne in einem bestimmten Frequenzbereich wahrnehmen. Frequenzen unterhalb des menschlichen Hörbereichs werden Infraschall genannt, darüber liegende Frequenzen werden als Ultraschall bezeichnet. Dieser Frequenzbereich ist nicht nur von Mensch zu Mensch unterschiedlich, sondern variiert auch mit zunehmendem Alter. Daher kann der Frequenzbereich des menschlichen Hörens nicht pauschal vereinheitlicht werden. Plassmann bringt den Hörbereich zwischen 16 Hz und 16 kHz vor \cite{plassmannHandbuchElektrotechnik2016} wohingegen Michels ihn zwischen 16 Hz bis 20 kHz ansiedelt \cite{michelsSonographieOrganUnd2012}. Der hörbare Frequenzbereich variiert auch von Lebewesen zu Lebewesen. Hunde haben zum Beispiel ein erheblich feineres Hörorgan als Menschen. Ihr Frequenzbereich erstreckt sich als Folge dessen von 65 Hz bis 45 kHz.\cite{michelsSonographieOrganUnd2012}
 
-Der, durch den Lautsprecher entstandene, hörbare Schall besteht aus einer mechanischen Welle. Diese ist definiert durch eine Frequenz, welche die Tonlage bestimmt und einer Amplitude, die in diesem Fall die Lautstärke des Audiosignals vorgibt. Damit sich die Welle im Raum ausbreiten kann, um zum Empfänger zu gelangen, benötigt sie ein Übertragungsmedium. Die Dichte eines Mediums bestimmt die Geschwindigkeit, in der sich die Welle ausbreitet. Je dichter das Medium ist, desto schneller kann sich eine Welle ausbreiten.
-
-Trifft die sich ausbreitende mechanische Welle auf das menschliche Trommelfell, wird dieses in Schwingung versetzt und regt somit die menschlichen Nerven an. Das Signal wird an dieser Stelle von einer mechanischen Welle in ein elektrisches Signal gewandelt, das über die Nervenbahnen zum Gehirn weitergeleitet wird. Im Gehirn wird das elektrische Signal analysiert und mit semantischen Informationen verbunden, die das Hören ermöglichen. Ob ein Ton von einem Menschen wahrgenommen werden kann, hängt einerseits von der Frequenz und der Amplitude des Audiosignals ab und anderseits von der wahrnehmenden Person. So gibt es nur einen bestimmten Bereich von Frequenzen der von einem Menschen wahrgenommen werden kann. Frequenzen unterhalb des menschlichen Hörbereichs werden Infraschall genannt, darüber liegende Frequenzen werden als Ultraschall bezeichnet (siehe Abbildung 2.1). Die Grenzen dieses Hörbereiches sind nicht nur von Mensch zu Mensch unterschiedlich, sondern verschieben sich auch mit zunehmendem Alter. Daher kann der Frequenzbereich des menschlichen Hörens nicht einheitlich bestimmt werden. Dies erklärt warum zum Teil unterschiedliche Angaben in der Literatur zu finden sind. Plassmann gibt den Hörbereich zwischen 16 Hz und 16 kHz an [Pla16]. Stotz hingegen zwischen 20 Hz bis 20 kHz [Sto11]. Der hörbare Frequenzbereich eines menschlichen Ohres unterscheidet sich hingegen stark von zum Beispiel dem eines Hundes. Hunde haben ein viel feineres Gehör als Menschen. Ihr Hörbereich reicht von 65 Hz bis 45 kHz .
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{audiospektrum.png}
 	\caption[Hörbereich des menschlichen Ohres]{Hörbereich des menschlichen Ohres} \cite{michelsSonographieOrganUnd2012}
 	\label{fig:audiospektrum}
 \end{figure}
-Neben dem beschreiben Hörbereich beeinflusst auch der Abstand zu einer Quelle die Wahrnehmung des Signals. Durch Freiraumdämpfung verringert sich die Amplitude einer sich
-ausbreitenden Welle, mit zunehmende Distanz wodurch die Lautstärke abnimmt. Befinden
-sich eine Quelle außerhalb der Hörreichweite, werden häufig analoge oder digitale Kommunikationssysteme verwendet, um eine Übertragung zu ermöglichen. Zur Übertragung und Weiterverarbeitung der beschriebenen mechanischen Welle, muss diese zunächst in eine elektrische Größe gewandelt werden.
-Für diese Wandlung wird für Audiosignale ein Mikrofon verwendet. Ähnliche wie es mit dem Trommelfell im menschlichen Ohr passiert, wird im Inneren des Mikrofons eine Membran in Schwingung versetzt und erzeugt hierdurch eine elektrische analoge Spannung.
+
+Außerdem verändert der Abstand zu einer Quelle die Wahrnehmung des Signals zusätzlich. Die Amplitude einer sich ausbreitenden Welle verringert sich mit zunehmender Distanz, wodurch die Lautstärke abnimmt. Befindet sich eine Quelle außerhalb der Hörreichweite können diese durch analoge oder digitale Kommunikationssysteme abgefangen werden um eine Übertragung zu ermöglichen. Zur Übertragung und Weiterverarbeitung der beschriebenen mechanischen Welle, muss diese zunächst in eine elektrische Größe gewandelt werden. Für diese Wandlung wird für Audiosignale ein Mikrofon verwendet. Ähnliche wie es mit dem Trommelfell im menschlichen Ohr passiert, wird im Inneren des Mikrofons eine Membran in Schwingung versetzt und erzeugt hierdurch eine elektrische analoge Spannung.
 Zur digitalen Verarbeitung des Signals muss dieses mithilfe eines Analog-Digital-Wandlers
-(AD-Wandler) in digitale Werte gewandelt werden. Hierfür wird die Analogspannung in zeitlich regelmäßigen (äquidistanten) Abständen ausgewertet und abgespeichert. Dieser
-Vorgang wird Abtastung genannt. Wie in Abbildung 2.2 zu sehen, entstehen einzelne
-Impulse mit Werten des Signals. Zwischen den Abtastzeitpunkten wird jedoch keine Information abgefragt, hierdurch ist der Wert an diesen Stellen Null. Um das Originalsignal zu
-rekonstruieren, müssen durch einen Digital-Analog Wandler (DA-Wandler) die fehlenden Signalabschnitte interpoliert werden. Hierbei ist auf den Zusammenhang zwischen Abtastfrequenz und Signalfrequenz zu achten.
+(AD-Wandler) in digitale Werte gewandelt werden. Hierfür wird die Analogspannung in zeitlich äquidistanten Abständen ausgewertet und abgespeichert. Es wird also ein Signal mit einem Dirac-Kamm gefaltet um dessen Werte zu ermitteln. Dieser Vorgang wird Abtastung genannt und in Darstellung~\ref{fig:abtastung} illustriert. Diese Abtastung spiegelt einzelne Impulse mit Werten des Signals zu den Abtastzeitpunkten wider. Zwischen den Abtastzeitpunkten wird jedoch keine Information abgefragt, wodurch der Wert an diesen Stellen Null beträgt. Zur Rekonstruierung des Originalsignals, müssen durch einen Digital-Analog Wandler die fehlenden Signalabschnitte interpoliert werden. Um also eine aussagekräftige Abtastung durchzuführen ist die Korrelation zwischen Abtastfrequenz und Signalfrequenz zu berücksichtigen.
 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{abtastung.png}
-	\caption[Abtastung eines Signals]{Abtastung eines Signals} \cite{michelsSonographieOrganUnd2012}
+	\caption[Abtastung eines Signals]{Abtastung eines Signals} \gls{online:abtastung}
 	\label{fig:abtastung}
 \end{figure}
 
-In Abbildung 2.2 ist zu erkennen, dass ausreichend viele Abtastwerte vorhanden sind,
-um den Verlauf des Signals detailliert wiederzugeben. Die gewählte Abtastfrequenz steht
-demnach in einem adäquaten Verhältnis zur Signalfrequenz. Mit einer sinkenden Anzahl
-von Abtastwerten vergrößern sich die Signallücken, wodurch die Rekonstruktion über den Analog-Digital Wandler (AD-Wandler) zunehmend erschwert wird. Nach dem Theorem von Shannon ist für die höchste Signalfrequenz pro Schwingung mindestens eine zweimalige Abtastung erforderlich, um das Signal perfekt rekonstruieren zu können. Hierbei gilt also:
+In Abbildung~\ref{fig:abtastung} ist zu erkennen, dass genügend Abtastwerte vorhanden sind, weshalb der Verlauf des Signals im Nachgang detailliert wiedergegeben werden kann. Abtastfrequenz und Signalfrequenz stehen demnach in einem adäquaten Verhältnis zueinander. Je weniger Abtastwerte vorhanden sind, desto größer werden Messabstände. So, dass eine Rekonstruktion des Signales bald nicht mehr möglich ist.\cite{masteraudio}
+
+Das Abtasttheorem von Shannon besagt, dass für die höchste Signalfrequenz pro Schwingung mindestens zwei mal Abgetastet werden muss um das Signal ausreichend rekonstruieren zu können. Hierbei wird also Formel~\ref{equ:abtast} angewendet.
 
 \begin{equation}
-	\label{equ:bsp1}
+	\label{equ:abtast}
 	F_{A} \geq 2 \cdot F_{S}
 \end{equation}
 
-Wobei $F_{A}$ fur die Abtastfrequenz und $F_{S}$ fur die höchste im Signal enthaltende Frequenz
-steht. In Abbildung 2.3 befolgt die obere Abtastung die Regel von Shannon, während die unter sie verletzt. Wie zu erkennen ist, gelingt durch die richtige Abtastung eine gute Rekonstruktion, während bei Unterabtastung das Signal stark verfälscht rekonstruiert wird.
+Die Variable $F_{A}$ bildet hierbei die Abtastfrequenz ab und $F_{S}$ für die höchste im Signal enthaltende Frequenz steht. In Abbildung~\ref{fig:shannon} wird bei der oberen Abtastung die Regel von Shannon befolgt, wohingegen sie um Unteren Teil der Abbildung verletzt wird. An diesem Beispiel ist gut zu erkennen, dass durch die richtige Abtastung eine relativ originalgetreue Rekonstruktion stattfinden kann, während bei einer Unterabtastung das Signal merklich verfälscht rekonstruiert wird. Zuzüglich ist an dieser Darstellung jedoch zu sehen, dass die Abtastung nur den minimalen und den Maximalen wert des Signals abgetastet hat. Dies bedeutet, dass bei einer Phasenverschiebung von $90^\circ$ nur Nulldurchgänge des Signals abgetastet worden waren, was eine Rekonstruktion unmöglich gemacht hätte. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8 \textwidth]{shannon.jpg}
-	\caption[Unterabtastung eines Signals]{Unterabtastung eines Signals} \cite{stotzComputergestuetzteAudioUnd2019}
+	\caption[Vergleich zwischen Abtastung und Unterabtastung eines Signals]{Vergleich zwischen Abtastung und Unterabtastung eines Signals} \cite{stotzComputergestuetzteAudioUnd2019}
 	\label{fig:shannon}
 \end{figure}
 
-Des Weiteren ist zu erkennen, dass die obere Abtastung das Signal jeweils in seinen Minima
-bzw. Maxima erfasst. Bei einer Phasenverschiebung von $90^\circ$ wurde die obere Abtastung jedoch genau die Nulldurchgänge des Signals erfassen. Eine Rekonstruktion des Signals wäre dann nicht mehr möglich, da es nicht mehr von einem Nullsignal unterscheidbar wäre. Aus diesem Grund ist es zu empfehlen, die Abtastfrequenz mehr als doppelt so groß, wie die größte im Signal auftretenden Frequenz f, zu wählen. Da das menschliche Gehör Töne, die oberhalb einer Frequenz von 20 kHz liegen, nicht mehr wahrnehmen kann, wird im Audiobereich meistens mit 44,1 kHz oder mit 48 kHz abgetastet und somit das
-Shannon-Theorem eingehalten.\cite{stotzComputergestuetzteAudioUnd2019}
+Empfehlenswert ist es also, das Shannon Theorem nur als absolute Untergrenze zu wählen und dazu zu neigen die Abtastfrequenz noch deutlich höher als das maximale zu messende Signal zu bestimmen.\cite{stotzComputergestuetzteAudioUnd2019} Im Audiobereich wird häufig mit 44,1 kHz oder mit 48 kHz abgetastet und somit das Shannon-Theorem eingehalten, da der Hörbereich des Menschlichen Ohres ~\ref{fig:audiospektrum} bei 20 kHz endet. \cite{masteraudio}
 
 
-
-
-\section{Übertragungstechnik}
-\label{subsec:Unterabschnitt1}
-
-In diesem Kapitel werden die Grundlagen der modernen Übertragungstechnik als Grundlage für die weiteren Ausführungen erklärt. Zunächst soll der generelle Aufbau eines Übertragungssystems erläutert werden, um im Folgenden einige gängige digitale Modulationsarten vorzustellen.
-Hierbei liegt der Fokus besonders auf einer Quadrature Phase Shift Keying (QPSK)-
-Modulation, welche in den später gezeigten Modellen Verwendung findet. Der letzte Abschnitt beschäftigt sich mit den Themen Bandbreitennutzung und Mehrkanalzugriff. Hier werden die aus der Mobilfunktechnik bekannten Begriffe Frequenzmultiplexverfahren (Frequency Division-Multiple-Access) (FDMA), Zeitmultiplexverfahren (Time-Division-Multiple-Access)
-(TDMA) und Codemultiplexverfahren (Code-Division-Multiple-Access) (CDMA) eingefuhrt und beschrieben.
-
+\section{Einführung in die Übertagungstechnik}
+\label{subsec:uebertragung}
+In diesem Kapitel werden die Grundlagen der modernen Übertragungstechnik als Grundlage für die weiteren Ausführungen erklärt. Zunächst soll der generelle Aufbau eines Übertragungssystems erläutert werden, um im Folgenden einige gängige digitale Modulationsarten vorzustellen. Hierbei liegt der Fokus besonders auf der \gls{acr:QAM}-Modulation, welche in der später diskutierten Dream Software Verwendung findet. Der letzte Abschnitt beschäftigt sich mit den Themen Bandbreitennutzung und Mehrkanalzugriff. Hier werden die aus der Mobilfunktechnik bekannten Begriffe \gls{acr:FDMA}, \gls{acr:TDMA} und \gls{acr:CDMA} eingeführt und beschrieben.
 
 \subsection{Aufbau eines Übertragungssystems}
-\label{subsec:Unterabschnitt1}
+\label{subsec:aufbauueber}
 
-Ein Übertragungssystem besteht stark vereinfacht dargestellt aus fünf verschiedenen Teilen. In Abbildung 2.4 ist eine Skizze eines solchen Übertragungssystems zu sehen, die im Folgenden näher beschrieben werden soll. Zunächst wird eine Quelle benötigt, welche ein zeitkontinuierliches Signal (z.B. Sprache, Musik, Bilddaten, analoge Messwerte) oder ein zeitdiskretes Signal (z.B. Buchstaben, Datensequenzen, abgetastete analoge Signale) zur Verfügung stellt. Der Sender übernimmt im System die Aufgabe, das Quellensignal in ein für die Übertragung geeignetes Format umzuwandeln. Dieses muss auf den später zur Weiterleitung des Signals genutzten Kanal abgestimmt werden. Dabei gilt es darauf zu achten, den zur Verfügung stehenden Kanal und seine Eigenschaften möglichst effizient zu nutzen. Hierbei
-wird zwischen drahtlosen Kanälen (elektromagnetisch, akustisch, Infrarot) und drahtgebundenen Kanälen wie beispielsweise Kupferleitungen oder Glasfaserkabeln unterschieden.
-Nach der Umwandlung des Originalsignals durch den Sender wird dieses über einen dieser physikalischen Kanäle gesendet. Ein Übertragungskanal ist im Allgemeinen fehlerbehaftet. Dies hat zur Folge, dass das Signal bei der Ausbreitung durch den Kanal verzerrt oder gedämpft wird. Es kann zudem zu Interferenzen mit anderen Kanälen oder Umwelteinflüssen kommen, welche das Übertragene Signal verfälschen.
-Die Aufgabe des Empfängers besteht in einer möglichst genauen Rekonstruktion des Quellensignals. Das reproduzierte Quellensignal gelangt schließlich an die Senke. Zum Eliminieren der im Kanal entstandenen Fehler wird dem übertragenen Signal durch verschiedene Verfahren Redundanz hinzugefügt. Die angefügte Redundanz enthält keinen Informationswert, sondern dient zur Absicherung der übertragenen Daten. Der Empfänger kann durch die Redundanz Fehler erkennen und im Optimalfall auch direkt korrigieren. Näheres hierzu wird im Kapitel 2.5 erklärt.
+Ein Übertragungssystem ergibt sich vereinfacht dargestellt aus fünf verschiedenen Komponenten. In Abbildung~\ref{fig:komsystem} ist eine Skizze eines solchen Übertragungssystems zu sehen. Zunächst ist eine Quelle vonnöten, welche ein zeitkontinuierliches Signal (z.B. Sprache, Musik, Bilddaten, analoge Messwerte) oder ein zeitdiskretes Signal (z.B. Buchstaben, Datensequenzen, abgetastete analoge Signale) zur Verfügung stellt. Die Informationsquelle (Information Source) übergibt die Nachricht (Message) dem Sender (Transmitter). Der Sender übernimmt im System die Aufgabe, die Informationsquelle in ein für die Übertragung geeignetes Format umzuwandeln. Dieses muss auf den später zur Weiterleitung des Signals genutzten Kanal abgestimmt werden, welcher dann das entsprechende Sendesignal (Signal) für den Kanal (Channel) generiert. Im Kanal addiert sich das Signal der Störquelle (Noise Source) hinzu, sodass sich das Empfangssignal (Received Signal) am Empfänger (Receiver) ergibt. Dabei gilt es darauf zu achten, den zur Verfügung stehenden Kanal und seine Eigenschaften möglichst effizient zu nutzen und die Störquelle zu minimieren. Sendekanäle sind physikalischer Natur und allgemein Fehlerbehaftet. Es wird zwischen drahtlosen Kanälen (elektromagnetisch, akustisch, Infrarot) und drahtgebundenen Kanälen (Kupferleitungen, Glasfaserkabel) unterschieden. Im Anschluss generiert der Empfänger daraus dann die empfangene Nachricht (Received Message) und leitet jene schließlich der Informationssenke (Destination) weiter. In Anbetracht ihrer Anwendung werden diese einzelnen Blöcke des Kommunikationsmodells in weitere Komponenten zerlegt und somit weiter spezialisiert. \cite{wernerNachrichtentechnikEinfuehrungFuer2010}
 
-Nach dieser allgemeinen Darstellung des Übertragungssystems soll nun eine genauere Beschreibung der Übertragungsstrecke folgen. Diese wird sich aufgrund des Schwerpunkts dieser Abschlussarbeit auf die Übertragung durch einen drahtlosen Kanal fokussieren. Zum Aufbau eines drahtlosen Übertragungssystems muss zunächst der physikalische Kanal über welchen sich das Signal ausbreitet definiert, sowie die Signalform festgelegt werden. So verwenden Fernbedienungen im Bereich der Unterhaltungselektronik beispielsweise als Signalform Licht im Infrarot-Bereich, um Daten zu Übermitteln. Hierfür muss jedoch der direkte Einfall des Lichts auf den Empfänger gegeben sein, wodurch die Reichweite dieser Art der
-Datenübertragung stark begrenzt ist und sich daher nicht für andere Anwendungsgebiete wie beispielsweise den Mobilfunk eignet. Für Mobilfunkanwendungen werden in der Regel elektromagnetische Wellen im Megaherz bis Gigaherz Frequenzbereichen verwendet. Diese Wellen bestehen aus einem elektrischen und einem magnetischen Feld, wobei die beiden Felder sich orthogonal zueinander ausbreiten.
-In Abbildung 2.5 ist die Ausbreitung einer solchen Welle veranschaulicht. Diese Art von
-Welle ist nicht auf ein Ausbreitungsmedium angewiesen und kann sich somit auch im
-Vakuum (z.B. im Weltraum) ausbreiten. Somit ermöglicht sie auch eine Kommunikation
-mit Satelliten. [But13] [An19]
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{komsystem.jpg}
+	\caption[Nachrichtenübertragung nach Shannon]{Nachrichtenübertragung nach Shannon} 
+	\cite{shannon}
+	\label{fig:komsystem}
+\end{figure}
 
-Zur Erzeugung einer elektromagnetischen Welle wird zunächst eine hochfrequente Wechselspannung benötigt. Diese wird meist durch einen Quarzoszillator erzeugt. Damit sich
-die Welle nun ausbreiten kann, benötigt sie eine Antenne von welcher sie sich ablösen kann.
-Eine elektromagnetische Welle kann sich jedoch erst dann von einer Sendeantenne lösen,
-wenn die Wellenlänge $\lambda$ in die Größenordnung der Antennenabmessung kommt [Fis10]. Es
-gilt:
+Aufgrund Thematik dieser Abschlussarbeit soll das Augenmerk nun auf ein drahtloses Übertragungssystem gelegt werden. Zur Projektierung eines jenen müssen zunächst der physikalische Kanal und die Signalform festgelegt werden.
+So verwenden Fernbedienungen beispielsweise als Signalform Licht im Infrarot-Bereich, um Datenbefehle zu übertragen. Nach einem ähnlichen Prinzip funktioniert auch \gls{acr:VLC}. Die Schwierigkeit ist jedoch, dass der direkte Einfall des Lichts auf den Empfänger gegeben sein muss, weshalb die Reichweite dieser Form der Datenübertragung äußerst begrenzt ist. Daher eignet es sich nicht beispielsweise den Mobilfunk. Hier werden üblicherweise elektromagnetische Wellen in Megahertz bis Gigahertz Frequenzbereichen appliziert. Diese Wellen bestehen aus einem magnetischen Feld ($\vec{B}$) und einem elektrischen Feld ($\vec{E}$). Zudem breiten sich jene Felder orthogonal zueinander aus wie in Abbildung ~\ref{fig:elektromag} veranschaulicht wurde.\gls{online:elektromag} 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{elektromag.jpg}
+	\caption[Ausbreitung einer elektromagnetischen Welle]{Ausbreitung einer elektromagnetischen Welle} 
+	\gls{online:elektromag}
+	\label{fig:elektromag}
+\end{figure}
 \begin{equation}
-	\label{equ:bsp1}
+	\label{equ:lambda}
 	\lambda = \frac{c}{f} 
 \end{equation}
-Ein Audiosignal erstreckt sich über einen Bereich von 20Hz bis 20kHz, wodurch nach dieser Formel eine extrem große Antenne benötigt werden wurde. Hieraus ergibt sich auch die Notwendigkeit eine geeignete, d.h. im richtigen Frequenz-, also Wellenlängenbereich
-liegende Sende-, bzw. Trägerfrequenz zu wählen und die zu versendende Information dieser
-durch Modulation aufzuprägen.[Höh13]
-
+Eine solche Form von Welle ist nicht an ein Ausbreitungsmedium gebunden, weshalb es sich auch im Vakuum (z.B. im Weltraum) ausbreiten kann. Diese Eigenschaft ermöglicht beispielsweise eine Satellitenkommunikation. Zur Erzeugung einer elektromagnetischen Welle wird zunächst eine hochfrequente Wechselspannung benötigt. Diese wird meist durch einen Quarzoszillator erzeugt. Damit sich die Welle nun ausbreiten kann, benötigt sie eine Antenne von welcher sie sich ablösen kann.\cite{howwireless}\cite{wernerNachrichtentechnikEinfuehrungFuer2010} Um sich jedoch von einer Antenne zu lösen muss die Wellenlänge ($\lambda$-~\ref{equ:lambda}) der elektromagnetische Welle in die Größenordnung der Antennenabmessung kommen. Da ein Ton von 300Hz jedoch nach Formel~\ref{equ:lambda} eine immens lange Antenne benötigen würde, muss mit alternativen gearbeitet werden. Hieraus entsteht also die Bedingung eine geeignete Trägerfrequenz zu bestimmen um jener dann die zu versendende Information aufzumodulieren.\cite{hftech}\cite{hoeher}
 \subsection{Modulationsarten}
-\label{subsec:Unterabschnitt1}
+\label{subsec:modulationsarten}
 
-In Kapitel 2.2.1 wurde beschrieben wie ein Übertragungssystem aufgebaut ist und aus welchen Komponenten es besteht. Es wurde auch gezeigt wie eine Welle entsteht und diese sich ausbreitet. Des Weiteren wurde die Notwendigkeit einer hochfrequenten Trägerfrequenz verdeutlicht. Im nächsten Schritt soll nun gezeigt werden, wie der Trägerwelle die geforderte Information aufgeprägt wird. Hierfür stehen die drei Parameter zur Verfügung, welche eine Welle beschreiben. Dies sind die Frequenz, die Amplitude sowie die Phase der Welle. Dabei wird die Variation der Amplitude als Amplitudenmodulation (AM) oder auch
-Amplitude Shift Keying (ASK) bezeichnet, eine Variation der Phase als Phasenmodulation
+In ~\ref{subsec:aufbauueber} wurden die Struktur und die Komponenten näher ausgeführt, welche ein Übertragungssystem besitzt. Zudem wurden elektromagnetische Wellen erklärt und die Bedeutung einer hochfrequenten Trägerfrequenz verdeutlicht. 
+
+
+Nun gezeigt werden, wie der Trägerwelle die geforderte Information aufgeprägt wird. Hierfür stehen die drei Parameter zur Verfügung, welche eine Welle beschreiben. Dies sind die Frequenz, die Amplitude sowie die Phase der Welle. Dabei wird die Variation der Amplitude als Amplitudenmodulation (AM) oder auch Amplitude Shift Keying (ASK) bezeichnet, eine Variation der Phase als Phasenmodulation
 (PM) oder auch Phase Shift Keying (PSK) sowie die Variation der Frequenz als Frequenzmodulation (FM) oder auch Frequency Shift Keying (FSK). Im Folgenden wird erläutert,
 wie diese Parameter verändert werden können, um der Welle die Information einzuprägen.
 Zunächst soll die analoge Modulation anhand eines AM-Signals und eines FM-Signals gezeigt werden. Hierbei wird das analoge Ausgangssignal nicht digital gewandelt, sondern
@@ -194,14 +177,19 @@ ist in Abbildung 2.13 auf der rechten Seite eine 16-QAM zu sehen. Hierbei wird s
 Phase als auch Amplitude des Signals verändert.
 \subsection{OFDM}
 \label{subsec:Unterabschnitt1}
+
+
+
 \subsection{DRM}
 \label{subsec:Unterabschnitt1}
+
+
 
 \section{Elektrische Bauteile}
 \label{subsec:Unterabschnitt1}
 In diesem Kapitel werden grundlegende Bauteile eines \gls{acr:VLC}-Senders dargestellt und näher erläutert. Diese sind essenziell um die Datenübertragung mittels dem optischen Kanal zu ermöglichen.
 
-\subsection{Die Leuchtdiode}
+\subsection{Leuchtdiode}
 \label{sub:led}
 
 
@@ -220,7 +208,7 @@ Der Grundsatz der Lichterzeugung in einer \gls{acr:LED} beruht auf einem Halblei
 	\centering
 	\includegraphics[width=0.65 \textwidth]{Kennlinie.jpg}
 	\caption[Diodenkennlinie]{Diodenkennlinie} 
-	\cite{Vorlesung_Elektonik}
+	\gls{online:elektronik}
 	\label{fig:Kennlinie}
 \end{figure}
 
@@ -234,7 +222,7 @@ einer blauen LED.
 	\centering
 	\includegraphics[width=0.85 \textwidth]{Flussspannung.jpg}
 	\caption[Flussspannungen von \gls{acr:LED}s verschiedener Farben]{Flussspannungen von \gls{acr:LED}s verschiedener Farben} 
-	\cite{Vorlesung_Elektonik}
+	\gls{online:elektronik}
 	\label{fig:Flussspannung}
 \end{figure}
 
@@ -250,14 +238,14 @@ ins Verhältnis, ergibt sich ein Zusammenhang wie ihn Abbildung ~\ref{fig:Hellig
 	\centering
 	\includegraphics[width=0.78 \textwidth]{Helligkeit.jpg}
 	\caption[Kennlinie einer Diode – Lichtleistung zu fließendem Strom]{Kennlinie einer Diode – Lichtleistung zu fließendem Strom} 
-	\cite{Eigen}
+	\gls{online:Eigen}
 	\label{fig:Helligkeit}
 \end{figure}
 
 An dieser Stelle wird verdeutlicht, dass es zwei außerordentlich nicht-lineare Abschnitte in der Kennlinie gibt, welche sich durch ihre stark nicht-linearen Eigenschaften keineswegs zur Datenübertragung eignen. Zwischen diesen Bereichen um die etwa mittlere Lichtleistung, gibt es jedoch einen linearen Bereich, welcher sich ausgezeichnet für die Übertragung von Daten eignet. Dies bedeutet, dass die LED auf einem festen Arbeitspunkt AP betrieben werden muss. Dieser Arbeitspunkt liefert der Diode einen immensen Aktionsradius. Wodurch eine maximale Aussteuerung der Amplitude des Signals und somit eine verbesserte Konstellation zur Signalübertragung gewährleistet wird.
 
 
-\subsection{Der Operationsverstärker}
+\subsection{Operationsverstärker}
 \label{subsec:OP}
 
 „Im Grunde besteht kein Unterschied zwischen einem normalen Verstärker und einem Operationsverstärker. Beide dienen dazu, Spannungen bzw. Ströme zu verstärken. Während die Eigenschaften eines normalen Verstärkers jedoch durch seinen inneren Aufbau vorgegeben sind, ist ein Operationsverstärker so beschaffen, dass seine Wirkungsweise überwiegend durch eine äußere Gegenkopplungs-Beschaltung bestimmt werden kann. Um dies zu ermöglichen, werden Operationsverstärker als gleichspannungsgekoppelte Verstärker mit hoher Verstärkung ausgeführt. Damit keine zusätzlichen Maßnahmen zur Arbeitspunkteinstellung erforderlich werden, verlangt man ein Eingangs- und Ausgangsruhepotential von 0V. Deshalb sind in der Regel zwei Betriebsspannungsquellen erforderlich: eine positive und eine negative.“(\cite{tietzeElectronicCircuits2008},S.491)
@@ -331,7 +319,7 @@ Es zeigt auch die maximale Aussteuerbarkeit am Ausgang der \gls{acr:OP}s, welche
 \end{figure} 
 
 \newpage
-\subsection{Der Feldeffekttransistor}
+\subsection{Feldeffekttransistor}
 \label{subsec:Unterabschnitt12}
 Die am häufigsten eingesetzten Leistungsschutzschalter im Spannungsbereich von bis etwa 250V sind \gls{acr:MOSFET}.\gls{online:mosfet}
 
@@ -339,7 +327,7 @@ Die am häufigsten eingesetzten Leistungsschutzschalter im Spannungsbereich von 
 Sie sind eine Sonderform der Transistoren welche auch unipolare Transistoren genannt werden. Sie besitzen einen Kanal aus Halbleitermaterial, auf dem Horizontal zur Stromrichtung ein elektrisches Feld entsteht, welches den Querschnitt des Kanals verändert. Damit wird der Stromfluss durch das Bauteil geregelt. Im Field-Effect Transistor (FET) steuert eine Spannung den Strom. Es gibt vier Grundbauformen von \gls{acr:MOSFET}. Einen \gls{acr:NMOS} und einen \gls{acr:PMOS} Typus und davon jeweils eine selbstsperrende und einen selbstleitende Variante. Im Anwendungsfall dieser Thesis wird ein \gls{acr:NMOS} verwendet. \cite{heringElektrotechnikUndElektronik2018}
 
 \newpage
-\subsection{Das Digital Potentiometer}
+\subsection{Digital Potentiometer}
 \label{subsec:Unterabschnitt12}
 
 Um den Strom durch die \gls{acr:LED} digital zu regulieren und demgemäß für die Datenübertragung die Helligkeit der \gls{acr:LED} zu variieren, wird ein Digitalpotentiometer benötigt. Hierfür wurde der \gls{acr:IC} MCP42010 in der 10k$\ohm$–Variante mit 2 Kanälen ausgewählt. Dieses Digitalpotentiometer kann über ein \gls{acr:SPI} mittels eines Arduino angesteuert werden um dessen Widerstandswert in 256 Schritten zu verändern. Dies ermöglicht eine Variation des Widerstandes in einem Bereich zwischen 52$\ohm$ (00h) und 10k$\ohm$ (FFh) in 39$\ohm$ Schritten. 
@@ -382,7 +370,7 @@ Die Funktion der einzelnen Pins und wie man den \gls{acr:IC} mit dem Arduino ver
 \end{table}
 Aufgrund des Anwendungsfalles in dieser Thesis, werden Pin 11 und Pin 12 des MCP42010 nicht benötigt und aus diesem Grund nicht am Arduino angeschlossen. 
 
-\subsection{Der DC/DC Spannungswandler}
+\subsection{DC/DC Spannungswandler}
 \label{subsec:Unterabschnitt12}
 
 Ein Gleichspannungswandler oder auch DC-DC-Wandler, wandelt eine der Schaltung zugeführte Eingangsgleichspannung in eine geregelte Ausgangsgleichspannung, welche ein anderes Spannungsniveau als die Eingangsspannung aufweist. Diese kann beispielsweise niedriger, höher oder auch Invertiert sein.
@@ -405,7 +393,7 @@ Der Spannungswandler arbeitet außerdem intern für die Invertierung mit einer N
 
 Die Arduino-Plattform besteht prinzipiell aus der auf C und C++ basierenden Entwicklungsumgebung und der zu Programmierenden Hardware\gls{online:arduino}. Vorteilhaft ist hier die gute Dokumentation und eine große menge an Bibliotheken zum einbinden externer Hardwarekomponenten. Ein zusätzlicher Vorteil der Plattform liegt in ihrer Quelloffenheit. Alle zugehörigen Komponenten sind demnach 'Open Source'. Das hat zur Folge, dass Codes der Bibliotheken und des Bootloaders frei zur Verfügung stehen und nach belieben verändert werden können. Auch die Architektur der Hardware ist offengelegt, weshalb Hersteller eigene kompatible Boards konstruieren und verkaufen können. Durch die Unabhängigkeit von Programmierer und Hersteller entsteht eine erschwingliche Hardware, welche bezüglich der Quelloffenheit ohne Einschränkungen programmiert werden kann.[10 - Evans, Beginning Arduino Programming. Apress, 2011, ISBN: 978-1-4302-3777-8]Diese eignet sich hervorragend zur Funktionsprogrammierung von ansteuerbaren Komponenten im Analogen Signalverarbeitungspfad.
 
-\section{Verwendete Tools}       
+\section{Tools}       
 \subsection{LT-Spice}
 \label{subsec:Unterabschnitt12}
 LT-Spice ist eine SPICE-basierte Computersoftware zur Simulation analoger elektronischer Schaltungen. Diese wurde vom Halbleiterhersteller Analog Devices (ursprünglich von Linear Technology) entwickelt. Es ist die am weitesten verbreitete und verwendete SPICE-Software in der Elektro-Simulationsbranche. Obwohl es sich um freie Software handelt, ist LT-Spice nicht künstlich eingeschränkt, um seine Funktionalität einzuschränken.\gls{online:spice} Diese Simulationssoftware würde im Rahmen dieser Arbeit zur Erprobung und Simulation des analogen Signalverarbeitungsschaltkreises verwendet.
@@ -428,7 +416,7 @@ Signifikant für die Dimensionierung des Platinenlayouts ist ~\ref{tab:leiterbah
 			30 & 2.0&20& 30\\
 			150 &2.7&30 & 50 \\
 			230& 3.5&50 & 100 \\
-			\hline
+		
 		\end{tabular}
 		\caption{Richtlinien zu Leiterbahnbreite und Leiterbahnabständen}
 		\label{tab:leiterbahnen}
@@ -436,7 +424,7 @@ Signifikant für die Dimensionierung des Platinenlayouts ist ~\ref{tab:leiterbah
 \end{table}
 
 
-\subsection{Arduino \gls{acr:IDE}}
+\subsection{Arduino IDE}
 \label{subsec:Unterabschnitt12}
 
 Die Sprachen welche in der Entwicklungsumgebung genutzt werden sind C und in kleineren Umfängen auch C++. In den Standardbibliotheken der Entwicklungsumgebung sind die für die Programmierung erheblichsten Funktionen zusammengefasst. Um ein weitere Funktionen zu nutzen, können dementsprechend zusätzliche Bibliotheken eingebunden werden. 

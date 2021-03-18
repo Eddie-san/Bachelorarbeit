@@ -92,54 +92,81 @@ Im unteren Bereich der Platine befindet sich der Leistungswiderstand, welcher si
 \subsection{Thermisches Management}
 \label{subsub:thermo}
 Wie im vorherigen Kapitel schon erwähnt, fließt durch den Leistungsstrang der Schaltung ein sehr hoher Strom. Durch diesen hohen Stromfluss kommt es zu einer immensen Hitzeentwicklung in den Bauteilen. Um jedoch die einwandfreie Funktion von elektronischen Halbleiterbauelementen zu gewährleisten, ist die Einhaltung der vom Hersteller angegebenen maximalen Sperrschichttemperaturen unerlässlich. Solch eine Sperrschichttemperatur lässt sich nur bei geringer Leistungsanforderung ohne Kühlung einhalten. Zudem sind die Einbaulage, der Einbauort, die Geschwindigkeit und Temperatur der Umgebungsluft variable Größen die miteinzukalkulieren sind.\gls{online:thermo}
-Um gegen diese Hitzeentwicklung vorzugehen wird für die kritischen Bauteile somit ein Kühlkörper vorgesehen. Diese sollen die Wärme vom Bauteil weg nach außen hin abführen. In dem hier gegebenen elektrischen Stromkreis, werden zwei Bauteile als kritische und zu kühlende Bauteile betrachtet. Zunächst die\gls{acr:LED} zum Übertragen der Signale und zum zweiten der \gls{acr:MOSFET}.\cite{thermLED}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width =1 \textwidth ]{thermo.jpg}
+	\caption[Montageschema eines Kühlkörpers]{Montageschema eines Kühlkörpers} \gls{online:Eigen}\gls{online:thermo2}
+	\label{fig:thermo}
+\end{figure}
+
+Um gegen diese Hitzeentwicklung vorzugehen wird für die kritischen Bauteile somit ein Kühlkörper vorgesehen. Diese sollen die Wärme vom Bauteil weg und nach außen hin abführen. In dem hier gegebenen elektrischen Stromkreis, werden zwei Halbleiter als kritische und zu kühlende Bauteile betrachtet. Zunächst die \gls{acr:LED} zum Übertragen des Signals und zum zweiten der \gls{acr:MOSFET}.\cite{thermLED}
+
+Zur Auswahl eines geeigneten Kühlkörpers für ein Halbleiterbauelement ist die Berechnung des Wärmewiderstandes unerlässlich. Dafür werden die in Tabelle~\ref{tab:thermofaktoren} aufgeführten Variablen in folgende Gleichung eingesetzt.
 
 \begin{equation}
 	\label{equ:thermo}
-	R_{K} = \frac{U_{R1}}{R_{1}}
+	R_{thK} = \frac{\vartheta_{i}-\vartheta_{u}}{P}-(R_{thG}+R_{RthM})
 \end{equation}
 
+\begin{table}[htb]
+	\begin{center}
+		\begin{tabular}[h]{c|l}	
+			
+			Faktor & Bedeutung \\
+			\hline
+			$\vartheta_{i}$& Herstellerangabe der Halbleiters zur max. Sperrschichttemperatur\\
+			$\vartheta_{u}$& Umgebungstemperatur in $^\circ C$ \\
+			$P$ &  Die am zu kühlenden Halbleiter maximal anfallende Leistung in Watt\\
+			Rth & Wärmewiderstand allgemein in $\frac{K}{W}$ \\
+			RthG & Herstellerangabe zum innerer Wärmewiderstand des Halbleiters \\
+			RthM & Wärmewiderstand der Montagefläche \\
+			RthK &  Wärmewiderstand des Kühlkörpers \\
+			
+		\end{tabular}
+		\caption{Variablen zu berechnung des Kühlkörpers}\gls{online:thermo1}
+		\label{tab:thermofaktoren}
+	\end{center}
+\end{table}
 
+Für die Berechnung der Kühlkörper wurden zudem Berechnungen zur Verlustleistung des
+\gls{acr:MOSFET}s und der \gls{acr:LED} vorgenommen. Es wird bewusst überdimensioniert. Dazu wurde beispielsweise für die \gls{acr:LED} mit einem Wirkungsgrad von 0 \% gerechnet. Unter diesen Umständen würde die Verlustleistung 100 \% betragen. \gls{acr:LED}s haben jedoch tatsächlich einen Wirkungsgrad von ca. 25 - 50 \%. Die maximalen Verluste werden natürlich bei voller Helligkeit verzeichnet. Zur Auslegung der Kühlkörper wurden also folgende Berechnungen durchgeführt:
 
-Um die LED als Lichtquelle nutzen zu können, werden hohe Leistungen benötigt.
-Im hellsten Betrieb der LED fließt ein Strom von etwa 1,35A durch sowohl \gls{acr:MOSFET} und \gls{acr:LED} als ich durch den Leistungswiderstand. Dieser dadurch resultierenden Hitzeentwicklung gilt es entgegenzuwirken. Deshalb werden die \gls{acr:LED} und der \gls{acr:MOSFET} auf einem Kühlkörper montiert. Der Leistungswiderstand liegt nahe am Transistorkühlkörper, darf aber nicht mit dem Kühlkörper verbunden werden.
-Ohne einen vorhandenen Kühlkörper würde sich der Transistor lt. Datenblatt um
-62 $\circ$CC/W erhitzen. Da durch den geringen Leistungswiderstand und dem dadurch
-resultierendem hohen Strom eine Leistung von ca. 5W in Hitze umgewandelt wird,
-kann dies zur Zerstörung des Bauteils führen.
-Zur Auslegung der Kühlkörper wurden folgende Berechnungen durchgeführt:
+\begin{equation}
+	\label{equ:thermoled}
+	P_{LED} = U_{LED} \cdot I_{G} = 3,12V \cdot 1,42A= 4,43W
+\end{equation}
 
-Hierbei ist:
-–j die Maximale Sperrschichttemperatur in $\circ$C des Halbleiters (Herstellerangabe)
-–A die Umgebungstemperatur in $\circ$CC
-Pv die am zu kühlenden Halbleiter maximal anfallende Verlustleistung in
-Watt
-– RJC der Wärmewiderstand zwischen Sperrschicht und Gehäuse (Herstellerangabe)
-– RCH der Wärmewiderstand zwischen Gehäuse und Kühlkörper
-– RK der Wärmewiderstand des Kühlkörpers (Herstellerangabe)
+\begin{equation}
+	\label{equ:thermomos}
+	P_{MOSFET} = U_{MOSFET} \cdot I_{G} = 4,1V \cdot 1,42A= 5,86W
+\end{equation}
 
-Für die Berechnung der Kühlkörper wurden Messungen zur Verlustleistung des
-Transistors und der LED vorgenommen. Die maximalen Verluste werden bei voller
-Helligkeit erzeugt.
+Wodurch sich der Wärmewiderstand der Kühlkörper für die \gls{acr:LED} zu
 
-– Leuchtdiode: 2,77V · 1,41A = 3,91W
-– Transistor: 3,6V · 1,41A = 5,08W
+\begin{equation}
+	\label{equ:thermo2}
+	R_{thK-LED} = \frac{35 ^\circ C - 25 ^\circ C}{4,43W}-(1 \frac{^\circ C}{W}+0,1 \frac{^\circ C}{W}) = 1,36\frac{^\circ C}{W}
+\end{equation}
 
-Dadurch berechnet sich der Wärmewiderstand des Transistorkühlkörpers bei gewünschter
-Chiptemperatur von 55$\circ$CC und einer Außentemperatur von 25$\circ$CC zu:
-Ausgehend von der Gleichung 3 wurde ein Kühlkörper von 4,3 $\circ$CC/W gewählt.
+berechnet und der Wärmewiderstand des \gls{acr:MOSFET} aus
+ 
+\begin{equation}
+	\label{equ:thermo3}
+	R_{thK-MOSFET} = \frac{50 ^\circ C - 25 ^\circ C}{5,86W}-(1,15 \frac{^\circ C}{W}+0,1 \frac{^\circ C}{W}) = 3,22\frac{^\circ C}{W}
+\end{equation}
+ergibt. Gewählt wurde zuletzt für sowohl \gls{acr:LED} als auch \gls{acr:MOSFET} ein Kühlkörper in der Größenordnung von 3 $^\circ C/W$.
 
-Bei der LED wurde eine geringere Chiptemperatur vorgesehen, da sie sich außen
-an der Kante des Boards befindet und somit leicht berührbar ist. Zudem wurde
-bei der Berechnung bewusst überdimensioniert. Dazu wird im folgenden mit einem
-Wirkungsgrad der LED von 0 \%, und somit einer Verlustleistung von 100  \%
-gerechnet, was dem Verhalten eines Widerstandes entspricht. LEDs haben jedoch
-tatsächlich einen Wirkungsgrad von ca. 40 - 50 \%.
-Der Kühlkörper für die LED berechnet sich wie folg
 
 \subsection{Planung und Aufbau des Gehäuses}
 \label{subsec:Unterabschnitt12}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width =1 \textwidth ]{3dbottom.jpg}
+	\caption[Boden des 3D-Drucks]{Boden des 3D-Drucks} \gls{online:Eigen}
+	\label{fig:3dbottom}
+\end{figure}
 
 Beim Entwurf des Gehäuses wurde so Platzsparend wie möglich gearbeitet, weshalb
 der fest verbaute Arduino zwischen Leiterplatte und Deckel angebracht wurde.
