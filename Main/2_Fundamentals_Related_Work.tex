@@ -4,7 +4,7 @@
 In diesem Kapitel werden die Grundlagen eines neuartigen Übertragungssystems vorgestellt. Da eine Audioübertragung mittels \gls{acr:VLC}-Technik implementiert werden soll, wird zunächst auf die Eigenschaften eines zu übertragenden Audiosignals eingegangen. Darauf folgend werden einige Grundlagen zur Übertragungstechnik und der verwendeten elektronischen Bauteile erläutert. Zuletzt setzt sich dieses Kapitel mit Programmen auseinander, welche signifikant für die Realisierung der Übertragung sind. Hier werden grundlegende Funktionsweisen sowie deren Rolle in der analogen und digitalen Signalverarbeitung thematisiert. 
 
 \section{Audio}
-\label{subsec:Unterabschnitt1}
+\label{subsec:audio}
 
 Ziel der vorliegenden Abschlussarbeit ist die Übertragung eines Echtzeit-Audio-Signals mithilfe des projektierten \gls{acr:VLC}-Senders. Deshalb soll im nachfolgenden Kapitel anfänglich im Allgemeinen auf die Übertragung von Audiosignalen eingegangen werden. Praktische Beispiele zu der Übertragung von Audiosignalen über größere Entfernung ergeben sich bei der Übertragung von Sprache und Musik. Hierbei wird zunächst der Hörschall mit Hilfe eines Mikrofons in ein proportionales elektrisches Signal umgewandelt. Dieses Signal wird anschließend auf drahtlosem  Wege dem Empfänger übermittelt. Gängige Beispiele für die drahtlose Übertragung sind \gls{acr:WLAN} und der klassische Rundfunk. Am Empfangsort wird das elektrische Signal mittels eines Lautsprechers wieder in ein akustisches Signal umgesetzt.\cite{plassmannHandbuchElektrotechnik2016} Der Lautsprecher erzeugt eine mechanische Welle, die in Hörschall resultiert. Hierbei definiert die Frequenz eine Tonlage und die Amplitude, in diesem Fall, die Lautstärke des Audiosignals. Beim Auftreffen dieser mechanischen Welle auf das menschliche Trommelfell wird dieses in Schwingung versetzt und regt somit die menschlichen Nerven an. Das Signal wird im Ohr von einer mechanischen Welle in ein elektrisches Signal umgewandelt, das über die Nervenbahnen zum Gehirn gelangt. Im Gehirn wird das elektrische Signal verarbeitet und mit semantischen Informationen verbunden. Diese ermöglichen das menschliche Hören.\cite{stotzaudio} Die Wahrnehmung von Tönen bei Menschen hängt jedoch nicht nur von der Amplitude und der Frequenz des Tones ab, sondern auch von der wahrnehmenden Person selbst. Demnach können Menschen nur Töne in einem bestimmten Frequenzbereich wahrnehmen. Frequenzen unterhalb des menschlichen Hörbereichs werden Infraschall genannt, darüber liegende Frequenzen werden als Ultraschall bezeichnet. Dieser Frequenzbereich ist nicht nur von Mensch zu Mensch unterschiedlich, sondern variiert auch mit zunehmendem Alter. Daher kann der Frequenzbereich des menschlichen Hörens nicht pauschal vereinheitlicht werden. Plassmann bringt den Hörbereich zwischen 16 Hz und 16 kHz vor \cite{plassmannHandbuchElektrotechnik2016}, wohingegen Michels ihn zwischen 16 Hz bis 20 kHz ansiedelt \cite{michelsSonographieOrganUnd2012}. Der hörbare Frequenzbereich variiert auch von Lebewesen zu Lebewesen. Hunde haben zum Beispiel ein erheblich feineres Hörorgan als Menschen. Ihr Frequenzbereich erstreckt sich als Folge dessen von 65 Hz bis 45 kHz.\cite{michelsSonographieOrganUnd2012}
 
@@ -138,39 +138,67 @@ Da im Zuge dieser Abschlussarbeit größtenteils mit einer \gls{acr:QAM}-Modulat
 Dabei steht die Variable $A$ für eine, bei der \gls{acr:QPSK}, konstante Amplitude. Die variable $\varPhi_{0}$ beschriebt zusätzlich die Phase des Referenzsignals.Zudem ergibt sich die in Formel ~\ref{equ:qpsk} genannte Kreisfrequenz $\omega$ aus:
 
 \begin{equation}
-	\label{equ:qpsk}
+	\label{equ:omega}
 	\omega = 2 \cdot \pi \cdot f
 \end{equation}
 Um die Entfernung der Symbole zu maximieren werden diese bei der \gls{acr:QPSK} um 90$^\circ$ zueinander verschoben. Tabelle~\ref{tab:qpsk} gibt Information über die verschiedenen Phasenlagen die von $i$ angenommen werden können.
 \begin{table}[htb]
-	\begin{center}
-		\begin{tabular}[h]{cc}	
+\centering
+		\begin{tabular}[h]{ccc}	
 			\toprule
-			Funktion & Phase  \\
+			Funktion & $\varphi_{i}$& $\varphi_{0}$ \\
 			\midrule
-			$s_{1}(t)$ & $0^\circ$ \\
-			$s_{2}(t)$ & $90^\circ$ \\
-			$s_{3}(t)$ & $180^\circ$ \\
-			$s_{4}(t)$ & $270^\circ$ \\
+			$s_{1}(t)$ & $0^\circ$ & $45^\circ$ \\
+			$s_{2}(t)$ & $90^\circ$ & $45^\circ$\\
+			$s_{3}(t)$ & $180^\circ$ & $45^\circ$\\
+			$s_{4}(t)$ & $270^\circ$& $45^\circ$ \\
 			\bottomrule
 		\end{tabular}
-		\caption{Phasenlagen bei der \gls{acr:QPSK}
+		\caption{Phasenlagen bei der \gls{acr:QPSK}}
 		\label{tab:qpsk}
-	\end{center}
 \end{table}
 
+Ein Konstellationsdiagramm illustriert die verschiedenen Symbole, mit Betrag und Phasenlage, im komplexen Raum. Zur Verringerung der Bitfehler wird hier der Gray Code für die Zuordnung von Bits gewählt. Dies hat zu Folge, dass wenn ein Symbol fälschlicherweise dem benachbarten Symbol zugeordnet wird, nur ein Bit fehlerhaft ist. Bei einer Binären Codierung könnte beispielsweise die 00 der 11 zugeordnet werden, wodurch zwei Bitfehler in einem Symbol inkorrekt wären. Die Zahl der Bitänderungen von Symbol zum nächstgelegenen Symbol wird auch Hamming Abstand genannt.\gls{online:ham}\gls{online:quint}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9 \textwidth]{konstqpsk.jpg}
+	\caption[Konstellationsdiagramm mit $\varphi_{0}=45^\circ$ im komplexen Raum]{Konstellationsdiagramm mit $\varphi_{0}=45^\circ$ im komplexen Raum} 
+	\gls{online:konst}
+	\label{fig:konstqpsk}
+\end{figure}
+
+In Abbildung~\ref{fig:konstqpsk} sind zwei Konstellationsdiagramme zu erkennen. Konstellationsdiagramm $(a)$ ist hierbei ein klares rauschfrei empfangenes Signal, $(b)$ hingegen wurde über einen verrauschten Kanal gesendet. Alle empfangenen Symbole häufen sich um die vier Symbolpunkte. Aufgrund des hier nur schwach verrauschten Kanals, können die Symbole noch problemlos zugeordnet werden. Bei einem einem sehr stark verrauschten Kanal jedoch, wäre diese Entscheidung unmöglich, wie in Abbildung~\ref{fig:verrauscht} zu sehen ist. Daher werden klare Entscheidungsgrenzen definiert, im gegeben Fall sind das die reelle und die imaginären Achse.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.42 \textwidth]{verrauscht.jpg}
+	\caption[Konstellationsdiagramm mit $\varphi_{0}=45^\circ$ mit stark verrauschtem Kanal]{Konstellationsdiagramm mit $\varphi_{0}=45^\circ$ mit stark verrauschtem Kanal} 
+	\gls{online:konst}
+	\label{fig:verrauscht}
+\end{figure}
+
+Ein solches Vorgehen ist jedoch bei höherwertigen \gls{acr:PSK}-Modulationen nicht mehr sinnvoll, da die Symbolabstände immer geringer werden würden und die Übertragung somit störanfälliger wird. Sinnvoller ist es also die \gls{acr:QPSK} so zu erweitern, dass man in der Wellengleichung nicht nur $\varphi_{i}$ variiert, sondern auch die Amplitude $A$. Durch diese Erweiterung kann der Bitstrom enorm gesteigert werden. Exemplarisch hierfür sind die in Abbildung~\ref{fig:qam} gezeigten 16-\gls{acr:QAM} und die 64-\gls{acr:QAM} welche im Laufe dieser Abschlussarbeit noch Verwendung finden. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9 \textwidth]{qam.jpg}
+	\caption[Konstellationsdiagramm 16-\gls{acr:QAM} und 64-\gls{acr:QAM}]{Konstellationsdiagramme mit  16-\gls{acr:QAM} und 64-\gls{acr:QAM}} 
+	\gls{online:Eigen}\gls{online:konst}
+	\label{fig:qam}
+\end{figure}
+
 \subsection{OFDM}
-\label{subsec:Unterabschnitt1}
+\label{subsec:ofdm}
 
 
 
 \subsection{DRM}
-\label{subsec:Unterabschnitt1}
+\label{subsec:drm}
 
 
 
 \section{Elektrische Bauteile}
-\label{subsec:Unterabschnitt1}
+\label{subsec:elbau}
 In diesem Kapitel werden grundlegende Bauteile eines \gls{acr:VLC}-Senders dargestellt und näher erläutert. Diese sind essenziell, um die Datenübertragung mittels dem optischen Kanal zu ermöglichen.
 
 \subsection{Leuchtdiode}
