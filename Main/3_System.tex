@@ -9,7 +9,7 @@ Bei der Signalübertragung über den optischen Kanal mit dem in dieser Arbeit ge
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.9 \textwidth ]{signalvorgang.jpg}
+	\includegraphics[width = 1 \textwidth ]{signalvorgang.jpg}
 	\caption[Signalverarbeitungsschritte]{Signalverarbeitungsschritte} \gls{online:Eigen}
 	\label{fig:signalvorgang}
 \end{figure}
@@ -27,10 +27,9 @@ Die analoge Signalverarbeitungsschaltung wurde in drei Stufen aufgeteilt. Die \g
 
 Der Schlüsselfaktor in der Eingangsstufe ist der variable Widerstand im Rückkopplungspfad des \gls{acr:OP}s. Hierbei handelt es sich um ein Digitales Potentiometer, welches sich über \gls{acr:SPI} vom Arduino zur Laufzeit beliebig verändern lässt. Die Schwierigkeit in der Implementierung dieses Bauteiles liegt jedoch darin, dass es keine negativen Spannungen verträgt. Aus dem Datenblatt ist ersichtlich, dass es nur mit Spannungen von $-0,6V<U<6V$ sorgfältig arbeiten kann. Da es sich bei dem zu verarbeitenden Audiosignal um ein Wechselstromsignal mit einer Amplitude von etwa 1,5V handelt, wurden in dieser Schaltung Vorkehrungen getroffen um die negativen Anteile dieses Signals in positive Anteile zu konvertieren. Um dieses Vorhaben zu realisieren wurde auf den nichtinvertierenden Eingang des \gls{acr:OP}s mithilfe eines Spannungsteilers $R_{3}$ und $R_{2}$ eine Spannung angelegt. Diese soll das Potential des \gls{acr:OP}s so anheben, dass das AC-Signal aus der Soundkarte direkt mit einem Offset addiert wird und somit keine negativen Anteile mehr besitzt. Um die Soundkarte vor der DC-Spannung zu schützen wurde ein DC Abblockkondensator $C_{1}$ am Signaleingang vorgesehen. Dieser ist für AC-Signale komplett durchlässig. Aufgrund der Annahme einer maximalen Amplitude von 1,5V muss also also ein Mindestoffset von 0,9V auf das Signal addiert werden. Um hier jedoch die Amplitude trotz Verstärkung innerhalb des erlaubten Spannungsbereiches von $-0,6V<U<6V$ bleiben wurde ein fester Offset von 2,15V gewählt. Zudem würde eine maximale Verstärkung von $A=2$ hinzugezogen wodurch sich der Spannungsbereich, selbst bei einer maximalen Verstärkung, stets in einem Bereich von $-0,2V<U<5,7V$ befindet. Dies ist in ~\ref{fig:ampoff} illustriert. 
 
-
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.9 \textwidth ]{ampoff.jpg}
+	\includegraphics[width = 0.8 \textwidth ]{ampoff.jpg}
 	\caption[Simulation von Offset und Verstärkung]{Simulation von Offset und Verstärkung} \gls{online:Eigen}
 	\label{fig:ampoff}
 \end{figure}
@@ -39,6 +38,7 @@ Somit kann gewährleistet werden, dass das Digitale Potentiometer zunehmend in e
 
 Der zweite \gls{acr:OP} der Schaltung sorgt in der Signalkette für einen weiteren
 Offset welcher die Grundhelligkeit der \gls{acr:LED} regelt. Da hier keine negative Spannung auftritt, kann das Digitale Potentiometer direkt angeschlossen werden.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = 0.9 \textwidth ]{stufe2.jpg}
@@ -111,10 +111,10 @@ Zur Auswahl eines geeigneten Kühlkörpers für ein Halbleiterbauelement ist die
 
 \begin{table}[htb]
 	\begin{center}
-		\begin{tabular}[h]{c|l}	
-			
+		\begin{tabular}[h]{cl}	
+			\toprule
 			Faktor & Bedeutung \\
-			\hline
+			\midrule
 			$\vartheta_{i}$& Herstellerangabe der Halbleiters zur max. Sperrschichttemperatur\\
 			$\vartheta_{u}$& Umgebungstemperatur in $^\circ C$ \\
 			$P$ &  Die am zu kühlenden Halbleiter maximal anfallende Leistung in Watt\\
@@ -122,7 +122,7 @@ Zur Auswahl eines geeigneten Kühlkörpers für ein Halbleiterbauelement ist die
 			RthG & Herstellerangabe zum innerer Wärmewiderstand des Halbleiters \\
 			RthM & Wärmewiderstand der Montagefläche \\
 			RthK &  Wärmewiderstand des Kühlkörpers \\
-			
+			\bottomrule
 		\end{tabular}
 		\caption{Variablen zu berechnung des Kühlkörpers}\gls{online:thermo1}
 		\label{tab:thermofaktoren}
@@ -155,11 +155,13 @@ berechnet und der Wärmewiderstand des \gls{acr:MOSFET} aus
 	\label{equ:thermo3}
 	R_{thK-MOSFET} = \frac{50 ^\circ C - 25 ^\circ C}{5,86W}-(1,15 \frac{^\circ C}{W}+0,1 \frac{^\circ C}{W}) = 3,22\frac{^\circ C}{W}
 \end{equation}
-ergibt. Gewählt wurde zuletzt für sowohl \gls{acr:LED} als auch \gls{acr:MOSFET} ein Kühlkörper in der Größenordnung von 3 $^\circ C/W$.
 
+ergibt. Gewählt wurde zuletzt für sowohl \gls{acr:LED} als auch \gls{acr:MOSFET} ein Kühlkörper in der Größenordnung von 3 $^\circ C/W$.
 
 \subsection{Planung und Aufbau des Gehäuses}
 \label{subsec:Unterabschnitt12}
+
+In den vorausgegangenen Unterkapiteln wurden sowohl die Schaltungteile, als auch die Wichtigkeit einer ausreichenden Kühlung der Bauteile verdeutlicht. Nun galt es all diese Hardwarekomponenten zu einem großen ganzen zusammen zu fassen um somit ein in sich beständiges System zu schaffen. Demnach wurde für die kompakte und ansehnliche Unterbringung aller Hardwarekomponenten ein 3D-Druck-Gehäuse projektiert. Hierbei wurde so platzsparend wie möglich gearbeitet. Aussparungen für die Datenschnittstelle und Spannungsversorgung wurden so angeordnet, dass diese jederzeit zugänglich sind. Zudem wurden drei Seiten mit ausreichend Lüftungsschlitzen bestückt, um der Wärmeentwicklung im Gehäuse entgegen zu wirken. Um diese thermische Entwicklung noch weiter unter Kontrolle zu bringen wurde eine Aussparung für einen mit $12V$ betriebenen Lüfter vorgesehen. Dieser soll den Luftstrom im Gehäuse anregen um somit eine bessere Kühlung zu gewährleisten. Abbildung~\ref{fig:3dbottom} veranschaulicht die 3D-Ansicht dieses Gehäuses.
 
 \begin{figure}[H]
 	\centering
@@ -168,16 +170,16 @@ ergibt. Gewählt wurde zuletzt für sowohl \gls{acr:LED} als auch \gls{acr:MOSFE
 	\label{fig:3dbottom}
 \end{figure}
 
-Beim Entwurf des Gehäuses wurde so Platzsparend wie möglich gearbeitet, weshalb
-der fest verbaute Arduino zwischen Leiterplatte und Deckel angebracht wurde.
-Da sich Leistungswiderstand, Transistor und Leuchtdiode im Betrieb stark erhitzen,
-wurden die zugehörigen Kühlkörper am Boden mithilfe von Abstandsbolzen
-befestigt. Zusätzlich wurden im Deckel Freischnitte über den Kühlkörpern vorgenommen
-um die nach oben steigende Luft möglichst gut abzuleiten. Für die
-Versorgungsspannung der Schaltung gibt es zwei 4mm Anschlüsse, die oben am
-Deckel angebracht wurden. Für die Datenübertragung wurde eine AUX Buchse im
-Deckel verbaut.
+Der Arduino wird am Boden des Gehäuses fixiert und bietet die Basis des Analogen Schaltungsteils.
+Da sich Leistungswiderstand, Transistor und Leuchtdiode im Betrieb stark erhitzen, wurden die zugehörigen Kühlkörper nah am Lüfter montiert. Zusätzlich wurde im Deckel eine Öffnung für den Einbau eines LCD-Displays vorgesehen um dort Daten visuell am Sender auszugeben. Für die Datenübertragung wurde eine \gls{acr:AUX}-Buchse in der Nähe der Spannungsversorgung verbaut.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width =1 \textwidth ]{3dtop.jpg}
+	\caption[Boden des 3D-Drucks]{Boden des 3D-Drucks} \gls{online:Eigen}
+	\label{fig:3dtop}
+\end{figure}
+\newpage
 \section{Software}
 \label{sec:Software}
 \subsection{Automatisierte Amplituden-Regelung}
@@ -210,6 +212,35 @@ Zum Start der Software ”Dream” im Übertragungsmodus muss das Programm mit d
 	\label{fig:dreamtxeinstellung}
 \end{figure}
 
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|p{0.28\linewidth} | p{0.72\linewidth}|}	
+			\toprule
+			\textbf{Parameters} &\textbf{Beschreibung}\\
+			\midrule
+			\textbf{\gls{acr:DRM} mode/ bandwidth} & In einem \gls{acr:DRM}-System sind vier mögliche Robustheitsmodi definiert, um das System an unterschiedliche Kanalbedingungen anzupassen.:\newline
+			\textbf{Mode A}: Gaußsche Kanäle, mit geringem Fading.\newline
+			\textbf{Mode B}: Zeit- und frequenzselektive Kanäle, mit längerer Verzögerungsspanne.\newline
+			\textbf{Mode C}: Wie Robustheitsmodus B, jedoch mit höherer Dopplerspreizung.\newline
+			\textbf{Mode D}: Wie Robustheitsmodus B, jedoch mit starker Verzögerung und Dopplerspreizung.\newline
+			Die Bandbreite ist die Bruttobandbreite des aktuellen \gls{acr:DRM}-Signals. \\
+			\midrule
+			\textbf{Interleaver Depth} & Die Symbol-Interleavertiefe kann entweder kurz (ca. 400 ms) oder lang (ca. 2 s) sein. Je länger der Interleaver, desto besser kann der Kanaldecoder Fehler aus langsam schwindenden Signalen korrigieren. Aber je länger die Interleaver-Länge, desto länger die Verzögerung, bis Audio zu hören ist.\\
+			\midrule			
+			\textbf{\gls{acr:SDC} / \gls{acr:MSC}} & Zeigt die Modulationsart des \gls{acr:SDC}- und \gls{acr:SDC}-Kanals an. Für den \gls{acr:MSC}-Kanal sind einige hierarchische Modi definiert, die einen sehr stark geschützten Dienstkanal bieten können.\\
+			\midrule
+			\textbf{Prot. Level (B/A)} & Die Fehlerschutzstufe des Kanalcodierers. Für 64-QAM gibt es vier Schutzstufen, die im DRM-Standard definiert sind. Schutzstufe 0 hat den höchsten Schutz, während Stufe 3 den niedrigsten Schutz hat. Die Buchstaben A und B sind die Bezeichnungen für den höher und niedriger geschützten Teil eines DRM-Blocks, wenn \gls{acr:UEP} verwendet wird. Wenn \gls{acr:EEP} verwendet wird, gilt nur die Schutzstufe von Teil B.\\
+			\midrule
+			\textbf{Number of Services} & Hier wird die Anzahl der im DRM-Stream übertragenen Audio- und Datendienste angezeigt. Die maximale Anzahl der Streams beträgt vier.\\
+			\midrule
+			\textbf{Received time - date} & Dieses Label zeigt die empfangene Zeit und das Datum in UTC an. Diese Information wird im \gls{acr:SDC}-Kanal übertragen.\\
+			\bottomrule
+		\end{tabular}
+		\caption{Beschreibung der Dream-Transmitter-Parameter}\gls{online:dream}
+		\label{tab:dreamparam}
+	\end{center}
+\end{table}
+
 \subsubsection{Dream Receiver}
 \label{subsec:Unterabschnitt12}
 
@@ -217,123 +248,86 @@ Der Evaluation Dialog liefert detaillierte Informationen über die empfangenen D
 
 \begin{table}[h]
 	\begin{center}
-		\begin{tabular}{p{0.3\linewidth} | p{0.7 \linewidth}}	
-			\textbf{Measurements} & \\
-			\hline
-			\textbf{DC Frequency Offset} & Dieser Offset entspricht der resultierenden Soundkarten-Zwischenfrequenz des Frontends. Diese Frequenz ist nicht auf einen bestimmten Wert beschränkt, sondern nur darauf, dass das DRM-Spektrum vollständig innerhalb der Bandbreite der Soundkarte liegen muss.\\
-			
-			\textbf{Sample Frequency Offset} & Offset der Abtastrate des lokalen Computers zum DA-Wandler im Sender. \\
-			
-			\textbf{Doppler / Delay} & The Doppler frequency of the channel is estimated for the Wiener filter design of channel estimation in time direction. If linear interpolation is set for channel estimation in time direction, this estimation is not updated. The Doppler frequency is an indication of how fast the channel varies with time. The higher the frequency, the faster the channel changes are.
-			The total delay time of the Power Delay Spectrum (PDS) is estimated from the impulse response estimation derived from the channel estimation. This delay corresponds to the range between the two vertical dashed black lines in the Impulse Response (IR) plot. \\
-			\textbf{I/O Interface LED} & This LED shows the current status of the sound card interface. The yellow light shows that the audio output was corrected. Since the sample rate of the transmitter and local computer are different, from time to time the audio buffers will overflow or under run and a correction is necessary. When a correction occurs, a "click" sound can be heard. The red light shows that a buffer was lost in the sound card input stream. This can happen if a thread with a higher priority is at 100 and the Dream software cannot read the provided blocks fast enough. In this case the Dream software will instantly loose the synchronization and has to re-synchronize. Another reason for red light is that the processor is to slow for running the Dream software.
-			\\
-			\textbf{Time Sync Acq LED} & This LED shows the state of the timing acquisition (search for the beginning of an OFDM symbol). If the acquisition is done, this LED will stay green.
-			\\
-			\textbf{Frame Sync LED} & The DRM frame synchronization status is shown with this LED. This LED is also only active during acquisition state of the Dream receiver. In tracking mode this LED is always green.
-			\\
-			\textbf{FAC CRC LED} & This LED shows the Cyclic Redundancy Check (CRC) of the Fast Access Channel (FAC) of DRM. FAC is one of the three logical channels and is always modulated with a 4-QAM. If the FAC CRC check was successful, the receiver changes to tracking mode. The FAC LED is the indication whether the receiver is synchronized to a DRM transmission or not. \\
-			\textbf{SRC CRC LED} & 	This LED shows the CRC check result of the Service Description Channel (SDC) which is one logical channel of the DRM stream. This data is transmitted in approx. 1 second intervals and contains information about station label, audio and data format etc. The error protection is normally lower than the protection of the FAC. Therefore this LED will turn to red earlier than the FAC LED in general. \\
-			\textbf{MSC CRC LED} & This LED shows the status of the Main Service Channel (MSC). This channel contains the actual audio and data bits. The LED shows the CRC check of the AAC core decoder. The SBR has a separate CRC, but this status is not shown with this LED. If SBR CRC is wrong but the AAC CRC is ok one can still hear something (of course, the high frequencies are not there in this case). If this LED turns red, interruptions of the audio are heard. The yellow light shows that only one 40 ms audio frame CRC was wrong. This causes usually no hearable artifacts.\\
-			
-			
-			
-			
-			
-			\hline
+		\begin{tabular}{|p{0.28\linewidth} | p{0.72\linewidth}|}	
+			\toprule
+			\textbf{Measurements} & \textbf{Beschreibung} \\
+			\midrule
+			\textbf{\gls{acr:DC} Frequency Offset} & Dieser Offset entspricht der resultierenden Soundkarten-Zwischenfrequenz des Frontends. Diese Frequenz ist nicht auf einen bestimmten Wert beschränkt, sondern nur darauf, dass das DRM-Spektrum vollständig innerhalb der Bandbreite der Soundkarte liegen muss.\\
+			\midrule
+			\textbf{Sample Frequency Offset} & Offset der Abtastrate des lokalen Computers zum \gls{acr:DA}-Wandler im Sender. \\
+			\midrule
+			\textbf{Doppler / Delay} & Die Dopplerfrequenz ist eine Angabe darüber, wie schnell sich der Kanal mit der Zeit ändert. Je höher die Frequenz ist, desto schneller sind die Kanaländerungen. \\
+			\midrule
+			\textbf{I/O Interface \gls{acr:LED}} & Diese \gls{acr:LED} zeigt den aktuellen Status der Soundkartenschnittstelle an. Das gelbe Licht zeigt an, dass die Audioausgabe korrigiert wurde. Da die Abtastrate des Senders und des lokalen Computers unterschiedlich sind, kommt es von Zeit zu Zeit zu einem Über- oder Unterlauf der Audiopuffer und eine Korrektur ist notwendig.\\
+			\midrule
+			\textbf{Time Sync Acq \gls{acr:LED}} &Diese \gls{acr:LED} zeigt den Zustand der Timing-Erfassung (suche nach dem Beginn eines \gls{acr:OFDM}-Symbols) an. Sobald die Erfassung abgeschlossen ist, bleibt diese LED grün.	\\
+			\midrule
+			\textbf{Frame Sync \gls{acr:LED}} & Der \gls{acr:DRM}-Frame-Synchronisationsstatus wird mit dieser \gls{acr:CRC} symbolisiert. Auch diese \gls{acr:LED} ist nur im Erfassungszustand des Dream-Empfängers aktiv. Im Tracking-Modus ist diese \gls{acr:LED} immer grün.\\
+			\midrule
+			\textbf{FAC \gls{acr:CRC} \gls{acr:LED}} & Diese \gls{acr:LED} zeigt die zyklische Redundanzprüfung (\gls{acr:CRC}) des Fast Access Channel (FAC) des DRM an. Wenn die \gls{acr:CRC}-Prüfung des FAC erfolgreich war, wechselt der Empfänger in den Tracking-Modus. Die FAC-LED ist die Anzeige, ob der Empfänger auf eine DRM-Übertragung synchronisiert ist oder nicht. \\
+			\midrule
+			\textbf{SRC \gls{acr:CRC} \gls{acr:LED}} & 	Diese \gls{acr:LED} zeigt das \gls{acr:CRC}-Prüfergebnis des \gls{acr:SDC} an, der ein logischer Kanal des \gls{acr:DRM}-Streams ist. Diese Daten werden in ca. 1-Sekunden-Intervallen übertragen und enthalten Informationen über Senderkennung, Audio- und Datenformat usw. Der Fehlerschutz ist normalerweise geringer als der Schutz des \gls{acr:FAC}. \\
+			\midrule
+			\textbf{MSC \gls{acr:CRC} \gls{acr:LED}} & Diese \gls{acr:LED} zeigt den Status des \gls{acr:MSC}. Dieser Kanal enthält die eigentlichen Audio- und Datenbits. Die \gls{acr:LED} zeigt die \gls{acr:CRC}-Prüfung des AAC-Core-Decoders an.  Wenn die \gls{acr:SBR}-\gls{acr:CRC} falsch ist, aber die AAC-\gls{acr:CRC} in Ordnung ist, kann man immer noch etwas hören (die hohen Frequenzen sind in diesem Fall natürlich nicht vorhanden). Wenn diese \gls{acr:LED} rot leuchtet, sind Unterbrechungen des Tons zu hören. Leuchtet die \gls{acr:LED} gelb, bedeutet das, dass nur ein 40 ms Audio-Frame-\gls{acr:CRC} falsch war. Dies verursacht normalerweise keine hörbaren Störungen.\\
+			\bottomrule
 		\end{tabular}
-		\caption{Unterschrift  der Tabelle}
-		\label{tab:Tabelle1}
+		\caption{Messeinheiten zur Evaluation des DRM-Empfangs}
+		\gls{online:dream}
+		\label{tab:drmmess}
 	\end{center}
 \end{table}
 
-\begin{table}[h]
-	\begin{center}
-		\begin{tabular}{p{0.3\linewidth} | p{0.7\linewidth}}	
-			
-			\textbf{Parameters} &  \\
-			\hline
-			\textbf{DRM mode/ bandwidth} & In a DRM system, four possible robustness modes are defined to adapt the system to different channel conditions. According to the DRM standard:\newline
-			\textbf{Mode A}: Gaussian channels, with minor fading\newline
-			\textbf{Mode B}: Time and frequency selective channels, with longer delay spread\newline
-			\textbf{Mode C}: As robustness mode B, but with higher Doppler spread\newline
-			\textbf{Mode D}: As robustness mode B, but with severe delay and Doppler spread\newline
-			The bandwidth is the gross bandwidth of the current DRM signal. \\
-			\textbf{Interleaver Depth} & The symbol interleaver depth can be either short (approx. 400 ms) or long (approx. 2 s). The longer the interleaver the better the channel decoder can correct errors from slow fading signals. But the longer the interleaver length the longer the delay until audio can be heard (after a re-synchronization).
-			\\
-			\textbf{SDC / MSC Mode} & Shows the modulation type of the SDC and MSC channel. For the MSC channel, some hierarchical modes are defined which can provide a very strong protected service channel.
-			\\
-			\textbf{Prot. Level (B/A)} & The error protection level of the channel coder. For 64-QAM, there are four protection levels defined in the DRM standard. Protection level 0 has the highest protection whereas level 3 has the lowest protection. The letters A and B are the names of the higher and lower protected parts of a DRM block when Unequal Error Protection (UEP) is used. If Equal Error Protection (EEP) is used, only the protection level of part B is valid.
-			\\
-			\textbf{Number of Services} & This shows the number of audio and data services transmitted in the DRM stream. The maximum number of streams is four.
-			\\
-			\textbf{Received time - date} & This label shows the received time and date in UTC. This information is carried in the SDC channel.
-			\\
-			\hline
-		\end{tabular}
-		\caption{Unterschrift  der Tabelle}
-		\label{tab:Tabelle1}
-	\end{center}
-\end{table}
-\begin{table}[ht]
-	\begin{center}
-		\begin{tabular}{p{0.3\linewidth} | p{0.7\linewidth}}
-			\textbf{Chart} & \\
-			\hline
-			\textbf{SNR} & Signal to Noise Ratio (SNR) estimation is plotted as a bar and as a value.
-			\\
-			\textbf{Main Plot} & Graphical display of different vectors of the DRM decoder. \\
-			\hline
-		\end{tabular}
-		\caption{Unterschrift  der Tabelle}
-		\label{tab:Tabelle1}
-	\end{center}
-\end{table}
 
 \begin{table}[htb]
 	\begin{center}
-		\begin{tabular}{p{0.25\linewidth} | p{0.75\linewidth}}	
-			
-			\textbf{Advanced Settings} &  \\
-			\hline
-			\textbf{Frequency Interpolation} & With these settings the channel estimation method in frequency direction can be selected. The default value uses the most powerful algorithm.
-			Wiener (default) - Wiener interpolation uses estimation of the statistics of the channel to design an optimal filter for noise reduction.
-			Linear - Simple linear interpolation method to get the channel estimate. The real and imaginary parts of the estimated channel at the pilot positions are linearly interpolated. This algorithm causes the lowest CPU load but performs much worse than the Wiener interpolation at low SNR's.
-			DFT Zero Pad: - Channel estimation method for the frequency direction using Discrete Fourier Transformation (DFT) to transform the channel estimation at the pilot positions to the time domain. A zero padding is applied to get a higher resolution in the frequency domain -> estimates at the data cells. This algorithm is very speed efficient but has problems at the edges of the OFDM spectrum due to the leakage effect. \\
-			\textbf{Time Interpolation} & With these settings the channel estimation method in time direction can be selected. The default value uses the most powerful algorithm.
-			Wiener (default) - Wiener interpolation uses estimation of the statistics of the channel to design an optimal filter for noise reduction.
-			Linear - Simple linear interpolation method to get the channel estimate. The real and imaginary parts of the estimated channel at the pilot positions are interpolated linearly. This algorithm causes the lowest CPU load and the audio is decoded more quickly, but in general it performs worse than the Wiener interpolation especially at low SNR's. \\
-			
-			\textbf{Time Sync Tracking} & 	With these settings the time synchronization tracking methods can be selected.
-			Guard Energy (default) - This algorithm utilizes the estimation of the impulse response and tries to maximize the energy in the guard-interval to set the correct timing.
-			First Peak - This algorithm searches for the first peak in the estimated impulse response and moves this peak to the beginning of the guard-interval (timing tracking algorithm) \\
-			
-			\textbf{Flip Input Spectrum} & Checking this box will flip or invert the input spectrum. This is necessary if the mixer in the front-end uses the lower side band.
+		\begin{tabular}{|p{0.25\linewidth} | p{0.75\linewidth}|}	
+			\toprule
+			\textbf{Advanced Settings} & \textbf{Beschreibung} \\
+			\midrule
+			\textbf{Frequency Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung in Frequenzrichtung ausgewählt werden.  \\
+			\midrule
+			\textbf{Time Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung in Zeitrichtung ausgewählt werden.\newline
+			\textbf{Wiener} - Die Wiener-Interpolation verwendet eine Schätzung der Statistik des Kanals, um einen optimalen Filter zur Rauschunterdrückung zu entwerfen.\newline
+			\textbf{Linear} - Enfache lineare Interpolationsmethode, um die Kanalschätzung zu erhalten. Die Real- und Imaginärteile des geschätzten Kanals werden linear interpoliert. Dieser Algorithmus verursacht die geringste CPU-Belastung und die Audiodaten werden schneller dekodiert, aber er schneidet im Allgemeinen schlechter ab als die Wiener Interpolation, insbesondere bei niedrigen \gls{acr:SNR}s.\\
+			\midrule
+			\textbf{Time Sync Tracking} & 	Mit diesen Einstellungen können die Methoden zur Nachführung der Zeitsynchronisation ausgewählt werden. \\
+			\midrule
+			\textbf{Flip Input Spectrum} & Wenn Sie dieses Kontrollkästchen aktivieren, wird das Eingangsspektrum gespiegelt oder invertiert. Dies ist erforderlich, wenn der Mischer im Front-End das untere Seitenband verwendet.
 			\\
-			
-			\textbf{Mute Audio} & The audio can be muted by checking this box. The reaction of checking or unchecking this box is delayed by approx. 1 second due to the audio buffers.
+			\midrule
+			\textbf{Mute Audio} & Der Ton kann durch Aktivieren dieses Kontrollkästchens stumm geschaltet werden. Die Reaktion auf das Aktivieren oder Deaktivieren dieses Kontrollkästchens wird durch die Audiopuffer um ca. 1 Sekunde verzögert.
 			\\
-			
-			\textbf{MLC, Number of Iterations} & In DRM a multilevel channel coder is used. With this code it is possible to iterate the decoding process in the decoder to improve the decoding result. The more iterations are used the better the result will be. But switching to more iterations will increase the CPU load. Simulations showed that the first iteration (number of iterations = 1) gives the most improvement (approx. 1.5 dB at a BER of 10-4 on a Gaussian channel, Mode A, 10 kHz bandwidth). The improvement of the second iteration (number of iterations = 2) will be as small as 0.3 dB.
-			The recommended number of iterations given in the DRM standard is one iteration (default value: number of iterations = 1).
-			The selection is saved in the Dream.ini file. \\
-			
-			\textbf{Log File} & Checking this box causes Dream to write two kinds of log files about the current reception of an audio service using AAC source coding, a standard and a long log file. Both files are written to the directory were the Dream application is located.
-			The standard log file DreamLog.txt is compatible to the log file created by the "DRM Software Radio". Each minute information about the average SNR, number of correct decoded FAC and number of correct decoded MSC blocks is recorded. The header of each log section also contains frequency, station label, bit-rate, mode and bandwidth. This file format is read by analyzer software like "DRMcalc" by Carsten Knütter.
-			The long log file DreamLogLong.csv includes more detailed technical information: Frequency, date, time, average SNR, status of synchronization, status of FAC and MSC decoding, number of transmitted and decoded audio frames, Doppler frequency and the total delay time of the Power Delay Spectrum (PDS). It gets updated every second so that the resulting file size is growing quickly. The CSV file format can be handled by many spreadsheet applications like Microsoft Excel® or Sun StarOffice®.
-			Known limitation: Due to a problem with QT timer implementation under Windows no Dream window should be moved or re-sized during logging! This problem does not exist in the Linux version of Dream.\\
-			
-			\textbf{Freq} & In the text field the current selected frequency on the front-end can be entered. This frequency will be written to the log file and saved in the Dream.ini file.
+			\midrule
+			\textbf{MLC, Number of Iterations} & Im \gls{acr:DRM} wird ein  mehrstufiger Kanalcodierer verwendet. Mit diesem Code ist es möglich, den Dekodiervorgang im Dekodierer zu iterieren, um das Dekodierergebnis zu verbessern. \\
+			\midrule
+			\textbf{Log File} & Wenn dieses Kontrollkästchen aktiviert wird, schreibt Dream zwei Arten von Protokolldateien über den aktuellen Empfang eines Audiodienstes mit \gls{acr:AAC}-Quellcodierung, eine Standard- und eine lange Protokolldatei. Beide Dateien werden in das Verzeichnis geschrieben, in dem sich die Dream-Anwendung befindet.\\
+			\midrule
+			\textbf{Freq} & Im Textfeld kann die aktuell gewählte Frequenz am Frontend eingegeben werden. Diese Frequenz wird in die Protokolldatei geschrieben und in der Datei Dream.ini gespeichert.
 			\\
-			
-			\textbf{Save Audio as WAV} & Save the audio signal as stereo, 16-bit, 48 kHz sample rate PCM wave file. Checking this box will let the user choose a file name for the recording. \\
-			
-			\textbf{filter}& Checking the BP box will activate a band path filter to reduce interference from adjacent channels. The filter bandwidth is automatically set to the bandwidth of the current DRM signal.
-			This filter should only be used in difficult reception situations because it increases CPU load noticeably.\\
-			\hline
+			\midrule
+			\textbf{Save Audio as WAV} & Speichern Sie das Audiosignal als PCM-Wave-Datei in Stereo mit 16 Bit und 48 kHz Abtastrate. Wenn Sie dieses Kontrollkästchen aktivieren, kann der Benutzer einen Dateinamen für die Aufnahme wählen. \\
+			\midrule
+			\textbf{Filter}& Wenn Sie das Kontrollkästchen aktivieren, wird ein Bandpassfilter aktiviert, um Störungen von Nachbarkanälen zu reduzieren. Die Filterbandbreite wird automatisch auf die Bandbreite des aktuellen \gls{acr:DRM}-Signals eingestellt.\\
+			\bottomrule
 		\end{tabular}
-		\caption{Unterschrift  der Tabelle}
-		\label{tab:Tabelle1}
+		\caption{Erweiterte Einstellungen in Dream}\gls{online:dream}
+		\label{tab:advdream}
 	\end{center}
 \end{table}
 
+\begin{table}[ht]
+	\begin{center}
+		\begin{tabular}{|p{0.28\linewidth} | p{0.72\linewidth}|}
+			\toprule
+			\textbf{Chart} & \textbf{Beschreibung} \\
+			\midrule
+			\textbf{SNR} & Signal to Noise Ratio (SNR) estimation is plotted as a bar and as a value.
+			\\
+			\midrule
+			\textbf{Main Plot} & Graphical display of different vectors of the DRM decoder. \\
+			\bottomrule
+		\end{tabular}
+		\caption{Beschreibung des \gls{acr:DRM}}Charts\gls{online:dream}
+		\label{tab:drmchart}
+	\end{center}
+\end{table}
