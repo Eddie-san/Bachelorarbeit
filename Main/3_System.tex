@@ -159,7 +159,7 @@ berechnet und der Wärmewiderstand des \gls{acr:MOSFET} aus
 ergibt. Gewählt wurde zuletzt für sowohl \gls{acr:LED} als auch \gls{acr:MOSFET} ein Kühlkörper in der Größenordnung von 3 $^\circ C/W$.
 
 \subsection{Planung und Aufbau des Gehäuses}
-\label{subsec:Unterabschnitt12}
+\label{subsec:geh}
 
 In den vorausgegangenen Unterkapiteln wurden sowohl die Schaltungteile, als auch die Wichtigkeit einer ausreichenden Kühlung der Bauteile verdeutlicht. Nun galt es all diese Hardwarekomponenten zu einem großen ganzen zusammen zu fassen um somit ein in sich beständiges System zu schaffen. Demnach wurde für die kompakte und ansehnliche Unterbringung aller Hardwarekomponenten ein 3D-Druck-Gehäuse projektiert. Hierbei wurde so platzsparend wie möglich gearbeitet. Aussparungen für die Datenschnittstelle und Spannungsversorgung wurden so angeordnet, dass diese jederzeit zugänglich sind. Zudem wurden drei Seiten mit ausreichend Lüftungsschlitzen bestückt, um der Wärmeentwicklung im Gehäuse entgegen zu wirken. Um diese thermische Entwicklung noch weiter unter Kontrolle zu bringen wurde eine Aussparung für einen mit $12V$ betriebenen Lüfter vorgesehen. Dieser soll den Luftstrom im Gehäuse anregen um somit eine bessere Kühlung zu gewährleisten. Abbildung~\ref{fig:3dbottom} veranschaulicht die 3D-Ansicht dieses Gehäuses.
 
@@ -183,14 +183,40 @@ Da sich Leistungswiderstand, Transistor und Leuchtdiode im Betrieb stark erhitze
 \section{Software}
 \label{sec:Software}
 \subsection{Automatisierte Amplituden-Regelung}
-\label{subsec:Unterabschnitt12}
+\label{subsec:autoamp}
+In Abbildung 16 wird die zur Steuerung Grundlegende Funktion des Programms erklärt, der zugehörige Quellcode kann im Kapitel Programmcode nachgelesen werden. Nach Initialisierung der Helligkeit der Lampe durch den Benutzer (Zwischen 0 und 255) wird aufgrund des gewählten Bereichs eine von zwei Berechnungen für die Amplitude vorgenommen. Dies kommt von der Begrenzung der Amplitude nach oben und
+unten durch die LED. Falls sich der Offset, was hier für die Helligkeit steht, nun in der Mitte
+befindet, kann die Amplitude des Signals Maximal werden. Weil durch diese Einordnung Werte zwischen 0 und 127 erreichen kann, wird der Wert der Amplitude noch mit einem Faktor von 2 Multipliziert. Der Zusammenhang zwischen Digitalwert und Verstärkung  kann in Kapitel Berechnung der Amplitudenverstärkung nachgelesen werden.
 
+Durch den möglichen Widerstandsbereich des Digitalpotentimeters von 52 
+bis
+10k
+lässt sich ein Spannungsteiler für die Spannungsquelle zur Einstellung des
+Amplituden Offsets mithilfe des OPs realisieren. Die Berechnung dafür zeigt Abbildung
+17.
+
+4.2.2 Berechnung der Amplitudenverstärkung
+Wie in Kapitel Digital Potentiometer MCP42010 und Kapitel Berechnung des Amplitudenoffset
+beschrieben, lässt sich durch den Digitalpotentiometer ein absoluter
+Widerstandsbereich von 52 
+bis 10k
+einstellen. Für die Amplitudenverstärkung
+des Signals wird der Widerstand zwischen Schleiferkontakt RW0 und Kontakt RB0
+abgegriffen. Dieser berechnet sich wie in Abbildung 19 gezeigt.
+Quelle: Datenblatt
+Abbildung 19: Berechnung des Widerstandsverhältniss
+Damit kann ein Rückkopplungswiderstand von 52
+bis 10 k
+erreicht werden. Die
+Verstärkung eines Invertierenden Verstärkers berechnet sich lt. Gleichung 1 mit
+dem vorgesehenen 10 k
+Vorwiderstand zu Verstärkungsfaktoren von
+V=-5,2 10−3 bis V= -1.
 
 \subsection{Übertragung mit Dream}
 \label{subsec:dream}
 
-Das Programm verfügt auf zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus. Zudem bietet Dream umfangreiche Einstellungsoptionen um sowohl Rauschen oder aber auch andere Störungen zu minimieren. Die wichtigsten Parameter für die Korrekte Benutzung werden in dend
-folgenden zwei Kapiteln näher erläutert.
+Das Programm verfügt auf zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus. Zudem bietet Dream umfangreiche Einstellungsoptionen um sowohl Rauschen oder aber auch andere Störungen zu minimieren. Die wichtigsten Parameter für die Korrekte Benutzung werden in den folgenden zwei Kapiteln näher erläutert.
 
 
 
@@ -282,9 +308,9 @@ Der Evaluation Dialog liefert detaillierte Informationen über die empfangenen D
 	\begin{center}
 		\begin{tabular}{|p{0.25\linewidth} | p{0.75\linewidth}|}	
 			\toprule
-			\textbf{Advanced Settings} & \textbf{Beschreibung} \\
+			\textbf{Advanced Settings} & \textbf{Beschreibung}\\
 			\midrule
-			\textbf{Frequency Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung in Frequenzrichtung ausgewählt werden.  \\
+			\textbf{Frequency Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung in Frequenzrichtung ausgewählt werden.\\
 			\midrule
 			\textbf{Time Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung in Zeitrichtung ausgewählt werden.\newline
 			\textbf{Wiener} - Die Wiener-Interpolation verwendet eine Schätzung der Statistik des Kanals, um einen optimalen Filter zur Rauschunterdrückung zu entwerfen.\newline

@@ -401,11 +401,20 @@ Es zeigt auch die maximale Aussteuerbarkeit am Ausgang der \gls{acr:OP}s, welche
 \newpage
 \subsection{Feldeffekttransistor}
 \label{subsec:mosfet}
-Die am häufigsten eingesetzten Leistungsschutzschalter im Spannungsbereich von bis etwa 250V sind \gls{acr:MOSFET}.\gls{online:mosfet}
+Die am häufigsten eingesetzten Leistungsschutzschalter im Spannungsbereich bis etwa 250V sind \gls{acr:MOSFET}.\gls{online:mosfet} Hierbei handelt es sich um eine Sonderform der Transistoren, welche auch unipolare Transistoren genannt werden. Sie besitzen einen Kanal aus Halbleitermaterial, auf dem horizontal zur Stromrichtung ein elektrisches Feld entsteht, welches den Querschnitt des Kanals verändert. Damit wird der Stromfluss durch das Bauteil geregelt. Im einem \gls{acr:MOSFET} steuert eine Spannung den Strom. Es gibt vier Grundbauformen von \gls{acr:MOSFET}. Einen \gls{acr:NMOS} und einen \gls{acr:PMOS} Typus und davon jeweils eine selbstsperrende und eine selbst leitende Variante. Im Anwendungsfall dieser Abschlussarbeit wird ein \gls{acr:NMOS} verwendet.\cite{heringElektrotechnikUndElektronik2018} 
+\newline
+\newline
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1 \textwidth]{nmos.jpg}
+	\caption[NMOS Feldeffektransistor]{NMOS Feldeffektransistor} 
+	\gls{online:elektronik}
+	\label{fig:nmos}
+\end{figure}
 
 
-Sie sind eine Sonderform der Transistoren, welche auch unipolare Transistoren genannt werden. Sie besitzen einen Kanal aus Halbleitermaterial, auf dem horizontal zur Stromrichtung ein elektrisches Feld entsteht, welches den Querschnitt des Kanals verändert. Damit wird der Stromfluss durch das Bauteil geregelt. Im Field-Effect Transistor (FET) steuert eine Spannung den Strom. Es gibt vier Grundbauformen von \gls{acr:MOSFET}. Einen \gls{acr:NMOS} und einen \gls{acr:PMOS} Typus und davon jeweils eine selbstsperrende und eine selbstleitende Variante. Im Anwendungsfall dieser Thesis wird ein \gls{acr:NMOS} verwendet. \cite{heringElektrotechnikUndElektronik2018}
-
+In Abbildung~\ref{fig:nmos} ist unter $(a)$ das Schaltsymbol, sowie Spannungs- und Strombepfeilung eines \gls{acr:NMOS} aufgeführt. Unter $(b)$ ist der \gls{acr:NMOS} nach anlegen einer Spannung zu sehen. Dabei ist zu observieren, dass sich unter dem Gate der n-Kanal gebildet hat. 
 \newpage
 \subsection{Digital Potentiometer}
 \label{subsec:digipot}
@@ -480,7 +489,7 @@ Die Arduino-Plattform besteht prinzipiell aus der auf C und C++ basierenden Entw
 \label{subsec:lts}
 LT-Spice ist eine SPICE-basierte Computersoftware zur Simulation analoger, elektronischer Schaltungen. Diese wurde vom Halbleiterhersteller Analog Devices (ursprünglich von Linear Technology) entwickelt. Es ist die am weitesten verbreitete und verwendete SPICE-Software in der Elektro-Simulationsbranche. Obwohl es sich um freie Software handelt, ist LT-Spice nicht künstlich eingeschränkt, um seine Funktionalität einzuschränken.\gls{online:spice} Diese Simulationssoftware wurde im Rahmen dieser Arbeit zur Erprobung und Simulation des analogen Signalverarbeitungsschaltkreises verwendet.
 
-\subsection{Eagle}
+\subsection{EAGLE}
 \label{subsec:eagle}
 
 EAGLE ist eine Software zum Designen und Erstellen von Leiterplattenlayouts. Die Software verfügt über einen Schaltplan- und einen Layouteditor, sowie über eine sehr umfassende Bibliothek an Bauteilen, welche sehr unkompliziert und individuell erweiterbar ist.\gls{online:eagle1}\gls{online:eagle2}
@@ -509,8 +518,7 @@ Signifikant für die Dimensionierung des Platinenlayouts ist Tabelle~\ref{tab:le
 \label{subsec:ide}
 
 Die Sprachen, welche in der Entwicklungsumgebung genutzt werden sind C und in kleineren Umfängen auch C++. In den Standardbibliotheken der Entwicklungsumgebung sind die für die Programmierung erheblichsten Funktionen zusammengefasst. Um weitere Funktionen zu nutzen, können dementsprechend zusätzliche Bibliotheken eingebunden werden. 
-Der Editor mit integriertem Compiler ist ein weiterer Bestandteil des \gls{acr:IDE}. In diesem wird der Code geschrieben, kompiliert und auf das Board überspielt. User benötigen also nur eine Software, um ihre Mikrocontroller in vollen Umfängen nutzen zu können. Dieses \gls{acr:IDE} bietet außerdem die Möglichkeit, Bibliotheken oder gar Programmbeispiele herunterzuladen. [10B. Evans, Beginning Arduino Programming. Apress, 2011, ISBN: 978-1-4302-
-3777-8.].
+Der Editor mit integriertem Compiler ist ein weiterer Bestandteil des \gls{acr:IDE}. In diesem wird der Code geschrieben, kompiliert und auf das Board überspielt. User benötigen also nur eine Software, um ihre Mikrocontroller in vollen Umfängen nutzen zu können. Dieses \gls{acr:IDE} bietet außerdem die Möglichkeit, Bibliotheken oder gar Programmbeispiele herunterzuladen.\cite{arduino}
 
 \begin{figure}[H]
 	\centering
