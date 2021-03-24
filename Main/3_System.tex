@@ -2,10 +2,12 @@
 
 \chapter{System}
 \label{sec:system}
+In diesem Kapitel werden die einzelnen analoge Signalverarbeitungskomponenten näher erläutert und zu einem ganzen System zusammengefügt. Da hier sowohl digitale als auch Analoge Signalverarbeitungsbausteine in Einklang gebracht werden sollen, werden zunächst die Eigenschaften des analogen Schaltkreises eingegangen. Darauf folgend werden der physikalische Aufbau von Schaltung und Gehäuse, aber auch das Thermische Management des Systems thematisiert. Zudem setzt sich dieses Kapitel mit der Ansteuerung der Potentiometer auseinander, welche es dem Sender ermöglichen den Offset und die Amplitude frei zu variieren. Zuletzt werden Einstellungs- und Evaluierungsparameter der Modulationssoftware Dream für Sender und Empfänger erörtert.
+
 
 \section{Analoge Signalverarbeitung}
 \label{sec:Signalverarbeitung}
-Bei der Signalübertragung über den optischen Kanal mit dem in dieser Arbeit gewählten Medium Licht, müssen einige grundlegende Dinge beachtet werden. Im Kapitel~\ref{sub:led} der Leuchtdiode wurden ihre grundlegenden Eigenschaften erklärt, die es sich hier nun zu verwenden gilt. Eine bekannte Schwierigkeit ist die Übertragung von negativen Wellen. Diese können nicht Übertragen werden, da Licht keinen negativen Wert annehmen kann. Hinzu ist man bei der Übertragung von Signalen darauf bedacht, nur im linearen Bereich der LED-Kennlinie Daten zu übertragen. Wenn man diese nämlich im nichtlinearen Bereich der LED Überträgt, können Verzerrungen auftreten und somit die Übertragung stark gestört werden. Um jenes Problem zu lösen, wird ein Offset verwendet, welcher das Signal so positiv verschiebt, dass dieses keine negativen Anteile mehr besitzt. Zudem wurde ein Spannungspuffer eingerichtet um zusätzlich die Amplitude zu verstärken. Dies liefert Gewissheit, dass nur positive Spannungsanteile übertragen werden und somit kein Signalverlust verzeichnet werden muss.
+Bei der Signalübertragung über den optischen Kanal mit dem in dieser Abschlussarbeit gewählten Medium Licht, müssen einige grundlegende Dinge beachtet werden. Im Kapitel~\ref{sub:led} der Leuchtdiode wurden ihre grundlegenden Eigenschaften erklärt, die es sich hier nun zu verwenden gilt. Eine bekannte Schwierigkeit ist die Übertragung von negativen Wellen. Diese können nicht Übertragen werden, da Licht keinen negativen Wert annehmen kann. Hinzu ist man bei der Übertragung von Signalen darauf bedacht, nur im linearen Bereich der LED-Kennlinie Daten zu übertragen. Wenn man diese nämlich im nichtlinearen Bereich der LED Überträgt, können Verzerrungen auftreten und somit die Übertragung stark gestört werden. Um jenes Problem zu lösen, wird ein Offset verwendet, welcher das Signal so positiv verschiebt, dass dieses keine negativen Anteile mehr besitzt. Zudem wurde ein Spannungspuffer eingerichtet um zusätzlich die Amplitude zu verstärken. Dies liefert Gewissheit, dass nur positive Spannungsanteile übertragen werden und somit kein Signalverlust verzeichnet werden muss.
 
 \begin{figure}[H]
 	\centering
@@ -161,7 +163,7 @@ ergibt. Gewählt wurde zuletzt für sowohl \gls{acr:LED} als auch \gls{acr:MOSFE
 \subsection{Planung und Aufbau des Gehäuses}
 \label{subsec:geh}
 
-In den vorausgegangenen Unterkapiteln wurden sowohl die Schaltungteile, als auch die Wichtigkeit einer ausreichenden Kühlung der Bauteile verdeutlicht. Nun galt es all diese Hardwarekomponenten zu einem großen ganzen zusammen zu fassen um somit ein in sich beständiges System zu schaffen. Demnach wurde für die kompakte und ansehnliche Unterbringung aller Hardwarekomponenten ein 3D-Druck-Gehäuse projektiert. Hierbei wurde so platzsparend wie möglich gearbeitet. Aussparungen für die Datenschnittstelle und Spannungsversorgung wurden so angeordnet, dass diese jederzeit zugänglich sind. Zudem wurden drei Seiten mit ausreichend Lüftungsschlitzen bestückt, um der Wärmeentwicklung im Gehäuse entgegen zu wirken. Um diese thermische Entwicklung noch weiter unter Kontrolle zu bringen wurde eine Aussparung für einen mit $12V$ betriebenen Lüfter vorgesehen. Dieser soll den Luftstrom im Gehäuse anregen um somit eine bessere Kühlung zu gewährleisten. Abbildung~\ref{fig:3dbottom} veranschaulicht die 3D-Ansicht dieses Gehäuses.
+In den vorausgegangenen Unterkapiteln wurden sowohl die Schaltungsteile, als auch die Wichtigkeit einer ausreichenden Kühlung der Bauteile verdeutlicht. Nun galt es all diese Hardwarekomponenten zu einem großen ganzen zusammen zu fassen um somit ein in sich beständiges System zu schaffen. Demnach wurde für die kompakte und ansehnliche Unterbringung aller Hardwarekomponenten ein 3D-Druck-Gehäuse projektiert. Hierbei wurde so platzsparend wie möglich gearbeitet. Aussparungen für die Datenschnittstelle und Spannungsversorgung wurden so angeordnet, dass diese jederzeit zugänglich sind. Zudem wurden drei Seiten mit ausreichend Lüftungsschlitzen bestückt, um der Wärmeentwicklung im Gehäuse entgegen zu wirken. Um diese thermische Entwicklung noch weiter unter Kontrolle zu bringen wurde eine Aussparung für einen mit $12V$ betriebenen Lüfter vorgesehen. Dieser soll den Luftstrom im Gehäuse anregen um somit eine bessere Kühlung zu gewährleisten. Abbildung~\ref{fig:3dbottom} veranschaulicht die 3D-Ansicht dieses Gehäuses.
 
 \begin{figure}[H]
 	\centering
@@ -182,42 +184,37 @@ Da sich Leistungswiderstand, Transistor und Leuchtdiode im Betrieb stark erhitze
 \newpage
 \section{Software}
 \label{sec:Software}
+
+Dieser Abschnitt beschäftigt sich mit der, in der Arduino \gls{acr:IDE} programmierten, Ansteuerung des Zwei-Kanal Digitalpotentiometers zur Variation des Offsets und der Amplitude. Dabei soll das prinzipielle Funktionsschema und dessen Implementierung zum Ausdruck gebracht werden. Im Anschluss wird die Konfigurierung und Evaluierung der Übertragung via Dream Software näher beschrieben und charakterisiert.
+
+\subsection{Offset-Regelung}
+\label{subsec:offset}
+Um ein Potentiometer mit dem Arduino einlesen zu können, muss einer der analogen Eingabepins des Arduino verwenden. Da Potentiometer drei Anschlüsse besitzen, schließt man einen der äußeren Kontakte des Schleifenwiderstands an der 5V Spannungsquelle an und den anderen auf Ground. Den mittleren Anschluss, welcher für die Variabilität des Potentiometer steht, wird mit dem analogen Eingang A0 des Arduino verbunden. Abbildung~\ref{fig:digipot} illustriert dies. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width =0.8 \textwidth ]{digipot.jpg}
+	\caption[Anschlussschema des Potentiometer]{Anschlussschema des Potentiometer} 
+	\gls{online:Eigen}\gls{online:fritz}
+	\label{fig:digipot}
+\end{figure}
+
+Der analoge Pin $A0$ wird in der Arduino \gls{acr:IDE} durch die Funktion analogRead eingelesen. Die Arduino-Boards beherbergen einen 10-Bit-Analog-zu-Digital-Konverter. Dies hat zur folge, dass das Board Eingangsspannungen zwischen 0 und 5 V auf Integer-Werte zwischen 0 und 1023 mappt. Die erreichte Auflösung ist damit auf dem gegebenen Arduino UNO, 4,9 mV per Bit.\gls{online:analogread} Diese 1023 gilt es dann durch vier zu teilen, da ein Digital Potentiometer nur in 256 Stufen angesteuert werden kann. Der Wert wird dann über die \gls{acr:SPI} Schnittstelle an das Digital Potentiometer gesendet und verändert somit dessen Widerstandswert. Somit kann der Offsetwert extern in das Programm geschrieben werden. Dies ist so bedeutsam, da der Offset auch in der Amplituden-Regelung eine entscheidende Aufgabe hat. 
+
 \subsection{Automatisierte Amplituden-Regelung}
 \label{subsec:autoamp}
 In Abbildung 16 wird die zur Steuerung Grundlegende Funktion des Programms erklärt, der zugehörige Quellcode kann im Kapitel Programmcode nachgelesen werden. Nach Initialisierung der Helligkeit der Lampe durch den Benutzer (Zwischen 0 und 255) wird aufgrund des gewählten Bereichs eine von zwei Berechnungen für die Amplitude vorgenommen. Dies kommt von der Begrenzung der Amplitude nach oben und
 unten durch die LED. Falls sich der Offset, was hier für die Helligkeit steht, nun in der Mitte
 befindet, kann die Amplitude des Signals Maximal werden. Weil durch diese Einordnung Werte zwischen 0 und 127 erreichen kann, wird der Wert der Amplitude noch mit einem Faktor von 2 Multipliziert. Der Zusammenhang zwischen Digitalwert und Verstärkung  kann in Kapitel Berechnung der Amplitudenverstärkung nachgelesen werden.
 
-Durch den möglichen Widerstandsbereich des Digitalpotentimeters von 52 
-bis
-10k
-lässt sich ein Spannungsteiler für die Spannungsquelle zur Einstellung des
-Amplituden Offsets mithilfe des OPs realisieren. Die Berechnung dafür zeigt Abbildung
-17.
+Durch den möglichen Widerstandsbereich des Digitalpotentiometers von 52 bis 10k lässt sich ein Spannungsteiler für die Spannungsquelle zur Einstellung des Amplituden Offsets mithilfe des OPs realisieren. Die Berechnung dafür zeigt Abbildung 17.
 
-4.2.2 Berechnung der Amplitudenverstärkung
-Wie in Kapitel Digital Potentiometer MCP42010 und Kapitel Berechnung des Amplitudenoffset
-beschrieben, lässt sich durch den Digitalpotentiometer ein absoluter
-Widerstandsbereich von 52 
-bis 10k
-einstellen. Für die Amplitudenverstärkung
-des Signals wird der Widerstand zwischen Schleiferkontakt RW0 und Kontakt RB0
-abgegriffen. Dieser berechnet sich wie in Abbildung 19 gezeigt.
-Quelle: Datenblatt
-Abbildung 19: Berechnung des Widerstandsverhältniss
-Damit kann ein Rückkopplungswiderstand von 52
-bis 10 k
-erreicht werden. Die
-Verstärkung eines Invertierenden Verstärkers berechnet sich lt. Gleichung 1 mit
-dem vorgesehenen 10 k
-Vorwiderstand zu Verstärkungsfaktoren von
-V=-5,2 10−3 bis V= -1.
+Berechnung der Amplitudenverstärkung
+Wie in Kapitel Digital Potentiometer MCP42010 und Kapitel Berechnung des Amplitudenoffset beschrieben, lässt sich durch den Digitalpotentiometer ein absoluter Widerstandsbereich von 52 bis 10k einstellen. Für die Amplitudenverstärkung des Signals wird der Widerstand zwischen Schleiferkontakt RW0 und Kontakt RB0 abgegriffen. Dieser berechnet sich wie in Abbildung 19 gezeigt. Quelle: Datenblatt Abbildung 19: Berechnung des Widerstandsverhältnis. Damit kann ein Rückkopplungswiderstand von 52 bis 10 k erreicht werden. Die Verstärkung eines Invertierenden Verstärkers berechnet sich lt. Gleichung 1 mit dem vorgesehenen 10 k Vorwiderstand zu Verstärkungsfaktoren von
 
-\subsection{Übertragung mit Dream}
+\subsection{Modulation mit Dream}
 \label{subsec:dream}
-
-Das Programm verfügt auf zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus. Zudem bietet Dream umfangreiche Einstellungsoptionen um sowohl Rauschen oder aber auch andere Störungen zu minimieren. Die wichtigsten Parameter für die Korrekte Benutzung werden in den folgenden zwei Kapiteln näher erläutert.
-
+Nun sollen Audio Echtzeitdaten in \gls{acr:DRM}-Format moduliert und über die aufgebaute Hardware versendet werden. Deshalb wird im folgenden erläutert wie die Dream Software zu verwenden ist. Sie verfügt über zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus, wodurch bei einer Übertragung die Benutzung von zwei verschiedenen Computern vorausgesetzt wird. Zudem bietet Dream umfangreiche Einstellungsoptionen um sowohl Rauschen als auch andere Störungen zu minimieren. Die wichtigsten Parameter für die korrekte Benutzung und potentielle Fehlersuche werden in den folgenden zwei Kapiteln näher erläutert.
 
 
 \subsubsection{Dream Transmitter}
