@@ -6,7 +6,7 @@ In diesem Kapitel werden die Grundlagen eines neuartigen Übertragungssystems vo
 \section{Eigenschaften von Audiosignalen}
 \label{subsec:audio}
 
-Ziel der vorliegenden Abschlussarbeit ist die Übertragung eines Echtzeit-Audio-Signals mithilfe des projektierten \gls{acr:VLC}-Senders. Deshalb soll im nachfolgenden Kapitel anfänglich im Allgemeinen auf die Übertragung von Audiosignalen eingegangen werden. Praktische Beispiele zu der Übertragung von Audiosignalen über größere Entfernung ergeben sich bei der Übertragung von Sprache und Musik. Hierbei wird zunächst der Hörschall mit Hilfe eines Mikrofons in ein proportionales elektrisches Signal umgewandelt. Dieses Signal wird anschließend auf drahtlosem  Wege dem Empfänger übermittelt. Gängige Beispiele für die drahtlose Übertragung sind \gls{acr:WLAN} und der klassische Rundfunk. Am Empfangsort wird das elektrische Signal mittels eines Lautsprechers wieder in ein akustisches Signal umgesetzt.\cite{plassmannHandbuchElektrotechnik2016} Der Lautsprecher erzeugt eine mechanische Welle, die in Hörschall resultiert. Hierbei definiert die Frequenz eine Tonlage und die Amplitude, in diesem Fall, die Lautstärke des Audiosignals. Beim Auftreffen dieser mechanischen Welle auf das menschliche Trommelfell wird dieses in Schwingung versetzt und regt somit die menschlichen Nerven an. Das Signal wird im Ohr von einer mechanischen Welle in ein elektrisches Signal umgewandelt, das über die Nervenbahnen zum Gehirn gelangt. Im Gehirn wird das elektrische Signal verarbeitet und mit semantischen Informationen verbunden. Diese ermöglichen das menschliche Hören.\cite{stotzaudio} Die Wahrnehmung von Tönen bei Menschen hängt jedoch nicht nur von der Amplitude und der Frequenz des Tones ab, sondern auch von der wahrnehmenden Person selbst. Demnach können Menschen nur Töne in einem bestimmten Frequenzbereich wahrnehmen. Frequenzen unterhalb des menschlichen Hörbereichs werden Infraschall genannt, darüber liegende Frequenzen werden als Ultraschall bezeichnet. Dieser Frequenzbereich ist nicht nur von Mensch zu Mensch unterschiedlich, sondern variiert auch mit zunehmendem Alter. Daher kann der Frequenzbereich des menschlichen Hörens nicht pauschal vereinheitlicht werden. Plassmann bringt den Hörbereich zwischen 16 Hz und 16 kHz vor \cite{plassmannHandbuchElektrotechnik2016}, wohingegen Michels ihn zwischen 16 Hz bis 20 kHz ansiedelt \cite{michelsSonographieOrganUnd2012}. Der hörbare Frequenzbereich variiert auch von Lebewesen zu Lebewesen. Hunde haben zum Beispiel ein erheblich feineres Hörorgan als Menschen. Ihr Frequenzbereich erstreckt sich als Folge dessen von 65 Hz bis 45 kHz.\cite{michelsSonographieOrganUnd2012}
+Ziel der vorliegenden Abschlussarbeit ist die Übertragung eines Echtzeit-Audio-Signals mithilfe des projektierten \gls{acr:VLC}-Senders. Deshalb soll im nachfolgenden Kapitel anfänglich im Allgemeinen auf die Übertragung von Audiosignalen eingegangen werden. Praktische Beispiele zu der Übertragung von Audiosignalen über größere Entfernung ergeben sich bei der Übertragung von Sprache und Musik. Hierbei wird zunächst der Hörschall mit Hilfe eines Mikrofons in ein proportionales elektrisches Signal umgewandelt. Dieses Signal wird anschließend auf drahtlosem  Wege dem Empfänger übermittelt. Gängige Beispiele für die drahtlose Übertragung sind \gls{acr:WLAN} und das klassische DAB+. Am Empfangsort wird das elektrische Signal mittels eines Lautsprechers wieder in ein akustisches Signal umgesetzt.\cite{plassmannHandbuchElektrotechnik2016} Der Lautsprecher erzeugt eine mechanische Welle, die in Hörschall resultiert. Hierbei definiert die Frequenz eine Tonlage und die Amplitude, in diesem Fall, die Lautstärke des Audiosignals. Beim Auftreffen dieser mechanischen Welle auf das menschliche Trommelfell wird dieses in Schwingung versetzt und regt somit die menschlichen Nerven an. Das Signal wird im Ohr von einer mechanischen Welle in ein elektrisches Signal umgewandelt, das über die Nervenbahnen zum Gehirn gelangt. Im Gehirn wird das elektrische Signal verarbeitet und mit semantischen Informationen verbunden. Diese ermöglichen das menschliche Hören.\cite{stotzaudio} Die Wahrnehmung von Tönen bei Menschen hängt jedoch nicht nur von der Amplitude und der Frequenz des Tones ab, sondern auch von der wahrnehmenden Person selbst. Demnach können Menschen nur Töne in einem bestimmten Frequenzbereich wahrnehmen. Frequenzen unterhalb des menschlichen Hörbereichs werden Infraschall genannt, darüber liegende Frequenzen werden als Ultraschall bezeichnet. Dieser Frequenzbereich ist nicht nur von Mensch zu Mensch unterschiedlich, sondern variiert auch mit zunehmendem Alter. Daher kann der Frequenzbereich des menschlichen Hörens nicht pauschal vereinheitlicht werden. Plassmann bringt den Hörbereich zwischen 16 Hz und 16 kHz vor \cite{plassmannHandbuchElektrotechnik2016}, wohingegen Michels ihn zwischen 16 Hz bis 20 kHz ansiedelt \cite{michelsSonographieOrganUnd2012}. Der hörbare Frequenzbereich variiert auch von Lebewesen zu Lebewesen. Hunde haben zum Beispiel ein erheblich feineres Hörorgan als Menschen. Ihr Frequenzbereich erstreckt sich als Folge dessen von 65 Hz bis 45 kHz.\cite{michelsSonographieOrganUnd2012}
 
 \begin{figure}[H]
 	\centering
@@ -15,9 +15,9 @@ Ziel der vorliegenden Abschlussarbeit ist die Übertragung eines Echtzeit-Audio-
 	\label{fig:audiospektrum}
 \end{figure}
 
-Außerdem verändert der Abstand zu einer Quelle zusätzlich die Wahrnehmung des Signals. Die Amplitude einer sich ausbreitenden Welle verringert sich mit zunehmender Distanz, wodurch die Lautstärke abnimmt. Befindet sich eine Quelle außerhalb der Hörreichweite können diese durch analoge oder digitale Kommunikationssysteme abgefangen werden, um eine Übertragung zu ermöglichen. Zur Übertragung und Weiterverarbeitung der beschriebenen mechanischen Welle muss diese zunächst in eine elektrische Größe verwandelt werden. Bei dieser Wandlung wird für Audiosignale ein Mikrofon verwendet. Ähnlich wie es mit dem Trommelfell im menschlichen Ohr passiert, wird im Inneren des Mikrofons eine Membran in Schwingung versetzt und erzeugt dadurch eine elektrische analoge Spannung.
+Außerdem verändert der Abstand zu einer Quelle zusätzlich die Wahrnehmung des Signals. Die Amplitude einer sich ausbreitenden Welle verringert sich mit zunehmender Distanz, wodurch die Lautstärke abnimmt. Befindet sich eine Quelle außerhalb der Hörreichweite können dessen gesendete Wellen durch analoge oder digitale Kommunikationssysteme abgefangen werden, um eine Übertragung zu ermöglichen. Zur Übertragung und Weiterverarbeitung der beschriebenen mechanischen Welle muss diese zunächst in eine elektrische Größe verwandelt werden. Bei dieser Wandlung wird für Audiosignale ein Mikrofon verwendet. Ähnlich wie es mit dem Trommelfell im menschlichen Ohr passiert, wird im Inneren des Mikrofons eine Membran in Schwingung versetzt und erzeugt dadurch eine elektrische analoge Spannung.
 Zur digitalen Verarbeitung des Signals muss dieses mithilfe eines Analog-Digital-Wandlers
-(AD-Wandler) in digitale Werte verwandelt werden. Hierfür wird die Analogspannung in zeitlich äquidistanten Abständen ausgewertet und abgespeichert. Es wird also ein Signal mit einem Dirac-Kamm gefaltet um dessen Werte zu ermitteln. Dieser Vorgang wird Abtastung genannt und in Darstellung~\ref{fig:abtastung} illustriert. Diese Abtastung spiegelt einzelne Impulse mit Werten des Signals zu den Abtastzeitpunkten wider. Zwischen den Abtastzeitpunkten wird jedoch keine Information abgefragt, wodurch der Wert an diesen Stellen Null beträgt. Zur Rekonstruierung des Originalsignals müssen durch einen Digital-Analog-Wandler die fehlenden Signalabschnitte interpoliert werden. Um also eine aussagekräftige Abtastung durchzuführen, ist die Korrelation zwischen Abtastfrequenz und Signalfrequenz zu berücksichtigen.
+(AD-Wandler) in digitale Werte verwandelt werden. Hierfür wird die Analogspannung in zeitlich äquidistanten Abständen ausgewertet und abgespeichert. Es wird also ein Signal mit einem Dirac-Kamm multipliziert um dessen Werte zu ermitteln. Dieser Vorgang wird Abtastung genannt und in Darstellung~\ref{fig:abtastung} illustriert. Durch die Ausblendeigenschaft der Impulsfunktion bleiben nach der Multiplikation nur noch die Werte des Signals zu den Abtastzeitpunkten übrig. Zwischen den Abtastzeitpunkten wird jedoch keine Information abgefragt, wodurch der Wert an diesen Stellen Null beträgt. Zur Rekonstruierung des Originalsignals müssen durch einen Digital-Analog-Wandler die fehlenden Signalabschnitte interpoliert werden. Um also eine aussagekräftige Abtastung durchzuführen, ist die Korrelation zwischen Abtastfrequenz und Signalfrequenz zu berücksichtigen.
 
 
 \begin{figure}[H]
@@ -45,17 +45,17 @@ Die Variable $F_{A}$ bildet hierbei die Abtastfrequenz ab und $F_{S}$ steht für
 	\label{fig:shannon}
 \end{figure}
 
-Empfehlenswert ist es also, das Shannon Theorem nur als absolute Untergrenze zu wählen und dazu zu neigen die Abtastfrequenz noch deutlich höher als das maximale zu messende Signal zu bestimmen.\cite{stotzaudio} Im Audiobereich wird häufig mit 44,1 kHz oder mit 48 kHz abgetastet und somit das Shannon-Theorem eingehalten, da der Hörbereich des menschlichen Ohrs ~\ref{fig:audiospektrum} bei 20 kHz endet. \cite{masteraudio}
+Empfehlenswert ist es also, das Shannon Theorem nur als absolute Untergrenze zu wählen und dazu zu neigen die Abtastfrequenz noch deutlich höher als das zweifache und maximal zu messende Signal zu bestimmen.\cite{stotzaudio} Im Audiobereich wird häufig mit 44,1 kHz oder mit 48 kHz abgetastet und somit das Shannon-Theorem eingehalten, da der Hörbereich des menschlichen Ohrs, welcher in Abbildung~\ref{fig:audiospektrum} illustriert wurde, bei 20 kHz endet. \cite{masteraudio}
 
 
 \section{Einführung in die Übertagungstechnik}
 \label{subsec:uebertragung}
-In diesem Kapitel werden die Grundlagen der modernen Übertragungstechnik als Basis für die weiteren Ausführungen erklärt. Zunächst soll der generelle Aufbau eines Übertragungssystems erläutert werden, um anschließend einige gängige digitale Modulationsarten vorzustellen. Hierbei liegt der Fokus besonders auf der Heranführung an die \gls{acr:QAM}-Modulation, welche in der später diskutierten Dream-Software Verwendung findet. Der letzte Abschnitt beschäftigt sich mit den Themen der Bandbreitennutzung und des Mehrkanalzugriffs. Hier werden die aus der Mobilfunktechnik bekannten Begriffe \gls{acr:TDMA},\gls{acr:CDMA} und \gls{acr:FDMA} eingeführt und beschrieben. Ein besonderes Augenmerk liegt hier auf dem \gls{acr:OFDM} einer weiterentwickelten Form des \gls{acr:FDMA}. Zuletzt wird der zentrale Baustein der digitalen Signalverarbeitung erläutert, das sogenannte \gls{acr:DRM}.
+In diesem Kapitel werden die Grundlagen der modernen Übertragungstechnik als Basis für die weiteren Ausführungen erklärt. Zunächst soll der generelle Aufbau eines Übertragungssystems erläutert werden, um anschließend einige gängige digitale Modulationsarten vorzustellen. Hierbei liegt der Fokus besonders auf der Heranführung an die \gls{acr:QAM}-Modulation, welche in der später diskutierten Dream-Software Verwendung findet. Der letzte Abschnitt beschäftigt sich mit den Themen der Bandbreitennutzung und des Mehrkanalzugriffs. Hier werden die aus der Mobilfunktechnik bekannten Begriffe \gls{acr:TDMA},\gls{acr:CDMA} und \gls{acr:FDMA} eingeführt und beschrieben. Ein besonderes Augenmerk liegt hier auf dem \gls{acr:OFDM} einer weiterentwickelten Form des \gls{acr:FDMA}. Zuletzt wird der zentrale Baustein der digitalen Signalverarbeitung in dieser Abschlussarbeit erläutert, das sogenannte \gls{acr:DRM}.
 
 \subsection{Übertragungssystem}
 \label{subsec:aufbauueber}
 
-Ein Übertragungssystem ergibt sich vereinfacht dargestellt aus fünf verschiedenen Komponenten. In Abbildung~\ref{fig:komsystem} ist eine Skizze eines solchen Übertragungssystems zu sehen. Zunächst ist eine Quelle vonnöten, welche ein zeitkontinuierliches Signal (z.B. Sprache, Musik, Bilddaten, analoge Messwerte) oder ein zeitdiskretes Signal (z.B. Buchstaben, Datensequenzen, abgetastete analoge Signale) zur Verfügung stellt. Die Informationsquelle (information source) übergibt die Nachricht (message) dem Sender (transmitter). Der Sender übernimmt im System die Aufgabe, die Informationsquelle in ein für die Übertragung geeignetes Format umzuwandeln. Dieses muss auf den später zur Weiterleitung des Signals genutzten Kanal abgestimmt werden, welcher dann das entsprechende Sendesignal (signal) für den Kanal (channel) generiert. Im Kanal addiert sich das Signal der Störquelle (noise source) hinzu, sodass sich das Empfangssignal (received signal) am Empfänger (receiver) ergibt. Dabei gilt es darauf zu achten, den zur Verfügung stehenden Kanal und seine Eigenschaften möglichst effizient zu nutzen und die Störquelle zu minimieren. Sendekanäle sind physikalischer Natur und allgemein fehlerbehaftet. Es wird zwischen drahtlosen Kanälen (elektromagnetisch, akustisch, Infrarot) und drahtgebundenen Kanälen (Kupferleitungen, Glasfaserkabel) unterschieden. Im Anschluss generiert der Empfänger daraus dann die empfangene Nachricht (received message) und leitet jene schließlich der Informationssenke (destination) weiter. In Anbetracht ihrer Anwendung werden diese einzelnen Blöcke des Kommunikationsmodells in weitere Komponenten zerlegt und somit weiter spezialisiert. \cite{wernerNachrichtentechnikEinfuehrungFuer2010}
+Ein Übertragungssystem ergibt sich vereinfacht dargestellt aus fünf verschiedenen Komponenten. In Abbildung~\ref{fig:komsystem} ist eine Skizze eines solchen Übertragungssystems zu sehen. Zunächst ist eine Quelle vonnöten, welche ein zeitkontinuierliches Signal (z.B. Sprache, Musik, Bilddaten, analoge Messwerte) oder ein zeitdiskretes Signal (z.B. Buchstaben, Datensequenzen, abgetastete analoge Signale) zur Verfügung stellt. Die Informationsquelle (information source) übergibt die Nachricht (message) dem Sender (transmitter). Der Sender übernimmt im System die Aufgabe, die Informationsquelle in ein für die Übertragung geeignetes Format umzuwandeln. Dieses muss auf den später zur Weiterleitung des Signals genutzten Kanal abgestimmt werden, welcher dann das entsprechende Sendesignal (signal) für den Kanal (channel) generiert. Im Kanal addiert sich, falls vorhanden, das Signal einer Störquelle (noise source) hinzu, sodass sich das Empfangssignal (received signal) am Empfänger (receiver) ergibt. Dabei gilt es darauf zu achten, den zur Verfügung stehenden Kanal und seine Eigenschaften möglichst effizient zu nutzen und die Störquelle zu minimieren. Sendekanäle sind physikalischer Natur und allgemein fehlerbehaftet. Es wird zwischen drahtlosen Kanälen (elektromagnetisch, akustisch, Infrarot) und drahtgebundenen Kanälen (Kupferleitungen, Glasfaserkabel) unterschieden. Im Anschluss generiert der Empfänger daraus dann die empfangene Nachricht (received message) und leitet jene schließlich der Informationssenke (destination) weiter. In Anbetracht ihrer Anwendung werden diese einzelnen Blöcke des Kommunikationsmodells in weitere Komponenten zerlegt und somit weiter spezialisiert. \cite{wernerNachrichtentechnikEinfuehrungFuer2010}
 
 \begin{figure}[H]
 	\centering
@@ -66,7 +66,7 @@ Ein Übertragungssystem ergibt sich vereinfacht dargestellt aus fünf verschiede
 \end{figure}
 
 Aufgrund der Thematik dieser Abschlussarbeit soll das Augenmerk nun auf ein drahtloses Übertragungssystem gelegt werden. Zur Projektierung eines solchen müssen zunächst der physikalische Kanal und die Signalform festgelegt werden.
-So verwenden Fernbedienungen beispielsweise als Signalform Licht im Infrarot-Bereich, um Datenbefehle zu übertragen. Nach einem ähnlichen Prinzip funktioniert auch \gls{acr:VLC}. Die Schwierigkeit ist jedoch, dass der direkte Einfall des Lichts auf den Empfänger gegeben sein muss, weshalb die Reichweite dieser Form der Datenübertragung äußerst begrenzt ist. Daher eignet sie sich beispielsweise nicht für den Mobilfunk. Hier werden üblicherweise elektromagnetische Wellen in Megahertz bis Gigahertz Frequenzbereichen appliziert. Diese Wellen bestehen aus einem magnetischen Feld ($\vec{B}$) und einem elektrischen Feld ($\vec{E}$). Zudem breiten sich jene Felder orthogonal zueinander aus, wie in Abbildung ~\ref{fig:elektromag} veranschaulicht wird.\gls{online:elektromag} 
+Daher eignet sie sich beispielsweise nicht für den Mobilfunk. Hier werden üblicherweise elektromagnetische Wellen in Megahertz bis Gigahertz Frequenzbereichen appliziert. Diese Wellen bestehen aus einem magnetischen Feld ($\vec{B}$) und einem elektrischen Feld ($\vec{E}$). Zudem breiten sich jene Felder orthogonal zueinander aus, wie in Abbildung ~\ref{fig:elektromag} veranschaulicht wird.\gls{online:elektromag} 
 
 \begin{figure}[H]
 	\centering
@@ -80,13 +80,12 @@ So verwenden Fernbedienungen beispielsweise als Signalform Licht im Infrarot-Ber
 	\lambda = \frac{c}{f} 
 \end{equation}
 
-Eine solche Form von Wellen ist nicht an ein Ausbreitungsmedium gebunden, weshalb es sich auch im Vakuum (z.B. im Weltraum) ausbreiten kann. Diese Eigenschaft ermöglicht beispielsweise eine Satellitenkommunikation. Zur Erzeugung einer elektromagnetischen Welle wird zunächst eine hochfrequente Wechselspannung benötigt. Diese wird meist durch einen Quarzoszillator erzeugt. Damit sich die Welle nun ausbreiten kann, benötigt sie eine Antenne, von welcher sie sich ablösen kann.\cite{howwireless}\cite{wernerNachrichtentechnikEinfuehrungFuer2010} Um sich jedoch von einer Antenne zu lösen, muss die Wellenlänge ($\lambda$-~\ref{equ:lambda}) der elektromagnetische Welle in die Größenordnung der Antennenabmessung kommen. Da ein Ton von 300Hz jedoch nach Formel~\ref{equ:lambda} eine immens lange Antenne benötigen würde, muss mit Alternativen gearbeitet werden. Hieraus entsteht also die Bedingung, eine geeignete Trägerfrequenz zu bestimmen, um jener dann die zu versendende Information aufzumodulieren.\cite{heuermannHochfrequenztechnikKomponentenFuer2018}\cite{hoeher}
-
+Eine solche Form von Wellen ist nicht an ein Ausbreitungsmedium gebunden, weshalb es sich auch im Vakuum (z.B. im Weltraum) ausbreiten kann. Diese Eigenschaft ermöglicht beispielsweise eine Satellitenkommunikation. Zur Erzeugung einer elektromagnetischen Welle wird zunächst eine hochfrequente Wechselspannung benötigt. Diese wird meist durch einen Quarzoszillator erzeugt. Damit sich die Welle nun ausbreiten kann, benötigt sie eine Antenne, von welcher sie sich ablösen kann.\cite{howwireless}\cite{wernerNachrichtentechnikEinfuehrungFuer2010} Um sich jedoch von einer Antenne zu lösen, muss die Wellenlänge $\lambda$  der elektromagnetische Welle ,welche in Formel\ref{equ:lambda} dargestellt wurde, in die Größenordnung der Antennenabmessung kommen. Da ein Ton von 300Hz jedoch nach Formel~\ref{equ:lambda} eine mehrere Kilometer lange Antenne benötigen würde, muss mit Alternativen gearbeitet werden. Hieraus entsteht also die Bedingung, eine geeignete Trägerfrequenz zu bestimmen, um jener dann die zu versendende Information aufzumodulieren.\cite{heuermannHochfrequenztechnikKomponentenFuer2018}\cite{hoeher} Zum Rundfunk existieren jedoch Alternativen. Beispielsweise Fernbedienungen nutzen als Signalform das Licht im Infrarot-Bereich, um Umschaltbefehle zu übertragen. Nach einem ähnlichen Prinzip funktioniert auch \gls{acr:VLC}. Die Schwierigkeit ist jedoch, dass der direkte Einfall des Lichts auf den Empfänger gegeben sein muss, weshalb die Reichweite dieser Form der Datenübertragung äußerst begrenzt ist.
 
 \subsection{Trägermodulation und Konstellationsdiagramm}
 \label{subsec:modulationsarten}
 
-In Kapitel~\ref{subsec:aufbauueber} wurden die Struktur und die Komponenten näher ausgeführt, welche ein Übertragungssystem besitzt. Zudem wurden elektromagnetische Wellen erklärt und die Bedeutung einer hochfrequenten Trägerfrequenz verdeutlicht. Hier soll nun die Funktionsweise eines solchen Vorhabens ausgeführt werden.  
+In Kapitel~\ref{subsec:aufbauueber} wurden die Struktur und die Komponenten näher ausgeführt, welche ein Übertragungssystem besitzt. Zudem wurden elektromagnetische Wellen eingeführt und die Bedeutung einer hochfrequenten Trägerfrequenz verdeutlicht. Hier soll nun die Funktionsweise einer Trägermodulation weiter ausgeführt werden.  
 
 \begin{figure}[H]
 	\centering
@@ -95,7 +94,7 @@ In Kapitel~\ref{subsec:aufbauueber} wurden die Struktur und die Komponenten näh
 	\cite{wernerNachrichtentechnikEinfuehrungFuer2010}
 	\label{fig:traeger}
 \end{figure}
-Liegt nun also ein Signal im Basisband vor, wobei es sich beispielsweise um ein Audiosignal als elektrische Spannung am Ausgang eines Mikrofons handeln könnte, wird es normalerweise in einen höheren Frequenzbereich verschoben um über eine größere Entfernung übertragen zu werden. Radio-Rundfunk liefert ein Beispiel für eine solche Trägermodulation. Hierbei macht man sich die drei variablen Parameter eines sinusförmigen Trägersignales zu eigen. Dabei handelt es sich um die Frequenz, Amplitude und Phase eines jenen. In Abhängigkeit der benutzten Verfahren spricht man von \gls{acr:AM}, \gls{acr:FM} oder \gls{acr:PM}.\cite{wernerNachrichtentechnikEinfuehrungFuer2010} Diese Theorie der Trägermodulation soll nun am Beispiel eines AM-Signals und eines FM-Signals veranschaulicht werden. 
+Liegt nun also ein Signal im Basisband vor, wobei es sich beispielsweise um ein Audiosignal als elektrische Spannung am Ausgang eines Mikrofons handeln könnte, wird es normalerweise in einen höheren Frequenzbereich verschoben um über eine größere Entfernung übertragen zu werden. Radio-Rundfunk liefert ein Beispiel für eine solche Trägermodulation. Hierbei werden sich die drei variablen Parameter eines sinusförmigen Trägersignales zu eigen gemacht. Dabei handelt es sich um die Frequenz, Amplitude und Phase eines jenen. In Abhängigkeit der benutzten Verfahren ist die Rede von \gls{acr:AM}, \gls{acr:FM} oder \gls{acr:PM}.\cite{wernerNachrichtentechnikEinfuehrungFuer2010} Diese Theorie der Trägermodulation soll nun am Beispiel eines AM-Signals und eines FM-Signals veranschaulicht werden. 
 
 \begin{figure}[H]
 	\centering
@@ -105,7 +104,7 @@ Liegt nun also ein Signal im Basisband vor, wobei es sich beispielsweise um ein 
 	\label{fig:fmam}
 \end{figure}
 
-Hierbei wird ein analoges Ausgangssignal verwendet. Es findet also keine Wandlung in ein digitales Signal statt. Bei der \gls{acr:AM}  die sinusförmige Trägerfrequenz mithilfe eines Mischers auf das Signal multipliziert. Dabei gibt das Eintonsignal, wie in Abbildung~\ref{fig:fmam} die Amplitude der hochfrequenten Trägerfrequenz vor und bildet somit die Einhüllende Kurve. Durch diesen Vorgang erlangt das Signal eine adäquate Frequenz zur Ablösung einer Antenne.\cite{klostermeyerDigitaleModulation2001}\cite{heuermannHochfrequenztechnikKomponentenFuer2018}
+Hierbei wird ein analoges Ausgangssignal verwendet. Es findet also keine Wandlung in ein digitales Signal statt. Bei der \gls{acr:AM} wird die sinusförmige Trägerfrequenz mithilfe eines Mischers auf das Signal multipliziert. Dabei gibt das Eintonsignal, wie in Abbildung~\ref{fig:fmam} die Amplitude der hochfrequenten Trägerfrequenz vor und bildet somit die Einhüllende Kurve. Durch diesen Vorgang erlangt das Signal eine adäquate Frequenz zur Ablösung einer Antenne.\cite{klostermeyerDigitaleModulation2001}\cite{heuermannHochfrequenztechnikKomponentenFuer2018}
 
 \begin{figure}[H]
 	\centering
@@ -115,10 +114,10 @@ Hierbei wird ein analoges Ausgangssignal verwendet. Es findet also keine Wandlun
 	\label{fig:mischer}
 \end{figure}
 
-Bei Frequenzmodulation wiederum liegt die Information in der Frequenz und nicht in der Amplitude. Abbildung~\ref{fig:fmam} illustriert dies. Beim frequenzmodulierten Signal ändert sich nämlich lediglich die Trägerfrequenz, wodurch diese Art von Modulation Störungen gegenüber deutlich resistenter ist, da keine so starke Amplitudenschwankungen auftreten.\cite{hoeher}
+Bei Frequenzmodulation wiederum liegt die Information in der Frequenz und nicht in der Amplitude. Abbildung~\ref{fig:fmam} illustriert dies. Beim frequenzmodulierten Signal ändert sich lediglich die Trägerfrequenz, wodurch diese Art von Modulation additiven Störungen gegenüber deutlich resistenter ist, da keine so starke Amplitudenschwankungen auftreten.\cite{hoeher}
 
 
-Zur Vertiefung des Basiswissen werden nun noch digitale Modulationsarten erläutert. Hierbei wird auch mit der Variation von Frequenz, Amplitude und Phase gearbeitet. Diese drei Grundmodulationsarten sind in ihrer zweiwertigen Form in Darstellung~\ref{fig:welle} veranschaulicht.
+Zur Vertiefung des Basiswissen werden nun noch digitale Modulationsarten erläutert. Hierbei wird auch mit der Variation von Frequenz, Amplitude und Phase gearbeitet. Diese drei Grundmodulationsarten sind in ihrer zweiwertigen Form 2-\gls{acr:ASK}, 2-\gls{acr:FSK} und 2-\gls{acr:PSK} in Darstellung~\ref{fig:welle} veranschaulicht.
 
 \begin{figure}[H]
 	\centering
@@ -128,8 +127,8 @@ Zur Vertiefung des Basiswissen werden nun noch digitale Modulationsarten erläut
 	\label{fig:welle}
 \end{figure}
 
-Hierbei wurde noch eine weitere Version der \gls{acr:AM}-Modulation illustriert. Diese nennt sich \gls{acr:OOK} und hat bei der Übertragung einer 1 eine Amplitude und wird jedoch bei der Übertragung einer 0 auf Null gesetzt. Da unter diesen Voraussetzungen nicht ermittelt werden kann wann die Übertragung endet, wird hier ein Zwischenwert mit z.B. halber Amplitude zum Senden einer 0 verwendet.
-Die übertragenen Bit werden hierbei auch Symbole genannt. Modernere Kommunikationssysteme verwenden mittlerweile jedoch Modulationsarten die es ermöglichen mehrere Bits pro Symbol zu übertragen. Bei zwei Bit werden hierbei vier Zustände benötigt. Daraus entstehen dann Erweiterungen der genannten Modulationsarten, welche 4-\gls{acr:ASK} 4-\gls{acr:FSK} und 4-\gls{acr:PSK} bezeichnet werden. Oft wird die Ziffer Vier auch mit dem Buchstaben Q für Quadratur ersetzt.\cite{howwireless}\cite{butlerWirelessNetworkingDeveloping2013} Bei einer \gls{acr:QAM} wird beispielsweise eine Kombination zweier Modulationsarten verwendet. Dabei werden sowohl die Amplituden- als auch Phasenmanipulation benutzt, um Informationen zu modulieren. 
+Hierbei wurde noch eine weitere Version der \gls{acr:AM}-Modulation illustriert. Diese nennt sich \gls{acr:OOK} und hat bei der Übertragung einer digitalen "1" eine Amplitude und wird jedoch bei der Übertragung einer digitalen "0" auf Null gesetzt. Da unter diesen Voraussetzungen nicht ermittelt werden kann wann die Übertragung endet, wird in der Praxis bei der \gls{acr:AM}-Moodulation ein Zwischenwert mit z.B. halber Amplitude zum Senden einer 0 verwendet.
+Ein übertragenes Bit entspricht bei zweiwertigen Modulationen einem Symbol. Modernere Kommunikationssysteme verwenden mittlerweile jedoch höherwertige Modulationsarten die es ermöglichen mehrere Bits pro Symbol zu übertragen. Bei zwei Bit werden hierbei vier Zustände benötigt. Daraus entstehen dann Erweiterungen der genannten Modulationsarten, welche z.B. 4-\gls{acr:ASK}, 4-\gls{acr:FSK} und 4-\gls{acr:PSK} bezeichnet werden. Oft wird die Ziffer Vier auch mit dem Buchstaben Q für Quadratur ersetzt.\cite{howwireless}\cite{butlerWirelessNetworkingDeveloping2013} Bei einer \gls{acr:QAM} wird beispielsweise eine Kombination zweier Modulationsarten verwendet. Dabei werden sowohl die Amplituden- als auch Phasenmanipulation benutzt, um Informationen zu modulieren. 
 
 Da im Zuge dieser Abschlussarbeit größtenteils mit einer \gls{acr:QAM}-Modulaton gearbeitet wurde, wird diese näher erläutert. Um jedoch ein besseres Verständnis für den Aufbau einer solchen Modulation zu erlangen, muss der Begriff des Konstellationsdiagramms eingeführt werden. Dies soll am Beispiel einer \gls{acr:QPSK} veranschaulicht werden. Modulierte Wellen, sind sinusförmig und wie folgt definiert. 
 
@@ -144,7 +143,7 @@ Dabei steht die Variable $A$ für eine, bei der \gls{acr:QPSK}, konstante Amplit
 	\label{equ:omega}
 	\omega = 2 \cdot \pi \cdot f
 \end{equation}
-Um die Entfernung der Symbole zu maximieren werden diese bei der \gls{acr:QPSK} um 90$^\circ$ zueinander verschoben. Tabelle~\ref{tab:qpsk} gibt Information über die verschiedenen Phasenlagen die von $i$ angenommen werden können.
+Um die Entfernung der Symbole zu maximieren werden diese bei der \gls{acr:QPSK} um 90$^\circ$ zueinander verschoben. Tabelle~\ref{tab:qpsk} gibt Information über die verschiedenen Phasenlagen die von $i$ angenommen werden können.\gls{online:quint}
 \begin{table}[htb]
 \centering
 		\begin{tabular}[h]{ccc}	
@@ -180,7 +179,8 @@ In Abbildung~\ref{fig:konstqpsk} sind zwei Konstellationsdiagramme zu erkennen. 
 	\label{fig:verrauscht}
 \end{figure}
 
-Ein solches Vorgehen ist jedoch bei höherwertigen \gls{acr:PSK}-Modulationen nicht mehr sinnvoll, da die Symbolabstände immer geringer werden würden und die Übertragung somit störanfälliger wird. Sinnvoller ist es also die \gls{acr:QPSK} so zu erweitern, dass man in der Wellengleichung nicht nur $\varphi_{i}$ variiert, sondern auch die Amplitude $A$. Durch diese Erweiterung kann der Bitstrom enorm gesteigert werden. Exemplarisch hierfür sind die in Abbildung~\ref{fig:qam} gezeigten 16-\gls{acr:QAM} und die 64-\gls{acr:QAM} welche im Laufe dieser Abschlussarbeit noch Verwendung findet.
+Ein solches Vorgehen ist jedoch bei höherwertigen \gls{acr:PSK}-Modulationen nicht mehr sinnvoll, da die Symbolabstände immer geringer werden würden und die Übertragung somit störanfälliger wird. Sinnvoller ist es also die \gls{acr:QPSK} so zu erweitern, dass
+ in der Wellengleichung nicht nur $\varphi_{i}$ variiert wird, sondern auch die Amplitude $A$. Durch diese Erweiterung kann der Bitstrom enorm gesteigert werden. Exemplarisch hierfür sind die in Abbildung~\ref{fig:qam} gezeigten 16-\gls{acr:QAM} und die 64-\gls{acr:QAM} welche im Laufe dieser Abschlussarbeit noch Verwendung findet.
 
 \begin{figure}[H]
 	\centering
@@ -265,7 +265,7 @@ Hierbei wird der Fast Access Channel vom Empfänger verwendet, um Informationen 
 
 Der \gls{acr:SDC} enthält die für die \gls{acr:MSC}-Dekodierung benötigten Informationen, wie die Multiplex-Frame-Struktur und weitere Zusatzinformationen. Diese werden in einer sequentiellen Liste von Datenentitäten übertragen. Jeder Daten-Entitätstyp hat eine eindeutige Nummer, welche seine Datenstruktur definiert. Der Channel Encoder verwendet ein Standard-Mapping mit einer Auflösung von 4-\gls{acr:PSK} oder 16-\gls{acr:QAM} und einer Gesamtcoderate von 0,5. Ebenso wie der \gls{acr:FAC} ist auch der \gls{acr:SDC} mit  \gls{acr:UEP}-kodiert und hat keinen hoch geschützten Bestandteil.\gls{online:drm}
 
-Der \gls{acr:MSC} enthält die eigentlichen Audio- und Datenbits. Dieser kodiert den vom Multiplexer erzeugten Multiplexrahmen und verwendet, je nach Wahl des Users, entweder eine 16- oder 64-\gls{acr:QAM} mit verschiedenen Mapping-Schemata. Man kann zwischen Standard-Mapping, symetrisch-hierarchischem oder gemischt-hierarchischem Mapping wählen, wobei nur das Standard-Mapping 16 \gls{acr:QAM} zulässt. Bei hierarchischer Modulation wird jedes Bit eines hierarchischen Multiplexrahmens auf einen komplexen Zellenquadranten abgebildet, was bei zu hoher Fehlerrate eine 4-\gls{acr:QAM}-Dekodierung der \gls{acr:MSC}-Zellen ermöglicht. Um das \gls{acr:MSC} noch fehlerresistenter zu machen, ist es möglich, \gls{acr:UEP} zu verwenden und den Multiplex-Rahmen in einen höher oder niedriger geschützten Datenteil aufzuteilen. Normalerweise wird der höher geschützte Teil mit einer höheren Coderate kodiert, was zu mehr Redundanz führt und somit die Wahrscheinlichkeit von Bitfehlern in schlechten Übertragungsszenarien verringert. Ein sogenanntes Cell-Interleaving von entweder 2s (lang) oder 400ms (kurz) schützt die \gls{acr:MSC}-Daten zusätzlich vor Fehlerbursts. \gls{online:drm}
+Der \gls{acr:MSC} enthält die eigentlichen Audio- und Datenbits. Dieser kodiert den vom Multiplexer erzeugten Multiplexrahmen und verwendet, je nach Wahl des Users, entweder eine 16- oder 64-\gls{acr:QAM} mit verschiedenen Mapping-Schemata. Es besteht die Wahl zwischen Standard-Mapping, symetrisch-hierarchischem oder gemischt-hierarchischem Mapping, wobei nur das Standard-Mapping 16 \gls{acr:QAM} zulässt. Bei hierarchischer Modulation wird jedes Bit eines hierarchischen Multiplexrahmens auf einen komplexen Zellenquadranten abgebildet, was bei zu hoher Fehlerrate eine 4-\gls{acr:QAM}-Dekodierung der \gls{acr:MSC}-Zellen ermöglicht. Um das \gls{acr:MSC} noch fehlerresistenter zu machen, ist es möglich, \gls{acr:UEP} zu verwenden und den Multiplex-Rahmen in einen höher oder niedriger geschützten Datenteil aufzuteilen. Normalerweise wird der höher geschützte Teil mit einer höheren Coderate kodiert, was zu mehr Redundanz führt und somit die Wahrscheinlichkeit von Bitfehlern in schlechten Übertragungsszenarien verringert. Ein sogenanntes Cell-Interleaving von entweder 2s (lang) oder 400ms (kurz) schützt die \gls{acr:MSC}-Daten zusätzlich vor Fehlerbursts. \gls{online:drm}
 
 Das \gls{acr:MDI}-Interface ermöglicht eine räumlich entfernte Verbindung zwischen dem \gls{acr:DRM}-Inhaltsserver und dem Basisbandmodulator (\gls{acr:MDI}-Empfänger) über Ethernet. Daher kann das analoge Basisbandsignal sehr nah am Sender erzeugt werden und es besteht keine Notwendigkeit für \gls{acr:HF}-Verbindungen über große Entfernungen, die dem Ausgangssignal viel Rauschen hinzufügen könnten.\gls{online:drm}\gls{online:drmpic} Um eine solche Struktur aufzubauen und \gls{acr:DRM} zu übertragen, wurde ein Programm namens Dream \gls{acr:DRM} verwendet. Dieses wird im weiteren Verlauf dieser Abschlussarbeit noch näher erläutert. 
 \newpage
@@ -308,7 +308,7 @@ je nach gewählter Farbe nicht bei ca. 0.7V sondern bei bis zu 4V bei einer blau
 	\label{fig:Flussspannung}
 \end{figure}
 
-Wie in Abbildung ~\ref{fig:Kennlinie} illustriert ist, ändert sich die Spannung in ihrem Verlauf ab einem gewissen Punkt nur noch minimal. Das bedeutet, dass sich ab einer gewissen angelegten Spannung lediglich der Strom noch weiter erhöhen kann. Da die Leuchtintensität der \gls{acr:LED} von dieser Höhe des Stromdurchflusses abhängt, führt dies zu der Betrachtung, den durchfließenden Strom statt der angelegten Spannung zu regulieren. Stellt man nun den durch die \gls{acr:LED} fließenden Strom mit der Ausgangsleistung ins Verhältnis, ergibt sich ein Zusammenhang wie ihn Abbildung ~\ref{fig:Helligkeit} zeigt. 
+Wie in Abbildung ~\ref{fig:Kennlinie} illustriert ist, ändert sich die Spannung in ihrem Verlauf ab einem gewissen Punkt nur noch minimal. Das bedeutet, dass sich ab einer gewissen angelegten Spannung lediglich der Strom noch weiter erhöhen kann. Da die Leuchtintensität der \gls{acr:LED} von dieser Höhe des Stromdurchflusses abhängt, führt dies zu der Betrachtung, den durchfließenden Strom statt der angelegten Spannung zu regulieren. Wird nun der durch die \gls{acr:LED} fließende Strom mit der Ausgangsleistung ins Verhältnis gestellt, ergibt sich ein Zusammenhang wie ihn Abbildung ~\ref{fig:Helligkeit} zeigt. 
 
 \begin{figure}[H]
 	\centering
@@ -326,7 +326,7 @@ An dieser Stelle wird verdeutlicht, dass es zwei außerordentlich nicht-lineare 
 
 „Im Grunde besteht kein Unterschied zwischen einem normalen Verstärker und einem Operationsverstärker. Beide dienen dazu, Spannungen bzw. Ströme zu verstärken. Während die Eigenschaften eines normalen Verstärkers jedoch durch seinen inneren Aufbau vorgegeben sind, ist ein Operationsverstärker so beschaffen, dass seine Wirkungsweise überwiegend durch eine äußere Gegenkopplungs-Beschaltung bestimmt werden kann. Um dies zu ermöglichen, werden Operationsverstärker als gleichspannungsgekoppelte Verstärker mit hoher Verstärkung ausgeführt. Damit keine zusätzlichen Maßnahmen zur Arbeitspunkteinstellung erforderlich werden, verlangt man ein Eingangs- und Ausgangsruhepotential von 0V. Deshalb sind in der Regel zwei Betriebsspannungsquellen erforderlich: eine positive und eine negative.“(\cite{tietzeElectronicCircuits2008},S.491)
 
-Ein \gls{acr:OP} kann also mit einem Differenzverstärker von theoretisch unendlicher Verstärkung verglichen werden. Diese bezeichnet man als Leerlaufverstärkung. Schließlich führt das dazu, dass eine Gesamtverstärkung der Schaltung von einer zusätzlichen externen Verdrahtung abhängt. Diese wird von einem rückgekoppelten Netzwerk hergestellt und nennt sich Schleifenverstärkung.\cite{lutzHalbleiterLeistungsbauelemente2012}
+Ein \gls{acr:OP} kann also mit einem Differenzverstärker von theoretisch unendlicher Verstärkung verglichen werden. Diese wird als Leerlaufverstärkung bezeichnet. Schließlich führt das dazu, dass eine Gesamtverstärkung der Schaltung von einer zusätzlichen externen Verdrahtung abhängt. Diese wird von einem rückgekoppelten Netzwerk hergestellt und nennt sich Schleifenverstärkung.\cite{lutzHalbleiterLeistungsbauelemente2012}
 
 \begin{figure}[H]
 	\centering
@@ -364,7 +364,7 @@ Rückkopplungszweig. Dieser definiert über den Widerstand $R_{2}$ die Schleifen
 
 und das negative Vorzeichen bedeutet, dass hier eine Phasendrehung des Signals um 180$\circ$ stattgefunden hat. Der invertierende Verstärker besitzt zudem die Fähigkeit Signale zu dämpfen. Daher wird er häufig für Filterschaltungen und messtechnische Zwecke benutzt. 
 
-Die folgende Abbildung~\ref{fig:ninvOP} illustriert den nicht-invertierenden Operationsverstärker in seiner Grundschaltung. Die Spannungsverstärkung berechnet sich anhand der Spannungsteiler Beziehung
+Die folgende Abbildung~\ref{fig:invOP} illustriert den nicht-invertierenden Operationsverstärker in seiner Grundschaltung. Die Spannungsverstärkung berechnet sich anhand der Spannungsteiler Beziehung
 
 \begin{equation}
 	\label{equ:bsp1}
@@ -424,13 +424,13 @@ Die vom \gls{acr:IC} vorgeschriebene Versorgungsspannung von 5V stellt der Spann
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8 \textwidth]{MCP.jpg}
+	\includegraphics[width=0.6 \textwidth]{MCP.jpg}
 	\caption[Aufbau des MCP42010]{Aufbau des MCP42010} 
 	\cite{MCP42}
 	\label{fig:MCP}
 \end{figure}
 
-Die Funktion der einzelnen Pins und wie man den \gls{acr:IC} mit dem Arduino verbindet, wird in nachfolgender Tabelle~\ref{tab:pinmcp} beschrieben. 
+Die Funktion der einzelnen Pins und wie der \gls{acr:IC} mit dem Arduino verbunden wird, wird in nachfolgender Tabelle~\ref{tab:pinmcp} beschrieben. 
 
 \begin{table}[htb]
 	\begin{center}
@@ -476,13 +476,13 @@ Gleichspannungswandler werden grundsätzlich immer dort eingesetzt, wo die zu Ve
 	\label{fig:DCDC}
 \end{figure}
 
-Der Spannungswandler arbeitet außerdem intern für die Invertierung mit einer Nennfrequenz von 25kHz. Da die zu übertragenden Daten auch nahe diesem Bereich liegen, empfiehlt es sich, den Pfad der Signalverarbeitung und den der Spannungsinvertierung auf der Platine möglichst weit auseinander zu platzieren, um möglichen parasitären Störungen vorzubeugen.
+Der Spannungswandler arbeitet außerdem intern für die Invertierung mit einer Frequenz von 25kHz. Da die zu übertragenden Daten auch nahe diesem Bereich liegen, empfiehlt es sich, den Pfad der Signalverarbeitung und den der Spannungsinvertierung auf der Platine möglichst weit auseinander zu platzieren, um möglichen parasitären Störungen vorzubeugen.
 
 
 \subsection{Arduino UNO V3}
 \label{subsec:unov3}
 
-Die Arduino-Plattform besteht prinzipiell aus der auf C und C++ basierenden Entwicklungsumgebung und der zu programmierenden Hardware\gls{online:arduino}. Vorteilhaft ist hier die gute Dokumentation und eine große Menge an Bibliotheken zum Einbinden externer Hardwarekomponenten. Ein zusätzlicher Vorteil der Plattform liegt in ihrer Quelloffenheit. Alle zugehörigen Komponenten sind demnach 'Open Source'. Das hat zur Folge, dass Codes der Bibliotheken und des Bootloaders frei zur Verfügung stehen und nach Belieben verändert werden können. Auch die Architektur der Hardware ist offengelegt, weshalb Hersteller eigene kompatible Boards konstruieren und verkaufen können. Durch die Unabhängigkeit von Programmierer und Hersteller entsteht eine erschwingliche Hardware, welche bezüglich der Quelloffenheit ohne Einschränkungen programmiert werden kann.\cite{arduino}\gls{online:aufbauarduino} [10 - Evans, Beginning Arduino Programming. Apress, 2011, ISBN: 978-1-4302-3777-8]Diese eignet sich hervorragend zur Funktionsprogrammierung von ansteuerbaren Komponenten im analogen Signalverarbeitungspfad.
+Die Arduino-Plattform besteht prinzipiell aus der auf C und C++ basierenden Entwicklungsumgebung und der zu programmierenden Hardware\gls{online:arduino}. Vorteilhaft ist hier die gute Dokumentation und eine große Menge an Bibliotheken zum Einbinden externer Hardwarekomponenten. Ein zusätzlicher Vorteil der Plattform liegt in ihrer Quelloffenheit. Alle zugehörigen Komponenten sind demnach 'Open Source'. Das hat zur Folge, dass Codes der Bibliotheken und des Bootloaders frei zur Verfügung stehen und nach Belieben verändert werden können. Auch die Architektur der Hardware ist offengelegt, weshalb Hersteller eigene kompatible Boards konstruieren und verkaufen können. Durch die Unabhängigkeit von Programmierer und Hersteller entsteht eine erschwingliche Hardware, welche bezüglich der Quelloffenheit ohne Einschränkungen programmiert werden kann.\cite{arduino} \gls{online:aufbauarduino} [10 - Evans, Beginning Arduino Programming. Apress, 2011, ISBN: 978-1-4302-3777-8]Diese eignet sich hervorragend zur Funktionsprogrammierung von ansteuerbaren Komponenten im analogen Signalverarbeitungspfad.
 
 \begin{figure}[H]
 	\centering
@@ -502,25 +502,6 @@ LT-Spice ist eine SPICE-basierte Computersoftware zur Simulation analoger, elekt
 
 EAGLE ist eine Software zum Designen und Erstellen von Leiterplattenlayouts. Die Software verfügt über einen Schaltplan- und einen Layouteditor, sowie über eine sehr umfassende Bibliothek an Bauteilen, welche sehr unkompliziert und individuell erweiterbar ist.\gls{online:eagle1}\gls{online:eagle2}
 
-Signifikant für die Dimensionierung des Platinenlayouts ist Tabelle~\ref{tab:leiterbahnen}. Hier werden die verschieden Leiterbahnbreiten und Leiterbahnabstände dargestellt, welche für ein funktionierendes Platinenlayout unabdingbar sind.
-
-\begin{table}[htb]
-	\begin{center}
-		\begin{tabular}[h]{cccc}	
-			\toprule
-			Spannung [V] & Max. Strombelastung [A]& Leiterbahnbreite [mil] & Leiterbahnabstand[mil] \\
-			\midrule
-			5 & 0.6&6 & 8 \\
-			10 & 0.8&8 & 13 \\
-			30 & 2.0&20& 30\\
-			150 &2.7&30 & 50 \\
-			230& 3.5&50 & 100 \\
-		\bottomrule
-		\end{tabular}
-		\caption{Richtlinien zu Leiterbahnbreite und Leiterbahnabständen}
-		\label{tab:leiterbahnen}
-	\end{center}
-\end{table}
 
 \subsection{Arduino IDE}
 \label{subsec:ide}

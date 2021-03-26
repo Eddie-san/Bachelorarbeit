@@ -65,33 +65,8 @@ Die sehr hohe Vorwärtsverstärkung und die differentielle Eingangscharakteristi
 
 Durch die Bekanntheit des Stromflusses durch $R_1$ kann nun durch kirchhoffsche Regeln auf den Stromfluss in der \gls{acr:LED} geschlossen werden.\gls{online:vtoi} Dieser Strom wiederum erzeugt über selbigen Widerstand eine Anhebung des Potentials am - Eingang des \gls{acr:OP}s. Auf diese Weise versucht der \gls{acr:OP} seine beiden Eingänge auf das gleiche Potential anzuheben. Beim Leistungswiderstand $R_{9}$ handelt es sich um einen sehr kleinen Widerstand, weshalb durch die \gls{acr:LED}, den \gls{acr:MOSFET} und den Leistungswiderstand ein sehr hoher Strom fließt. Dieser sorgt für eine hell leuchtende \gls{acr:LED} zur Übertragung des Signals.
 
-\subsection{Simulation in LT-Spice}
-\label{subsec:Unterabschnitt1}
 
-Das vorausgegangene theoretische Wissen wurde zudem mit einer LT-Spice Simulation überprüft. So konnten eventuelle Fehler bei der Dimensionierung ermittelt und verbessert werden werden. 
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width = 1 \textwidth ]{spice.jpg}
-	\caption[LT-Spice Simulation der Signalverarbeitung]{LT-Spice Simulation der Signalverarbeitung} \gls{online:Eigen}
-	\label{fig:spice}
-\end{figure}
-
-\subsection{Platinenlayout in Eagle}
-\label{subsec:Unterabschnitt12}
-
-Beim Platinenlayout Entwurf vom Senders wurde ein besonderes Augenmerk auf die Trennung von Signal und Leistungswegen geachtet.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width =0.8 \textwidth ]{eagle.jpg}
-	\caption[Eagle Auszug der Platine]{Eagle Auszug der Platine} \gls{online:Eigen}
-	\label{fig:eagle}
-\end{figure}
-
-Im unteren Bereich der Platine befindet sich der Leistungswiderstand, welcher sich von $R-P-IN$ zu $R-P-OUT$ erstreckt. Zuzüglich befinden sich der DC/DC Spannungswandler, \gls{acr:LED} und \gls{acr:MOSFET}, die signifikanten Bauteile der Stromquelle auf des Rechten Seite der Platine und somit möglichst weit vom Signalverarbeitungspfad entfernt. In der Schaltung fließen teilweise Ströme bis 1,35A. Da es bei solch hohen Strömen zu Problemen mit der   \gls{acr:EMV} kommen kann, wurde der Signalweg linksseitig auf der Platine positioniert. Außerdem wurden die Leiterbahnen im Leistungspfad besonders breit ausgelegt, da hier große Ströme fließen. Genaue Informationen über die Dimensionierung der Leiterbahnen und Abstände ist in Tabelle~\ref{tab:leiterbahnen} zu finden. Auf der Platine wurden für die Operationsverstärker, das Digitalpotentiometer und den DC/DC Spannungswandler IC-Sockel aufgelötet. Das ermöglicht den schnellen Austausch von defekten Bauteilen. Die komplette Schaltung des \gls{acr:VLC}-Senders wurde auf die Größe einer kleinen gefrästen Platine untergebracht. Deshalb wurden Leitungen auf der Rückseite der Platine verlegt. Diese sind in Abbildung ~\ref{fig:eagle} durch die Blauen Leiterbahnen dargestellt. Des weiteren wurden im Signalverarbeitungspfad nach jeder Stufe Pins vorgesehen, um die Fehlersuche zu erleichtern und nachträglich einzelne Funktionsprüfungen durchzuführen. Hinzu ist zu beachten, dass die Bauteile im Leistungspfad durch den hohen Stromfluss eine hohe thermische Abgabe an Energie verzeichnen müssen. Um diese zu reduzieren wurden Kühlkörper vorgesehen. Wie diese Berechnet und Dimensioniert werden wird in Kapitel ~\ref{subsub:thermo} näher erläutert. Um die Schaltung zuletzt noch zusätzlich weniger Störanfällig zu gestalten, wurden die gegebenen freien Flächen auf beiden Seiten der Platine mit dem Masse Potential ausgefüllt. 
-
-\subsection{Thermisches Management}
+\section{Thermisches Management}
 \label{subsub:thermo}
 Wie im vorherigen Kapitel schon erwähnt, fließt durch den Leistungsstrang der Schaltung ein sehr hoher Strom. Durch diesen hohen Stromfluss kommt es zu einer immensen Hitzeentwicklung in den Bauteilen. Um jedoch die einwandfreie Funktion von elektronischen Halbleiterbauelementen zu gewährleisten, ist die Einhaltung der vom Hersteller angegebenen maximalen Sperrschichttemperaturen unerlässlich. Solch eine Sperrschichttemperatur lässt sich nur bei geringer Leistungsanforderung ohne Kühlung einhalten. Zudem sind die Einbaulage, der Einbauort, die Geschwindigkeit und Temperatur der Umgebungsluft variable Größen die miteinzukalkulieren sind.\gls{online:thermo}
 
@@ -160,27 +135,6 @@ berechnet und der Wärmewiderstand des \gls{acr:MOSFET} aus
 
 ergibt. Gewählt wurde zuletzt für sowohl \gls{acr:LED} als auch \gls{acr:MOSFET} ein Kühlkörper in der Größenordnung von 3 $^\circ C/W$.
 
-\subsection{Planung und Aufbau des Gehäuses}
-\label{subsec:geh}
-
-In den vorausgegangenen Unterkapiteln wurden sowohl die Schaltungsteile, als auch die Wichtigkeit einer ausreichenden Kühlung der Bauteile verdeutlicht. Nun galt es all diese Hardwarekomponenten zu einem großen ganzen zusammen zu fassen um somit ein in sich beständiges System zu schaffen. Demnach wurde für die kompakte und ansehnliche Unterbringung aller Hardwarekomponenten ein 3D-Druck-Gehäuse projektiert. Hierbei wurde so platzsparend wie möglich gearbeitet. Aussparungen für die Datenschnittstelle und Spannungsversorgung wurden so angeordnet, dass diese jederzeit zugänglich sind. Zudem wurden drei Seiten mit ausreichend Lüftungsschlitzen bestückt, um der Wärmeentwicklung im Gehäuse entgegen zu wirken. Um diese thermische Entwicklung noch weiter unter Kontrolle zu bringen wurde eine Aussparung für einen mit $12V$ betriebenen Lüfter vorgesehen. Dieser soll den Luftstrom im Gehäuse anregen um somit eine bessere Kühlung zu gewährleisten. Abbildung~\ref{fig:3dbottom} veranschaulicht die 3D-Ansicht dieses Gehäuses.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width =1 \textwidth ]{3dbottom.jpg}
-	\caption[Boden des 3D-Drucks]{Boden des 3D-Drucks} \gls{online:Eigen}
-	\label{fig:3dbottom}
-\end{figure}
-
-Der Arduino wird am Boden des Gehäuses fixiert und bietet die Basis des Analogen Schaltungsteils.
-Da sich Leistungswiderstand, Transistor und Leuchtdiode im Betrieb stark erhitzen, wurden die zugehörigen Kühlkörper nah am Lüfter montiert. Zusätzlich wurde im Deckel eine Öffnung für den Einbau eines LCD-Displays vorgesehen um dort Daten visuell am Sender auszugeben. Für die Datenübertragung wurde eine \gls{acr:AUX}-Buchse in der Nähe der Spannungsversorgung verbaut.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width =1 \textwidth ]{3dtop.jpg}
-	\caption[Boden des 3D-Drucks]{Boden des 3D-Drucks} \gls{online:Eigen}
-	\label{fig:3dtop}
-\end{figure}
 \newpage
 \section{Software}
 \label{sec:Software}
@@ -193,33 +147,52 @@ Um ein Potentiometer mit dem Arduino einlesen zu können, muss einer der analoge
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width =0.8 \textwidth ]{digipot.jpg}
+	\includegraphics[width =0.6 \textwidth ]{digipot.jpg}
 	\caption[Anschlussschema des Potentiometer]{Anschlussschema des Potentiometer} 
 	\gls{online:Eigen}\gls{online:fritz}
 	\label{fig:digipot}
 \end{figure}
 
-Der analoge Pin $A0$ wird in der Arduino \gls{acr:IDE} durch die Funktion analogRead eingelesen. Die Arduino-Boards beherbergen einen 10-Bit-Analog-zu-Digital-Konverter. Dies hat zur folge, dass das Board Eingangsspannungen zwischen 0 und 5 V auf Integer-Werte zwischen 0 und 1023 mappt. Die erreichte Auflösung ist damit auf dem gegebenen Arduino UNO, 4,9 mV per Bit.\gls{online:analogread} Diese 1023 gilt es dann durch vier zu teilen, da ein Digital Potentiometer nur in 256 Stufen angesteuert werden kann. Der Wert wird dann über die \gls{acr:SPI} Schnittstelle an das Digital Potentiometer gesendet und verändert somit dessen Widerstandswert. Somit kann der Offsetwert extern in das Programm geschrieben werden. Dies ist so bedeutsam, da der Offset auch in der Amplituden-Regelung eine entscheidende Aufgabe hat. 
-
+Der analoge Pin A0 wird in der Arduino \gls{acr:IDE} durch die Funktion analogRead() eingelesen. Die Arduino-Boards beherbergen einen 10-Bit-Analog-zu-Digital-Konverter. Dies hat zur folge, dass das Board Eingangsspannungen zwischen 0 und 5 V auf Integer-Werte zwischen 0 und 1023 mappt. Die erreichte Auflösung ist damit auf dem gegebenen Arduino UNO etwa 4,9 mV per Bit.\gls{online:analogread} Diese 1023 gilt es dann durch vier zu teilen, da ein Digital Potentiometer nur in 256 Stufen angesteuert werden kann. Der Wert wird dann über die \gls{acr:SPI} Schnittstelle an das Digital Potentiometer gesendet und verändert somit dessen Widerstandswert. Somit kann der Offsetwert extern in das Programm geschrieben werden. Dies ist so bedeutsam, da der Offset auch in der Amplituden-Regelung eine entscheidende Aufgabe hat. 
+\newpage
 \subsection{Automatisierte Amplituden-Regelung}
 \label{subsec:autoamp}
-In Abbildung 16 wird die zur Steuerung Grundlegende Funktion des Programms erklärt, der zugehörige Quellcode kann im Kapitel Programmcode nachgelesen werden. Nach Initialisierung der Helligkeit der Lampe durch den Benutzer (Zwischen 0 und 255) wird aufgrund des gewählten Bereichs eine von zwei Berechnungen für die Amplitude vorgenommen. Dies kommt von der Begrenzung der Amplitude nach oben und
-unten durch die LED. Falls sich der Offset, was hier für die Helligkeit steht, nun in der Mitte
-befindet, kann die Amplitude des Signals Maximal werden. Weil durch diese Einordnung Werte zwischen 0 und 127 erreichen kann, wird der Wert der Amplitude noch mit einem Faktor von 2 Multipliziert. Der Zusammenhang zwischen Digitalwert und Verstärkung  kann in Kapitel Berechnung der Amplitudenverstärkung nachgelesen werden.
 
-Durch den möglichen Widerstandsbereich des Digitalpotentiometers von 52 bis 10k lässt sich ein Spannungsteiler für die Spannungsquelle zur Einstellung des Amplituden Offsets mithilfe des OPs realisieren. Die Berechnung dafür zeigt Abbildung 17.
 
-Berechnung der Amplitudenverstärkung
-Wie in Kapitel Digital Potentiometer MCP42010 und Kapitel Berechnung des Amplitudenoffset beschrieben, lässt sich durch den Digitalpotentiometer ein absoluter Widerstandsbereich von 52 bis 10k einstellen. Für die Amplitudenverstärkung des Signals wird der Widerstand zwischen Schleiferkontakt RW0 und Kontakt RB0 abgegriffen. Dieser berechnet sich wie in Abbildung 19 gezeigt. Quelle: Datenblatt Abbildung 19: Berechnung des Widerstandsverhältnis. Damit kann ein Rückkopplungswiderstand von 52 bis 10 k erreicht werden. Die Verstärkung eines Invertierenden Verstärkers berechnet sich lt. Gleichung 1 mit dem vorgesehenen 10 k Vorwiderstand zu Verstärkungsfaktoren von
 
+
+
+
+
+\newpage
 \subsection{Modulation mit Dream}
 \label{subsec:dream}
-Nun sollen Audio Echtzeitdaten in \gls{acr:DRM}-Format moduliert und über die aufgebaute Hardware versendet werden. Deshalb wird im folgenden erläutert wie die Dream Software zu verwenden ist. Sie verfügt über zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus, wodurch bei einer Übertragung die Benutzung von zwei verschiedenen Computern vorausgesetzt wird. Zudem bietet Dream umfangreiche Einstellungsoptionen um sowohl Rauschen als auch andere Störungen zu minimieren. Die wichtigsten Parameter für die korrekte Benutzung und potentielle Fehlersuche werden in den folgenden zwei Kapiteln näher erläutert.
+Nun sollen Audio Echtzeitdaten in \gls{acr:DRM}-Format moduliert und über die projektierte Hardware versendet werden. Deshalb wird im folgenden erläutert wie die Dream Software zu verwenden ist. Sie verfügt über zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus, wodurch bei einer Übertragung die Benutzung von zwei verschiedenen Computern vorausgesetzt wird. Für das interne Routing des Audiosignals wird zusätzlich noch ein Software namens \gls{acr:VAC} vorgestellt. Dream bietet zudem umfangreiche Einstellungsoptionen um sowohl Rauschen als auch andere Störungen zu minimieren. Die wichtigsten Parameter für die korrekte Benutzung und potentielle Fehlersuche werden in den folgenden zwei Kapiteln näher erläutert.
+
+\subsubsection{Virtual Audio Cable}
+\label{subsubsec:routing}
+Virtual Audio Cable ist eine Software mit der man eine Vielzahl virtueller Audiogeräte auf dem Computer implementieren kann, um diese im Anschluss mit anderen Programmen ohne den geringsten Qualitätsverlust zu verwenden.\gls{online:vac} So wird dieses Programm in dieser Abschlussarbeit zum Routen der Audiodaten in die Dream Software verwendet. Der Vorgang muss jedoch nur auf der Sendeseite beachtet werden, da die Audio Daten hier dem Programm im Sendemodus zugeführt und dann über den \gls{acr:AUX} Anschluss ausgegeben werden müssen. Dieses Vorgehen ist in Abbildung~\ref{fig:dreamtxeinstellung} dargestellt. Beim Empfänger hingegen ist \gls{acr:VAC} nicht notwendig, da dort über den Mikrofon Eingang des Computers die Daten empfangen werden. Jener stellt in der Dream Software demnach den Eingang dar, wohingegen die Lautsprecher des Computers den Ausgang darstellen.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth]{dreamtxeinstellung.jpg}
+	\caption[Internes Audiorouting]{Internes Audiorouting} \gls{online:Eigen}
+	\label{fig:dreamtxeinstellung}
+\end{figure}
 
 
 \subsubsection{Dream Transmitter}
 \label{subsubsec:dreamtx}
-Zum Start der Software ”Dream” im Übertragungsmodus muss das Programm mit dem parameter ”- t” gestartet werden. Die einfachste Möglichkeit für einen Programmstart mit Parameter bietet eine Verknüpfung, welche wie in Abbildung 15 gezeigt, angepasst wird. Das Zielverzeichnis darf dabei nicht verändert werden! Dieser Schritt muss nur einmal gemacht werden und man kann jederzeit den Übertragungsmodus starten indem man die Dream software über diese geänderte Verknüpfung startet.
+In diesem Kapitel wird das Einrichten der Dream Software auf der Senderseite behandelt. Dies ist ein signifikanter Baustein zur Realisierung der Übertragung. Um Dream im Übertragungsmodus zu starten, muss die Dream.exe-Datei im Command Fenster mit einem angefügten $-t$ aufgerufen werden, wie in Abbildung~\ref{fig:dreamaufrufen} präsentiert wurde.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.9 \textwidth]{dreamaufrufen.jpg}
+	\caption[Dream im Command Prompt aufrufen]{Dream im Command Prompt aufrufen} \gls{online:Eigen}
+	\label{fig:dreamaufrufen}
+\end{figure}
+
+Alternativ kann jedoch eine Verknüpfung erstellt und modifiziert werden wie in Abbildung~\ref{fig:dreamtx} gezeigt wurde. Dabei handelt es sich um eine nachhaltige und unkomplizierte Methode, da der Übertragungsmodus hier schlicht mit zwei Mausklicks gestartet werden kann. Es ist jedoch darauf zu achten, dass das Zielverzeichnis nicht verändert wird. 
 
 \begin{figure}[H]
 	\centering
@@ -228,35 +201,35 @@ Zum Start der Software ”Dream” im Übertragungsmodus muss das Programm mit d
 	\label{fig:dreamtx}
 \end{figure}
 
+Im Anschluss kann der Übertragungsmodus gestartet werden. Dieser ist durch eine Vielzahl einstellbarer Parameter charakterisiert. 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.9 \textwidth ]{dreamtxeinstellung.jpg}
-	\caption[Internes Audiorouting]{Internes Audiorouting} \gls{online:Eigen}
-	\label{fig:dreamtxeinstellung}
+	\includegraphics[width = 0.95 \textwidth ]{dreamtransmitter.jpg}
+	\caption[Transmitter Modus]{Transmitter Modus} \gls{online:Eigen}
+	\label{fig:dreamtransmitter}
 \end{figure}
-
-\begin{table}[h]
+\begin{table}[H]
 	\begin{center}
-		\begin{tabular}{|p{0.28\linewidth} | p{0.72\linewidth}|}	
+		\begin{tabular}{p{0.17\linewidth}  p{0.83\linewidth}}	
 			\toprule
 			\textbf{Parameters} &\textbf{Beschreibung}\\
 			\midrule
-			\textbf{\gls{acr:DRM} mode/ bandwidth} & In einem \gls{acr:DRM}-System sind vier mögliche Robustheitsmodi definiert, um das System an unterschiedliche Kanalbedingungen anzupassen.:\newline
+			\textbf{Mode/ BW} & In einem \gls{acr:DRM}-System sind vier mögliche Robustheitsmodi definiert, um das System an unterschiedliche Kanalbedingungen anzupassen.:\newline
 			\textbf{Mode A}: Gaußsche Kanäle, mit geringem Fading.\newline
-			\textbf{Mode B}: Zeit- und frequenzselektive Kanäle, mit längerer Verzögerungsspanne.\newline
+			\textbf{Mode B}: Zeit- und frequenzselektive Kanäle, längere Verzögerungsspanne.\newline
 			\textbf{Mode C}: Wie Robustheitsmodus B, jedoch mit höherer Dopplerspreizung.\newline
 			\textbf{Mode D}: Wie Robustheitsmodus B, jedoch mit starker Verzögerung und Dopplerspreizung.\newline
 			Die Bandbreite ist die Bruttobandbreite des aktuellen \gls{acr:DRM}-Signals. \\
-			\midrule
-			\textbf{Interleaver Depth} & Die Symbol-Interleavertiefe kann entweder kurz (ca. 400 ms) oder lang (ca. 2 s) sein. Je länger der Interleaver, desto besser kann der Kanaldecoder Fehler aus langsam schwindenden Signalen korrigieren. Aber je länger die Interleaver-Länge, desto länger die Verzögerung, bis Audio zu hören ist.\\
-			\midrule			
+
+			\textbf{Interl. Depth} & Die Symbol-Interleavertiefe kann entweder kurz (ca. 400 ms) oder lang (ca. 2 s) sein. Je länger der Interleaver, desto besser kann der Kanaldecoder Fehler aus langsam schwindenden Signalen korrigieren. Aber je länger die Interleaver-Länge, desto länger die Verzögerung, bis Audio zu hören ist.\\
+				
 			\textbf{\gls{acr:SDC} / \gls{acr:MSC}} & Zeigt die Modulationsart des \gls{acr:SDC}- und \gls{acr:SDC}-Kanals an. Für den \gls{acr:MSC}-Kanal sind einige hierarchische Modi definiert, die einen sehr stark geschützten Dienstkanal bieten können.\\
-			\midrule
-			\textbf{Prot. Level (B/A)} & Die Fehlerschutzstufe des Kanalcodierers. Für 64-QAM gibt es vier Schutzstufen, die im DRM-Standard definiert sind. Schutzstufe 0 hat den höchsten Schutz, während Stufe 3 den niedrigsten Schutz hat. Die Buchstaben A und B sind die Bezeichnungen für den höher und niedriger geschützten Teil eines DRM-Blocks, wenn \gls{acr:UEP} verwendet wird. Wenn \gls{acr:EEP} verwendet wird, gilt nur die Schutzstufe von Teil B.\\
-			\midrule
-			\textbf{Number of Services} & Hier wird die Anzahl der im DRM-Stream übertragenen Audio- und Datendienste angezeigt. Die maximale Anzahl der Streams beträgt vier.\\
-			\midrule
-			\textbf{Received time - date} & Dieses Label zeigt die empfangene Zeit und das Datum in UTC an. Diese Information wird im \gls{acr:SDC}-Kanal übertragen.\\
+		
+			\textbf{Prot. Level} & Die Fehlerschutzstufe des Kanalcodierers. Für 64-QAM gibt es vier Schutzstufen, die im DRM-Standard definiert sind. Schutzstufe 0 hat den höchsten Schutz, während Stufe 3 den niedrigsten Schutz hat. Die Buchstaben A und B sind die Bezeichnungen für den höher und niedriger geschützten Teil eines DRM-Blocks, wenn \gls{acr:UEP} verwendet wird. Wenn \gls{acr:EEP} verwendet wird, gilt nur die Schutzstufe von Teil B.\\
+		
+			\textbf{No. of Services} & Hier wird die Anzahl der im DRM-Stream übertragenen Audio- und Datendienste angezeigt. Die maximale Anzahl der Streams beträgt vier.\\
+		
+			\textbf{Received time} & Dieses Label zeigt die empfangene Zeit und das Datum in UTC an. Diese Information wird im \gls{acr:SDC}-Kanal übertragen.\\
 			\bottomrule
 		\end{tabular}
 		\caption{Beschreibung der Dream-Transmitter-Parameter}\gls{online:dream}
@@ -264,10 +237,39 @@ Zum Start der Software ”Dream” im Übertragungsmodus muss das Programm mit d
 	\end{center}
 \end{table}
 
+\newpage
 \subsubsection{Dream Receiver}
 \label{subsec:Unterabschnitt12}
 
-Der Evaluation Dialog liefert detaillierte Informationen über die empfangenen DRM-Parameter. Hier können Parameter sowie einige Diagramme eingesehen werden. In den folgenden Tabellen, werden für die Übertragung bedeutende Parameter näher erläutert.
+Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.exe standardmäßig geöffnet. Deshalb ist hierbei keinerlei spezielle Aufrufmethodik notwendig. Der Evaluation Dialog liefert detaillierte Informationen über die empfangenen \gls{acr:DRM}-Parameter und Visualisiert diese in verschiedenen Diagrammen. In Abbilfung~\ref{fig:dreamevaluation} wird beispielsweise ein Empfangenes \gls{acr:DRM}-Spektrum illustriert. Hierzu können demnach einige Eigenschaften eingelesen werden. In den folgenden Tabellen, werden für die Übertragung und das Verständnis des Evaluationsdialoges bedeutende Parameter näher erläutert.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 1 \textwidth]{dreamevaluation.jpg}
+	\caption[Dream Receiver Evaluation]{Dream Receiver Evaluation}\gls{online:Eigen}
+	\label{fig:dreamevaluation}
+\end{figure}
+
+
+
+\begin{table}[ht]
+	\begin{center}
+		\begin{tabular}{|p{0.28\linewidth} | p{0.72\linewidth}|}
+			\toprule
+			\textbf{Chart} & \textbf{Beschreibung} \\
+			\midrule
+			\textbf{SNR} & Signal to Noise Ratio (SNR) estimation is plotted as a bar and as a value.
+			\\
+			\midrule
+			\textbf{Main Plot} & Graphical display of different vectors of the DRM decoder. \\
+			\bottomrule
+		\end{tabular}
+		\caption{Beschreibung des \gls{acr:DRM}}Charts\gls{online:dream}
+		\label{tab:drmchart}
+	\end{center}
+\end{table}
+
 
 \begin{table}[h]
 	\begin{center}
@@ -338,19 +340,3 @@ Der Evaluation Dialog liefert detaillierte Informationen über die empfangenen D
 	\end{center}
 \end{table}
 
-\begin{table}[ht]
-	\begin{center}
-		\begin{tabular}{|p{0.28\linewidth} | p{0.72\linewidth}|}
-			\toprule
-			\textbf{Chart} & \textbf{Beschreibung} \\
-			\midrule
-			\textbf{SNR} & Signal to Noise Ratio (SNR) estimation is plotted as a bar and as a value.
-			\\
-			\midrule
-			\textbf{Main Plot} & Graphical display of different vectors of the DRM decoder. \\
-			\bottomrule
-		\end{tabular}
-		\caption{Beschreibung des \gls{acr:DRM}}Charts\gls{online:dream}
-		\label{tab:drmchart}
-	\end{center}
-\end{table}
