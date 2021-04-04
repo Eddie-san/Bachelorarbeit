@@ -127,8 +127,7 @@ Zur Vertiefung des Basiswissen werden nun noch digitale Modulationsarten erläut
 	\label{fig:welle}
 \end{figure}
 
-Hierbei wurde noch eine weitere Version der \gls{acr:AM}-Modulation illustriert. Diese nennt sich \gls{acr:OOK} und hat bei der Übertragung einer digitalen "1" eine Amplitude und wird jedoch bei der Übertragung einer digitalen "0" auf Null gesetzt. Da unter diesen Voraussetzungen nicht ermittelt werden kann wann die Übertragung endet, wird in der Praxis bei der \gls{acr:AM}-Moodulation ein Zwischenwert mit z.B. halber Amplitude zum Senden einer 0 verwendet.
-Ein übertragenes Bit entspricht bei zweiwertigen Modulationen einem Symbol. Modernere Kommunikationssysteme verwenden mittlerweile jedoch höherwertige Modulationsarten die es ermöglichen mehrere Bits pro Symbol zu übertragen. Bei zwei Bit werden hierbei vier Zustände benötigt. Daraus entstehen dann Erweiterungen der genannten Modulationsarten, welche z.B. 4-\gls{acr:ASK}, 4-\gls{acr:FSK} und 4-\gls{acr:PSK} bezeichnet werden. Oft wird die Ziffer Vier auch mit dem Buchstaben Q für Quadratur ersetzt.\cite{howwireless}\cite{butlerWirelessNetworkingDeveloping2013} Bei einer \gls{acr:QAM} wird beispielsweise eine Kombination zweier Modulationsarten verwendet. Dabei werden sowohl die Amplituden- als auch Phasenmanipulation benutzt, um Informationen zu modulieren. 
+Hierbei wurde noch eine weitere Version der \gls{acr:AM}-Modulation illustriert. Diese nennt sich \gls{acr:OOK} und hat bei der Übertragung einer digitalen $"1"$ eine Amplitude und wird jedoch bei der Übertragung einer digitalen $"0"$ auf Null gesetzt. Da unter diesen Voraussetzungen nicht ermittelt werden kann wann die Übertragung endet, wird in der Praxis bei der \gls{acr:AM}-Moodulation ein Zwischenwert mit z.B. halber Amplitude zum Senden einer digitalen $"0"$ verwendet. Ein übertragenes Bit entspricht bei zweiwertigen Modulationen einem Symbol. Modernere Kommunikationssysteme verwenden mittlerweile jedoch höherwertige Modulationsarten die es ermöglichen mehrere Bits pro Symbol zu übertragen. Bei zwei Bit werden hierbei vier Zustände benötigt. Daraus entstehen dann Erweiterungen der genannten Modulationsarten, welche z.B. 4-\gls{acr:ASK}, 4-\gls{acr:FSK} und 4-\gls{acr:PSK} bezeichnet werden. Oft wird die Ziffer Vier auch mit dem Buchstaben $"Q"$ für Quadratur ersetzt.\cite{howwireless}\cite{butlerWirelessNetworkingDeveloping2013} Bei einer \gls{acr:QAM} wird beispielsweise eine Kombination zweier Modulationsarten verwendet. Dabei werden sowohl die Amplituden- als auch Phasenmanipulation benutzt, um Informationen zu modulieren. 
 
 Da im Zuge dieser Abschlussarbeit größtenteils mit einer \gls{acr:QAM}-Modulaton gearbeitet wurde, wird diese näher erläutert. Um jedoch ein besseres Verständnis für den Aufbau einer solchen Modulation zu erlangen, muss der Begriff des Konstellationsdiagramms eingeführt werden. Dies soll am Beispiel einer \gls{acr:QPSK} veranschaulicht werden. Modulierte Wellen, sind sinusförmig und wie folgt definiert. 
 
@@ -271,7 +270,7 @@ Das \gls{acr:MDI}-Interface ermöglicht eine räumlich entfernte Verbindung zwis
 \newpage
 \section{Hardwarekomponenten}
 \label{subsec:elbau}
-Im letzten Kapitel wurden grundlegende Bestandteile einer digitalen Signalmodulation erörtert. Nun sollen  relevante Bauteile eines \gls{acr:VLC}-Senders dargestellt und näher erläutert werden. Hierbei handelt es sich nun um jene Komponenten, welche als Sender und Kanal in Abbildung~\ref{fig:komsystem} charakterisiert wurden. Diese Hardwarekomponenten sind essenziell, um sowohl die analoge Signalverarbeitung, also auch die Datenübertragung mittels dem optischen Kanal zu ermöglichen. Es werden im Folgenden also verschiedene Bauteile und deren Bedeutung im Kontext zu dieser Abschlussarbeit verdeutlicht.
+Im letzten Kapitel wurden grundlegende Bestandteile einer digitalen Signalmodulation erörtert. Nun sollen relevante Bauteile eines \gls{acr:VLC}-Senders dargestellt und näher ausgeführt werden. Hierbei handelt es sich nun um jene Komponenten, welche als Sender und Kanal in Abbildung~\ref{fig:komsystem} charakterisiert wurden. Diese Hardwarekomponenten sind essenziell, um sowohl die analoge Signalverarbeitung, als auch die Datenübertragung mittels dem optischen Kanal zu ermöglichen. Es werden im Folgenden demnach verschiedene Bauteile und deren Bedeutung im Kontext zu dieser Abschlussarbeit verdeutlicht.
 
 \subsection{Leuchtdiode}
 \label{sub:led}
@@ -419,12 +418,12 @@ In Abbildung~\ref{fig:nmos} ist unter $(a)$ das Schaltsymbol, sowie Spannungs- u
 \subsection{Digital Potentiometer}
 \label{subsec:digipot}
 
-Um den Strom durch die \gls{acr:LED} digital zu regulieren und demgemäß die Helligkeit der \gls{acr:LED} für die Datenübertragung zu variieren, wird ein Digitalpotentiometer benötigt. Hierfür wurde der \gls{acr:IC} MCP42010 in der 10k$\ohm$–Variante mit 2 Kanälen ausgewählt. Dieses Digitalpotentiometer kann über ein \gls{acr:SPI} mittels eines Arduino angesteuert werden, um dessen Widerstandswert in 256 Schritten zu verändern. Dies ermöglicht eine Variation des Widerstandes in einem Bereich zwischen 52$\ohm$ (00h) und 10k$\ohm$ (FFh) in 39$\ohm$ Schritten. 
-Die vom \gls{acr:IC} vorgeschriebene Versorgungsspannung von 5V stellt der Spannungsversorgungspin des Arduino bereit. Außerdem kann dem Datenblatt des \gls{acr:IC}s die Information entnommen werden, dass dessen Eingangsspannungsbereich an den Widerstandseingängen maximal zwischen -0.5V und 6V liegen darf. Da der IC in dieser Schaltung mit 5V betrieben wird, dürfen die Widerstandseingänge mit einer Spannung von maximal -0.6V bis 6V belastet werden. Das ist ein äußerst wichtiges Kriterium für die Auslegung der Schaltung, da hier über die Grenzen der maximalen Amplitude entschieden werden muss, um unerwünschten Nebeneffekten vorzubeugen.
+Um den Strom durch die \gls{acr:LED} nun digital zu regulieren und zudem die Helligkeit der \gls{acr:LED} für die Datenübertragung zu variieren, wird ein Digitalpotentiometer benötigt. Hierfür wurde der \gls{acr:IC} MCP42010 in der 10k$\ohm$–Variante mit 2 Kanälen ausgewählt. Dieses Digitalpotentiometer kann über ein sogenanntes \gls{acr:SPI} mittels eines Arduino angesteuert werden, um dessen Widerstandswert in 256 Schritten zu verändern. Dies ermöglicht eine Variation des Widerstandes in einem Bereich zwischen 52$\ohm$ (00h) und 10k$\ohm$ (FFh) in 39$\ohm$ Schritten. 
+Die vom \gls{acr:IC} vorgeschriebene Versorgungsspannung von 5V stellt der Spannungsversorgungspin des Arduino bereit. Außerdem kann dem Datenblatt des \gls{acr:IC}s die Information entnommen werden, dass dessen Eingangsspannungsbereich an den Widerstandseingängen maximal zwischen -0.5V und 6V liegen darf. Da der \gls{acr:IC} in dieser Schaltung mit 5V betrieben wird, dürfen die Widerstandseingänge mit einer Spannung von maximal -0.6V bis 6V belastet werden. Das ist ein äußerst wichtiges Kriterium für die Auslegung der Schaltung, da hier über die Grenzen der maximalen Amplitude entschieden werden muss, um unerwünschten Nebeneffekten vorzubeugen.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6 \textwidth]{MCP.jpg}
+	\includegraphics[width=0.7 \textwidth]{MCP.jpg}
 	\caption[Aufbau des MCP42010]{Aufbau des MCP42010} 
 	\cite{MCP42}
 	\label{fig:MCP}
@@ -454,7 +453,7 @@ Die Funktion der einzelnen Pins und wie der \gls{acr:IC} mit dem Arduino verbund
 			14 & $V_{DD}$ & Power & 5V \\
 			\bottomrule
 		\end{tabular}
-		\caption{Anschlussinformation und Pinbelegung des MCP42010}
+		\caption{Anschlussinformation und Pinbelegung des MCP42010 aus dem Datenblatt}
 		\label{tab:pinmcp}
 	\end{center}
 \end{table}
@@ -470,7 +469,8 @@ Gleichspannungswandler werden grundsätzlich immer dort eingesetzt, wo die zu Ve
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6 \textwidth]{DCDC.jpg}
+	\includegraphics[width=0.8
+	 \textwidth]{DCDC.jpg}
 	\caption[Beschaltung und erzeugte Spannung des LT1054]{Beschaltung und erzeugte Spannung des LT1054} 
 	\gls{online:Eigen}+Datenblatt
 	\label{fig:DCDC}

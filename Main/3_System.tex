@@ -27,7 +27,7 @@ Die analoge Signalverarbeitungsschaltung wurde in drei Stufen aufgeteilt. Die \g
 	\label{fig:stufe1}
 \end{figure}
 
-Der Schlüsselfaktor in der Eingangsstufe ist der variable Widerstand im Rückkopplungspfad des \gls{acr:OP}s. Hierbei handelt es sich um ein Digitales Potentiometer, welches sich über \gls{acr:SPI} vom Arduino zur Laufzeit beliebig verändern lässt. Die Schwierigkeit in der Implementierung dieses Bauteiles liegt jedoch darin, dass es keine negativen Spannungen verträgt. Aus dem Datenblatt ist ersichtlich, dass es nur mit Spannungen von $-0,6V<U<6V$ sorgfältig arbeiten kann. Da es sich bei dem zu verarbeitenden Audiosignal um ein Wechselstromsignal mit einer Amplitude von etwa 1,5V handelt, wurden in dieser Schaltung Vorkehrungen getroffen um die negativen Anteile dieses Signals in positive Anteile zu konvertieren. Um dieses Vorhaben zu realisieren wurde auf den nichtinvertierenden Eingang des \gls{acr:OP}s mithilfe eines Spannungsteilers $R_{3}$ und $R_{2}$ eine Spannung angelegt. Diese soll das Potential des \gls{acr:OP}s so anheben, dass das AC-Signal aus der Soundkarte direkt mit einem Offset addiert wird und somit keine negativen Anteile mehr besitzt. Um die Soundkarte vor der DC-Spannung zu schützen wurde ein DC Abblockkondensator $C_{1}$ am Signaleingang vorgesehen. Dieser ist für AC-Signale komplett durchlässig. Aufgrund der Annahme einer maximalen Amplitude von 1,5V muss also also ein Mindestoffset von 0,9V auf das Signal addiert werden. Um hier jedoch die Amplitude trotz Verstärkung innerhalb des erlaubten Spannungsbereiches von $-0,6V<U<6V$ bleiben wurde ein fester Offset von 2,15V gewählt. Zudem würde eine maximale Verstärkung von $A=2$ hinzugezogen wodurch sich der Spannungsbereich, selbst bei einer maximalen Verstärkung, stets in einem Bereich von $-0,2V<U<5,7V$ befindet. Dies ist in ~\ref{fig:ampoff} illustriert. 
+Der Schlüsselfaktor in der Eingangsstufe ist der variable Widerstand im Rückkopplungspfad des \gls{acr:OP}s. Hierbei handelt es sich um ein Digitales Potentiometer, welches sich über \gls{acr:SPI} vom Arduino zur Laufzeit beliebig verändern lässt. Die Schwierigkeit in der Implementierung dieses Bauteiles liegt jedoch darin, dass es keine negativen Spannungen verträgt. Aus dem Datenblatt ist ersichtlich, dass es nur mit Spannungen von $-0,6V<U<6V$ sorgfältig arbeiten kann. Da es sich bei dem zu verarbeitenden Audiosignal um ein Wechselstromsignal mit einer Amplitude von etwa 1,5V handelt, wurden in dieser Schaltung Vorkehrungen getroffen um die negativen Anteile dieses Signals in positive Anteile zu konvertieren. Um dieses Vorhaben zu realisieren wurde auf den nichtinvertierenden Eingang des \gls{acr:OP}s mithilfe eines Spannungsteilers $R_{3}$ und $R_{2}$ eine Spannung angelegt. Diese soll das Potential des \gls{acr:OP}s so anheben, dass das \gls{acr:AC}-Signal aus der Soundkarte direkt mit einem Offset addiert wird und somit keine negativen Anteile mehr besitzt. Um die Soundkarte vor der DC-Spannung zu schützen wurde ein \gls{acr:DC}-Abblockkondensator $C_{1}$ am Signaleingang vorgesehen. Dieser ist für AC-Signale komplett durchlässig. Aufgrund der Annahme einer maximalen Amplitude von 1,5V muss also also ein Mindestoffset von 0,9V auf das Signal addiert werden. Um hier jedoch die Amplitude trotz Verstärkung innerhalb des erlaubten Spannungsbereiches von $-0,6V<U<6V$ bleiben wurde ein fester Offset von 2,15V gewählt. Zudem würde eine maximale Verstärkung von $A=2$ hinzugezogen wodurch sich der Spannungsbereich, selbst bei einer maximalen Verstärkung, stets in einem Bereich von $-0,2V<U<5,7V$ befindet. Dies ist in ~\ref{fig:ampoff} illustriert. 
 
 \begin{figure}[H]
 	\centering
@@ -158,16 +158,25 @@ Der analoge Pin A0 wird in der Arduino \gls{acr:IDE} durch die Funktion analogRe
 \subsection{Automatisierte Amplituden-Regelung}
 \label{subsec:autoamp}
 
+Um die Amplitudenregelung zu realisieren musste zunächst die Amplitude analogen Eingang des Arduino eingelesen werden. Hierbei wurde am Ausgang der ersten Verstärkerstufe, welche in Abbildung~\ref{fig:stufe1} illustriert wurde, ein Messpunkt vorgesehen welcher auf den Pin A1 des Arduino geführt wurde. Dieser kann Spannungen im Bereich von 0-5V auslesen, weshalb die Maximale Verstärkung der ersten Verstärkerstufe auf diesen gegebenen Bereich limitiert wurde. Abbildung ~\ref{fig:amplitudeanalog} illustiert die Schematisch ein solches auslesen eines Signals mit dem analogen Eingang eines Arduino. 
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width =1 \textwidth ]{amplitudeanalog.jpg}
+	\caption[Anschlussschema zur Amplitudenmessung]{Anschlussschema zur Amplitudenmessung} 
+	\gls{online:Eigen}\gls{online:fritz}
+	\label{fig:amplitudeanalog}
+\end{figure}
 
+Da die erste Verstärkerstufe ein maximales Eingangssignal von 1V \gls{acr:RMS} vorweist wird dieses mit einem Offset versehen und so weit verstärkt, dass es sich immernoch innerhalb der gesetzten Spannungsgrenzen befindet. Durch dieses Vorgehen kann hierbei der Spannungsbereich von 0V - 5V gut ausgenutzt werden. Wenn also eine zu kleine Amplitude gemessen wird, steuert der Arduino das Digitale Potentiometer so an, dass sich die Verstärkung des \gls{acr:OP}s und somit auch die Amplitude des Signals Schritt für Schritt erhöht. Dies geschieht bis diese wieder in dem vorher experimentell Ermittelten, für die Übertragung optimalen Amplitudenbereich liegt. Hierzu wurde von dem gemessenen Signal sowohl das Minimum, als auch das Maximum simuliert. Dadurch konnten Grenzen gebildet werden welche den optimalen Übertragungsbereich darstellen. 
 
 
 
 
 \newpage
-\subsection{Modulation mit Dream}
+\subsection{Modulation mit Dream 2.2.1}
 \label{subsec:dream}
-Nun sollen Audio Echtzeitdaten in \gls{acr:DRM}-Format moduliert und über die projektierte Hardware versendet werden. Deshalb wird im folgenden erläutert wie die Dream Software zu verwenden ist. Sie verfügt über zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus, wodurch bei einer Übertragung die Benutzung von zwei verschiedenen Computern vorausgesetzt wird. Für das interne Routing des Audiosignals wird zusätzlich noch ein Software namens \gls{acr:VAC} vorgestellt. Dream bietet zudem umfangreiche Einstellungsoptionen um sowohl Rauschen als auch andere Störungen zu minimieren. Die wichtigsten Parameter für die korrekte Benutzung und potentielle Fehlersuche werden in den folgenden zwei Kapiteln näher erläutert.
+Nun sollen Audio Echtzeitdaten in \gls{acr:DRM}-Format moduliert und über die projektierte Hardware versendet werden. Deshalb wird im folgenden erläutert wie die Dream Software (Version 2.2.1) zu verwenden ist. Sie verfügt über zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus, wodurch bei einer Übertragung die Benutzung von zwei verschiedenen Computern vorausgesetzt wird. Für das interne Routing des Audiosignals wird zusätzlich noch ein Software namens \gls{acr:VAC} vorgestellt. Dream bietet zudem umfangreiche Einstellungsoptionen um sowohl Rauschen als auch andere Störungen zu minimieren. Die wichtigsten Parameter für die korrekte Benutzung und potentielle Fehlersuche werden in den folgenden zwei Kapiteln näher erläutert.
 
 \subsubsection{Virtual Audio Cable}
 \label{subsubsec:routing}
@@ -255,14 +264,12 @@ Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.
 
 \begin{table}[ht]
 	\begin{center}
-		\begin{tabular}{|p{0.28\linewidth} | p{0.72\linewidth}|}
+		\begin{tabular}{p{0.28\linewidth}  p{0.72\linewidth}}
 			\toprule
 			\textbf{Chart} & \textbf{Beschreibung} \\
 			\midrule
-			\textbf{SNR} & Signal to Noise Ratio (SNR) estimation is plotted as a bar and as a value.
-			\\
-			\midrule
-			\textbf{Main Plot} & Graphical display of different vectors of the DRM decoder. \\
+			\textbf{SNR} & Das \gls{acr:SNR} wird hier wert angegeben.\\
+			\textbf{Main Plot} & Die graphische veranschaulichung verschiedener Vectoren im \gls{acr:DRM}-Dekodierer. \\
 			\bottomrule
 		\end{tabular}
 		\caption{Beschreibung des \gls{acr:DRM}}Charts\gls{online:dream}
@@ -273,26 +280,26 @@ Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.
 
 \begin{table}[h]
 	\begin{center}
-		\begin{tabular}{|p{0.28\linewidth} | p{0.72\linewidth}|}	
+		\begin{tabular}{p{0.28\linewidth}  p{0.72\linewidth}}	
 			\toprule
 			\textbf{Measurements} & \textbf{Beschreibung} \\
 			\midrule
 			\textbf{\gls{acr:DC} Frequency Offset} & Dieser Offset entspricht der resultierenden Soundkarten-Zwischenfrequenz des Frontends. Diese Frequenz ist nicht auf einen bestimmten Wert beschränkt, sondern nur darauf, dass das DRM-Spektrum vollständig innerhalb der Bandbreite der Soundkarte liegen muss.\\
-			\midrule
+			
 			\textbf{Sample Frequency Offset} & Offset der Abtastrate des lokalen Computers zum \gls{acr:DA}-Wandler im Sender. \\
-			\midrule
+			
 			\textbf{Doppler / Delay} & Die Dopplerfrequenz ist eine Angabe darüber, wie schnell sich der Kanal mit der Zeit ändert. Je höher die Frequenz ist, desto schneller sind die Kanaländerungen. \\
-			\midrule
+			
 			\textbf{I/O Interface \gls{acr:LED}} & Diese \gls{acr:LED} zeigt den aktuellen Status der Soundkartenschnittstelle an. Das gelbe Licht zeigt an, dass die Audioausgabe korrigiert wurde. Da die Abtastrate des Senders und des lokalen Computers unterschiedlich sind, kommt es von Zeit zu Zeit zu einem Über- oder Unterlauf der Audiopuffer und eine Korrektur ist notwendig.\\
-			\midrule
+			
 			\textbf{Time Sync Acq \gls{acr:LED}} &Diese \gls{acr:LED} zeigt den Zustand der Timing-Erfassung (suche nach dem Beginn eines \gls{acr:OFDM}-Symbols) an. Sobald die Erfassung abgeschlossen ist, bleibt diese LED grün.	\\
-			\midrule
+			
 			\textbf{Frame Sync \gls{acr:LED}} & Der \gls{acr:DRM}-Frame-Synchronisationsstatus wird mit dieser \gls{acr:CRC} symbolisiert. Auch diese \gls{acr:LED} ist nur im Erfassungszustand des Dream-Empfängers aktiv. Im Tracking-Modus ist diese \gls{acr:LED} immer grün.\\
-			\midrule
+			
 			\textbf{FAC \gls{acr:CRC} \gls{acr:LED}} & Diese \gls{acr:LED} zeigt die zyklische Redundanzprüfung (\gls{acr:CRC}) des Fast Access Channel (FAC) des DRM an. Wenn die \gls{acr:CRC}-Prüfung des FAC erfolgreich war, wechselt der Empfänger in den Tracking-Modus. Die FAC-LED ist die Anzeige, ob der Empfänger auf eine DRM-Übertragung synchronisiert ist oder nicht. \\
-			\midrule
+			
 			\textbf{SRC \gls{acr:CRC} \gls{acr:LED}} & 	Diese \gls{acr:LED} zeigt das \gls{acr:CRC}-Prüfergebnis des \gls{acr:SDC} an, der ein logischer Kanal des \gls{acr:DRM}-Streams ist. Diese Daten werden in ca. 1-Sekunden-Intervallen übertragen und enthalten Informationen über Senderkennung, Audio- und Datenformat usw. Der Fehlerschutz ist normalerweise geringer als der Schutz des \gls{acr:FAC}. \\
-			\midrule
+			
 			\textbf{MSC \gls{acr:CRC} \gls{acr:LED}} & Diese \gls{acr:LED} zeigt den Status des \gls{acr:MSC}. Dieser Kanal enthält die eigentlichen Audio- und Datenbits. Die \gls{acr:LED} zeigt die \gls{acr:CRC}-Prüfung des AAC-Core-Decoders an.  Wenn die \gls{acr:SBR}-\gls{acr:CRC} falsch ist, aber die AAC-\gls{acr:CRC} in Ordnung ist, kann man immer noch etwas hören (die hohen Frequenzen sind in diesem Fall natürlich nicht vorhanden). Wenn diese \gls{acr:LED} rot leuchtet, sind Unterbrechungen des Tons zu hören. Leuchtet die \gls{acr:LED} gelb, bedeutet das, dass nur ein 40 ms Audio-Frame-\gls{acr:CRC} falsch war. Dies verursacht normalerweise keine hörbaren Störungen.\\
 			\bottomrule
 		\end{tabular}
@@ -305,33 +312,33 @@ Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.
 
 \begin{table}[htb]
 	\begin{center}
-		\begin{tabular}{|p{0.25\linewidth} | p{0.75\linewidth}|}	
+		\begin{tabular}{p{0.25\linewidth} p{0.75\linewidth}}	
 			\toprule
 			\textbf{Advanced Settings} & \textbf{Beschreibung}\\
 			\midrule
 			\textbf{Frequency Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung in Frequenzrichtung ausgewählt werden.\\
-			\midrule
+			
 			\textbf{Time Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung in Zeitrichtung ausgewählt werden.\newline
 			\textbf{Wiener} - Die Wiener-Interpolation verwendet eine Schätzung der Statistik des Kanals, um einen optimalen Filter zur Rauschunterdrückung zu entwerfen.\newline
 			\textbf{Linear} - Enfache lineare Interpolationsmethode, um die Kanalschätzung zu erhalten. Die Real- und Imaginärteile des geschätzten Kanals werden linear interpoliert. Dieser Algorithmus verursacht die geringste CPU-Belastung und die Audiodaten werden schneller dekodiert, aber er schneidet im Allgemeinen schlechter ab als die Wiener Interpolation, insbesondere bei niedrigen \gls{acr:SNR}s.\\
-			\midrule
+			
 			\textbf{Time Sync Tracking} & 	Mit diesen Einstellungen können die Methoden zur Nachführung der Zeitsynchronisation ausgewählt werden. \\
-			\midrule
+			
 			\textbf{Flip Input Spectrum} & Wenn Sie dieses Kontrollkästchen aktivieren, wird das Eingangsspektrum gespiegelt oder invertiert. Dies ist erforderlich, wenn der Mischer im Front-End das untere Seitenband verwendet.
 			\\
-			\midrule
+			
 			\textbf{Mute Audio} & Der Ton kann durch Aktivieren dieses Kontrollkästchens stumm geschaltet werden. Die Reaktion auf das Aktivieren oder Deaktivieren dieses Kontrollkästchens wird durch die Audiopuffer um ca. 1 Sekunde verzögert.
 			\\
-			\midrule
+			
 			\textbf{MLC, Number of Iterations} & Im \gls{acr:DRM} wird ein  mehrstufiger Kanalcodierer verwendet. Mit diesem Code ist es möglich, den Dekodiervorgang im Dekodierer zu iterieren, um das Dekodierergebnis zu verbessern. \\
-			\midrule
+			
 			\textbf{Log File} & Wenn dieses Kontrollkästchen aktiviert wird, schreibt Dream zwei Arten von Protokolldateien über den aktuellen Empfang eines Audiodienstes mit \gls{acr:AAC}-Quellcodierung, eine Standard- und eine lange Protokolldatei. Beide Dateien werden in das Verzeichnis geschrieben, in dem sich die Dream-Anwendung befindet.\\
-			\midrule
+			
 			\textbf{Freq} & Im Textfeld kann die aktuell gewählte Frequenz am Frontend eingegeben werden. Diese Frequenz wird in die Protokolldatei geschrieben und in der Datei Dream.ini gespeichert.
 			\\
-			\midrule
+			
 			\textbf{Save Audio as WAV} & Speichern Sie das Audiosignal als PCM-Wave-Datei in Stereo mit 16 Bit und 48 kHz Abtastrate. Wenn Sie dieses Kontrollkästchen aktivieren, kann der Benutzer einen Dateinamen für die Aufnahme wählen. \\
-			\midrule
+			
 			\textbf{Filter}& Wenn Sie das Kontrollkästchen aktivieren, wird ein Bandpassfilter aktiviert, um Störungen von Nachbarkanälen zu reduzieren. Die Filterbandbreite wird automatisch auf die Bandbreite des aktuellen \gls{acr:DRM}-Signals eingestellt.\\
 			\bottomrule
 		\end{tabular}
