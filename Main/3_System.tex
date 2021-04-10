@@ -2,12 +2,12 @@
 
 \chapter{System}
 \label{sec:system}
-In diesem Kapitel werden die einzelnen analoge Signalverarbeitungskomponenten näher erläutert und zu einem ganzen System zusammengefügt. Da hier sowohl digitale als auch Analoge Signalverarbeitungsbausteine in Einklang gebracht werden sollen, werden zunächst die Eigenschaften des analogen Schaltkreises eingegangen. Darauf folgend werden der physikalische Aufbau von Schaltung und Gehäuse, aber auch das Thermische Management des Systems thematisiert. Zudem setzt sich dieses Kapitel mit der Ansteuerung der Potentiometer auseinander, welche es dem Sender ermöglichen den Offset und die Amplitude frei zu variieren. Zuletzt werden Einstellungs- und Evaluierungsparameter der Modulationssoftware Dream für Sender und Empfänger erörtert.
+In diesem Kapitel werden die einzelnen analogen Signalverarbeitungskomponenten näher erläutert und zu einem ganzen System zusammengefügt. Da hier sowohl digitale, als auch analoge Signalverarbeitungsbausteine in Einklang gebracht werden sollen, wird zunächst auf die Eigenschaften des analogen Schaltkreises eingegangen. Darauf folgend werden der physikalische Aufbau von Schaltung und Gehäuse, aber auch das thermische Management des Systems thematisiert. Zudem setzt sich dieses Kapitel mit der Ansteuerung der Potentiometer auseinander, welche es dem Sender ermöglichen, den Offset und die Amplitude frei zu variieren. Zuletzt werden Einstellungs- und Evaluierungsparameter der Modulationssoftware Dream für Sender und Empfänger erörtert.
 
 
 \section{Analoge Signalverarbeitung}
 \label{sec:Signalverarbeitung}
-Bei der Signalübertragung über den optischen Kanal mit dem in dieser Abschlussarbeit gewählten Medium Licht, müssen einige grundlegende Dinge beachtet werden. Im Kapitel~\ref{sub:led} der Leuchtdiode wurden ihre grundlegenden Eigenschaften erklärt, die es sich hier nun zu verwenden gilt. Eine bekannte Schwierigkeit ist die Übertragung von negativen Wellen. Diese können nicht Übertragen werden, da Licht keinen negativen Wert annehmen kann. Hinzu ist man bei der Übertragung von Signalen darauf bedacht, nur im linearen Bereich der LED-Kennlinie Daten zu übertragen. Wenn man diese nämlich im nichtlinearen Bereich der LED Überträgt, können Verzerrungen auftreten und somit die Übertragung stark gestört werden. Um jenes Problem zu lösen, wird ein Offset verwendet, welcher das Signal so positiv verschiebt, dass dieses keine negativen Anteile mehr besitzt. Zudem wurde ein Spannungspuffer eingerichtet um zusätzlich die Amplitude zu verstärken. Dies liefert Gewissheit, dass nur positive Spannungsanteile übertragen werden und somit kein Signalverlust verzeichnet werden muss.
+Bei der Signalübertragung über den physikalischen Kanal mit dem, in dieser Abschlussarbeit gewählten, Medium Licht, müssen einige grundlegende Dinge beachtet werden. Im Kapitel~\ref{sub:led} der Leuchtdiode wurden ihre grundlegenden Eigenschaften erklärt, die es hier nun zu verwenden gilt. Eine bekannte Schwierigkeit ist die Übertragung von negativen Wellen. Diese können nicht übertragen werden, da Licht keinen negativen Wert annehmen kann. Hinzu ist bei der Übertragung von Signalen darauf zu achten, die \gls{acr:LED} nur im linearen Bereich der \gls{acr:LED}-Kennlinie zu betreiben. Wenn diese im nichtlinearen Bereich der \gls{acr:LED} betrieben wird, können Verzerrungen auftreten und somit die Übertragung stark gestört werden. Um dieses Problem zu lösen, wird ein Offset verwendet, welcher dem Signal einen positiven Gleichanteil aufaddiert, sodass dieses keine negativen Spannungsanteile mehr enthält. Zudem wurde ein Spannungspuffer eingerichtet um den nötigen Abstand zum Nullpunkt zu garantieren. Dies liefert Gewissheit, dass nur positive Spannungsanteile übertragen werden und somit kein Signalverlust verzeichnet werden muss.
 
 \begin{figure}[H]
 	\centering
@@ -16,68 +16,65 @@ Bei der Signalübertragung über den optischen Kanal mit dem in dieser Abschluss
 	\label{fig:signalvorgang}
 \end{figure}
 
-In Abbildung ~\ref{fig:signalvorgang} werden die Verschiedenen Stufen der Signalübertragung veranschaulicht. Da es sich an dieser Stelle um ein nichtlineares System handelt, dürfen die Signalverarbeitungsstufen nicht beliebig vertauscht werden. Eine solche Veränderung der Reihenfolge könnte zur Verfälschung des Signals führen. 
+In Abbildung ~\ref{fig:signalvorgang} werden die verschiedenen Stufen der Signalübertragung veranschaulicht. Da es sich an dieser Stelle um ein nichtlineares System handelt, dürfen die Signalverarbeitungsstufen nicht beliebig vertauscht werden. Eine solche Veränderung der Reihenfolge könnte zur Verfälschung des Signals führen. 
 
 Die analoge Signalverarbeitungsschaltung wurde in drei Stufen aufgeteilt. Die \gls{acr:OP}- Grundschaltungen wurden hierfür so modifiziert, dass Amplitude und Offset variabel einstellbar sind und möglich auftretende Fehler vermieden werden. In Abbildung ~\ref{fig:stufe1} ist die Eingangssignalverarbeitungsstufe illustriert. 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.9 \textwidth ]{stufe1.jpg}
+	\includegraphics[width = 1 \textwidth ]{stufe1.jpg}
 	\caption[Eingangssignalverarbeitungsstufe]{Eingangssignalverarbeitungsstufe} \gls{online:Eigen}
 	\label{fig:stufe1}
 \end{figure}
 
-Der Schlüsselfaktor in der Eingangsstufe ist der variable Widerstand im Rückkopplungspfad des \gls{acr:OP}s. Hierbei handelt es sich um ein Digitales Potentiometer, welches sich über \gls{acr:SPI} vom Arduino zur Laufzeit beliebig verändern lässt. Die Schwierigkeit in der Implementierung dieses Bauteiles liegt jedoch darin, dass es keine negativen Spannungen verträgt. Aus dem Datenblatt ist ersichtlich, dass es nur mit Spannungen von $-0,6V<U<6V$ sorgfältig arbeiten kann. Da es sich bei dem zu verarbeitenden Audiosignal um ein Wechselstromsignal mit einer Amplitude von etwa 1,5V handelt, wurden in dieser Schaltung Vorkehrungen getroffen um die negativen Anteile dieses Signals in positive Anteile zu konvertieren. Um dieses Vorhaben zu realisieren wurde auf den nichtinvertierenden Eingang des \gls{acr:OP}s mithilfe eines Spannungsteilers $R_{3}$ und $R_{2}$ eine Spannung angelegt. Diese soll das Potential des \gls{acr:OP}s so anheben, dass das \gls{acr:AC}-Signal aus der Soundkarte direkt mit einem Offset addiert wird und somit keine negativen Anteile mehr besitzt. Um die Soundkarte vor der DC-Spannung zu schützen wurde ein \gls{acr:DC}-Abblockkondensator $C_{1}$ am Signaleingang vorgesehen. Dieser ist für AC-Signale komplett durchlässig. Aufgrund der Annahme einer maximalen Amplitude von 1,5V muss also also ein Mindestoffset von 0,9V auf das Signal addiert werden. Um hier jedoch die Amplitude trotz Verstärkung innerhalb des erlaubten Spannungsbereiches von $-0,6V<U<6V$ bleiben wurde ein fester Offset von 2,15V gewählt. Zudem würde eine maximale Verstärkung von $A=2$ hinzugezogen wodurch sich der Spannungsbereich, selbst bei einer maximalen Verstärkung, stets in einem Bereich von $-0,2V<U<5,7V$ befindet. Dies ist in ~\ref{fig:ampoff} illustriert. 
+Der Schlüsselfaktor in der Eingangsstufe ist der variable Widerstand im Rückkopplungspfad des \gls{acr:OP}s. Hierbei handelt es sich um ein digitales Potentiometer, welches sich über die \gls{acr:SPI}-Schnittstelle des Arduino zur Laufzeit beliebig verändern lässt. Die Schwierigkeit in der Implementierung dieses Bauteils liegt jedoch darin, dass es keine hohen negativen Spannungen verträgt. Aus dem Datenblatt ist ersichtlich, dass es nur mit Spannungen von $-0,6V<U<6V$ sorgfältig arbeiten kann. Da es sich bei dem zu verarbeitenden Audiosignal um ein Wechselspannungssignal mit einer Amplitude von etwa 1V \gls{acr:RMS} handelt, wurden in dieser Schaltung Vorkehrungen getroffen, um die negativen Anteile dieses Signals in positive Anteile zu transferieren. Um dieses Vorhaben zu realisieren, wurde auf den nicht-invertierenden Eingang des \gls{acr:OP}s mithilfe eines Spannungsteilers $R_{3}$ und $R_{2}$ eine Spannung angelegt. Diese soll das Potential des \gls{acr:OP}s so anheben, dass das \gls{acr:AC}-Signal aus der Soundkarte direkt mit einem Offset addiert wird und somit keine negativen Anteile mehr besitzt. Um die Soundkarte vor der \gls{acr:DC}-Spannung zu schützen wurde ein \gls{acr:DC}-Abblockkondensator $C_{1}$ am Signaleingang vorgesehen. Dieser ist für \gls{acr:AC}-Signale komplett durchlässig. Aufgrund der Annahme einer maximalen Amplitude von 1V \gls{acr:RMS} muss also ein Mindestoffset von 1V \gls{acr:RMS} zum Signal hinzu addiert werden. Um hier jedoch mit der Amplitude trotz Verstärkung innerhalb des erlaubten Spannungsbereiches von $-0,6V<U<6V$ zu bleiben, wurde ein fester Offset von 2,15V gewählt. Die Wahl dieses Wertes ist auch auf die gegenseitige Beeinflussung des Offsets und der Verstärkung zurückzuführen. Der Offset steigt auch also mit zunehmender Amplitudenverstärkung. Zudem wurde eine maximale Verstärkung von $A=1,6$ hinzugezogen wodurch sich der Spannungsbereich, selbst bei einer maximalen Verstärkung, stets in einem Bereich von $-0,2V<U<5,7V$ befindet. Dies ist in Abbildung~\ref{fig:ampoff} illustriert.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.8 \textwidth ]{ampoff.jpg}
+	\includegraphics[width = 1 \textwidth ]{ampoff.jpg}
 	\caption[Simulation von Offset und Verstärkung]{Simulation von Offset und Verstärkung} \gls{online:Eigen}
 	\label{fig:ampoff}
 \end{figure}
 
-Somit kann gewährleistet werden, dass das Digitale Potentiometer zunehmend in einem legitimen Spannungsbereich betrieben wird.
+Somit kann gewährleistet werden, dass das digitale Potentiometer zunehmend in einem legitimen Spannungsbereich betrieben wird.
 
 Der zweite \gls{acr:OP} der Schaltung sorgt in der Signalkette für einen weiteren
-Offset welcher die Grundhelligkeit der \gls{acr:LED} regelt. Da hier keine negative Spannung auftritt, kann das Digitale Potentiometer direkt angeschlossen werden.
+Offset, welcher die Grundhelligkeit der \gls{acr:LED} regelt. Da hier keine negative Spannung auftritt, kann das digitale Potentiometer direkt angeschlossen werden.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.9 \textwidth ]{stufe2.jpg}
+	\includegraphics[width = 1 \textwidth ]{stufe2.jpg}
 	\caption[Zweite Signalverarbeitungsstufe]{Zweite Signalverarbeitungsstufe} \gls{online:Eigen}
 	\label{fig:stufe2}
 \end{figure}
 
 
-Die sehr hohe Vorwärtsverstärkung und die differentielle Eingangscharakteristik des \gls{acr:OP}s können genutzt werden, um eine nahezu ideale spannungsgesteuerte Stromquelle oder einen Spannungs-zu-Strom-Wandler zu realisieren. Es ist jedoch zu beachten, dass die umzuwandelnde Eingangsspannung an den nicht invertierenden Eingang des \gls{acr:OP}s angelegt wird. Der invertierende Eingang ist in Rückkopplung mit einem Ende des Widerstands $R{1}$ und der Source des Transistors $M{1}$ verbunden. Dies sorgt dafür, dass zwischen den Eingängen des \gls{acr:OP}s kein Spannungsunterschied herrscht. Der Ausgang des \gls{acr:OP}s steuert also das Gate des \gls{acr:MOSFET}s. Seine hohe Leerlaufverstärkung zwingt das Gate von $M{1}$ auf die erforderliche Spannung. Dadurch wird die Spannung, welche an $OP2-OUT = U_{R1}$ anliegt auf die Source des \gls{acr:MOSFET}s gespiegelt. Draus ergibt sich der Strom zu: 
-
-\begin{equation}
-	\label{equ:bsp1}
-	I_{R1} = \frac{U_{R1}}{R_{1}}
-\end{equation}
+Die sehr hohe Vorwärtsverstärkung und die differentielle Eingangscharakteristik des \gls{acr:OP}s können genutzt werden, um eine nahezu ideale spannungsgesteuerte Stromquelle oder einen Spannungs-zu-Strom-Wandler zu realisieren. Es ist jedoch zu beachten, dass die umzuwandelnde Eingangsspannung an den nicht invertierenden Eingang des \gls{acr:OP}s angelegt wird. Der Ausgang des \gls{acr:OP}s ist über den Widerstand $R{8}$ auf den invertierenden Eingang rückgekoppelt.  Zudem ist der invertierende Eingang zusätzlich mit der Source des Transistors $M{1}$ verbunden.Dies sorgt dafür, dass zwischen den Eingängen des \gls{acr:OP}s kein Spannungsunterschied herrschen kann, da der \gls{acr:OP} versucht beide Eingänge auf das Selbe Potential zu heben. Der Ausgang des \gls{acr:OP}s steuert also das Gate des \gls{acr:MOSFET}s. Seine hohe Leerlaufverstärkung zwingt das Gate von $M{1}$ auf die für das durchschalten erforderliche Spannung. Dadurch wird die Spannung, welche an $OP2-OUT$ anliegt, als Strom auf die den Source Kontakt des \gls{acr:MOSFET}s gespiegelt.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.9 \textwidth ]{endstufe.jpg}
+	\includegraphics[width = 1 \textwidth ]{endstufe.jpg}
 	\caption[LED- Treiber als Endstufe]{LED- Treiber als Endstufe} \gls{online:Eigen}
 	\label{fig:endstufe}
 \end{figure}
 
-Durch die Bekanntheit des Stromflusses durch $R_1$ kann nun durch kirchhoffsche Regeln auf den Stromfluss in der \gls{acr:LED} geschlossen werden.\gls{online:vtoi} Dieser Strom wiederum erzeugt über selbigen Widerstand eine Anhebung des Potentials am - Eingang des \gls{acr:OP}s. Auf diese Weise versucht der \gls{acr:OP} seine beiden Eingänge auf das gleiche Potential anzuheben. Beim Leistungswiderstand $R_{9}$ handelt es sich um einen sehr kleinen Widerstand, weshalb durch die \gls{acr:LED}, den \gls{acr:MOSFET} und den Leistungswiderstand ein sehr hoher Strom fließt. Dieser sorgt für eine hell leuchtende \gls{acr:LED} zur Übertragung des Signals.
+Durch die Simulation des Stromflusses durch $R_9$ konnte der Stromfluss in der \gls{acr:LED} berechnet werden.\gls{online:vtoi} Dieser Strom im \gls{acr:LED}-Treiber erzeugt über dem Leistungswiderstand eine Anhebung des Potentials am invertierenden Eingang des \gls{acr:OP}s. Auf diese Weise versucht der \gls{acr:OP} seine beiden Eingänge auf das gleiche Potential anzuheben. Beim Leistungswiderstand $R_{9}$ handelt es sich um einen sehr kleinen Widerstand von 3,9$\ohm$. Aus diesem Grund fließt durch die \gls{acr:LED}, den \gls{acr:MOSFET} und den Leistungswiderstand ein sehr hoher Strom. Dieser hohe Strom ist signifikant für eine hell leuchtende \gls{acr:LED}, welche zur Übertragung des Signals dient.
 
 
+
+\newpage
 \section{Thermisches Management}
 \label{subsub:thermo}
-Wie im vorherigen Kapitel schon erwähnt, fließt durch den Leistungsstrang der Schaltung ein sehr hoher Strom. Durch diesen hohen Stromfluss kommt es zu einer immensen Hitzeentwicklung in den Bauteilen. Um jedoch die einwandfreie Funktion von elektronischen Halbleiterbauelementen zu gewährleisten, ist die Einhaltung der vom Hersteller angegebenen maximalen Sperrschichttemperaturen unerlässlich. Solch eine Sperrschichttemperatur lässt sich nur bei geringer Leistungsanforderung ohne Kühlung einhalten. Zudem sind die Einbaulage, der Einbauort, die Geschwindigkeit und Temperatur der Umgebungsluft variable Größen die miteinzukalkulieren sind.\gls{online:thermo}
+Wie im vorherigen Kapitel schon erwähnt, fließt durch den Leistungsstrang der Schaltung ein sehr hoher Strom. Durch diesen hohen Stromfluss kommt es zu einer immensen Hitzeentwicklung in den Bauteilen. Um jedoch die einwandfreie Funktion von elektronischen Halbleiterbauelementen zu gewährleisten, ist die Einhaltung der vom Hersteller angegebenen maximalen Sperrschichttemperaturen unerlässlich. Solch eine Sperrschichttemperatur lässt sich nur bei geringer Leistungsanforderung ohne Kühlung einhalten. Zudem sind die Einbaulage, der Einbauort, die Geschwindigkeit und Temperatur der Umgebungsluft variable Größen, die miteinzukalkulieren sind.\gls{online:thermo}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width =1 \textwidth ]{thermo.jpg}
-	\caption[Montageschema eines Kühlkörpers]{Montageschema eines Kühlkörpers} \gls{online:Eigen}\gls{online:thermo2}
+	\caption[Montageschema eines Kühlkörpers]{Montageschema eines Kühlkörpers} \gls{online:Eigen}
 	\label{fig:thermo}
 \end{figure}
 
-Um gegen diese Hitzeentwicklung vorzugehen wird für die kritischen Bauteile somit ein Kühlkörper vorgesehen. Diese sollen die Wärme vom Bauteil weg und nach außen hin abführen. In dem hier gegebenen elektrischen Stromkreis, werden zwei Halbleiter als kritische und zu kühlende Bauteile betrachtet. Zunächst die \gls{acr:LED} zum Übertragen des Signals und zum zweiten der \gls{acr:MOSFET}.\cite{thermLED}
+Um gegen diese Hitzeentwicklung vorzugehen, wird für die kritischen Bauteile somit ein Kühlkörper vorgesehen. Dieser soll die Wärme vom Bauteil weg-, und nach außen hin abführen. In dem hier gegebenen elektrischen Stromkreis werden zwei Halbleiter als kritische und zu kühlende Bauteile betrachtet. Zunächst die \gls{acr:LED} zum Übertragen des Signals und zum zweiten der \gls{acr:MOSFET}.\cite{thermLED}
 
 Zur Auswahl eines geeigneten Kühlkörpers für ein Halbleiterbauelement ist die Berechnung des Wärmewiderstandes unerlässlich. Dafür werden die in Tabelle~\ref{tab:thermofaktoren} aufgeführten Variablen in folgende Gleichung eingesetzt.
 
@@ -96,18 +93,18 @@ Zur Auswahl eines geeigneten Kühlkörpers für ein Halbleiterbauelement ist die
 			$\vartheta_{u}$& Umgebungstemperatur in $^\circ C$ \\
 			$P$ &  Die am zu kühlenden Halbleiter maximal anfallende Leistung in Watt\\
 			Rth & Wärmewiderstand allgemein in $\frac{K}{W}$ \\
-			RthG & Herstellerangabe zum innerer Wärmewiderstand des Halbleiters \\
+			RthG & Herstellerangabe zum inneren Wärmewiderstand des Halbleiters \\
 			RthM & Wärmewiderstand der Montagefläche \\
 			RthK &  Wärmewiderstand des Kühlkörpers \\
 			\bottomrule
 		\end{tabular}
-		\caption{Variablen zu berechnung des Kühlkörpers}\gls{online:thermo1}
+		\caption{Variablen zur Berechnung des Kühlkörpers}\gls{online:thermo1}
 		\label{tab:thermofaktoren}
 	\end{center}
 \end{table}
 
 Für die Berechnung der Kühlkörper wurden zudem Berechnungen zur Verlustleistung des
-\gls{acr:MOSFET}s und der \gls{acr:LED} vorgenommen. Es wird bewusst überdimensioniert. Dazu wurde beispielsweise für die \gls{acr:LED} mit einem Wirkungsgrad von 0 \% gerechnet. Unter diesen Umständen würde die Verlustleistung 100 \% betragen. \gls{acr:LED}s haben jedoch tatsächlich einen Wirkungsgrad von ca. 25 - 50 \%. Die maximalen Verluste werden natürlich bei voller Helligkeit verzeichnet. Zur Auslegung der Kühlkörper wurden also folgende Berechnungen durchgeführt:
+\gls{acr:MOSFET}s und der \gls{acr:LED} vorgenommen. Es wird bewusst überdimensioniert. Dazu wurde beispielsweise für die \gls{acr:LED} mit einem Wirkungsgrad von 0 \% gerechnet. Unter diesen Umständen würde die Verlustleistung 100 \% betragen. \gls{acr:LED}s haben jedoch tatsächlich einen Wirkungsgrad von ca. 25 - 50 \%. Die maximalen Verluste werden natürlich bei voller Helligkeit verzeichnet. Für die Umgebungstemperatur $\vartheta_{u}$ wurde eine konstanter Wert von 25$^\circ$ angenommen, dies ist darauf zurückzuführen, dass der Sender später in Labor und Innenräumen Verwendung findet. Zur Auslegung der Kühlkörper wurden also folgende Berechnungen durchgeführt:
 
 \begin{equation}
 	\label{equ:thermoled}
@@ -139,11 +136,11 @@ ergibt. Gewählt wurde zuletzt für sowohl \gls{acr:LED} als auch \gls{acr:MOSFE
 \section{Software}
 \label{sec:Software}
 
-Dieser Abschnitt beschäftigt sich mit der, in der Arduino \gls{acr:IDE} programmierten, Ansteuerung des Zwei-Kanal Digitalpotentiometers zur Variation des Offsets und der Amplitude. Dabei soll das prinzipielle Funktionsschema und dessen Implementierung zum Ausdruck gebracht werden. Im Anschluss wird die Konfigurierung und Evaluierung der Übertragung via Dream Software näher beschrieben und charakterisiert.
+Dieser Abschnitt beschäftigt sich mit der, in der Arduino \gls{acr:IDE} programmierten, Ansteuerung des Zwei-Kanal Digitalpotentiometers zur Variation des Offsets und der Amplitude. Dabei soll das prinzipielle Funktionsschema und dessen Implementierung zum Ausdruck gebracht werden. Im Anschluss werden die Konfigurierung und Evaluierung der Übertragung via Dream Software näher beschrieben und charakterisiert.
 
 \subsection{Offset-Regelung}
 \label{subsec:offset}
-Um ein Potentiometer mit dem Arduino einlesen zu können, muss einer der analogen Eingabepins des Arduino verwenden. Da Potentiometer drei Anschlüsse besitzen, schließt man einen der äußeren Kontakte des Schleifenwiderstands an der 5V Spannungsquelle an und den anderen auf Ground. Den mittleren Anschluss, welcher für die Variabilität des Potentiometer steht, wird mit dem analogen Eingang A0 des Arduino verbunden. Abbildung~\ref{fig:digipot} illustriert dies. 
+Um ein Potentiometer mit dem Arduino einlesen zu können, muss einer der analogen Eingabepins des Arduino verwendet werden. Da Potentiometer drei Anschlüsse besitzen, schließt man einen der äußeren Kontakte des Schleifenwiderstands an der 5V Spannungsquelle an und den anderen auf Ground. Den mittleren Anschluss, welcher für die Variabilität des Potentiometer steht, wird mit dem analogen Eingang A0 des Arduino verbunden. Abbildung~\ref{fig:digipot} illustriert dies. 
 
 \begin{figure}[H]
 	\centering
@@ -153,12 +150,22 @@ Um ein Potentiometer mit dem Arduino einlesen zu können, muss einer der analoge
 	\label{fig:digipot}
 \end{figure}
 
-Der analoge Pin A0 wird in der Arduino \gls{acr:IDE} durch die Funktion analogRead() eingelesen. Die Arduino-Boards beherbergen einen 10-Bit-Analog-zu-Digital-Konverter. Dies hat zur folge, dass das Board Eingangsspannungen zwischen 0 und 5 V auf Integer-Werte zwischen 0 und 1023 mappt. Die erreichte Auflösung ist damit auf dem gegebenen Arduino UNO etwa 4,9 mV per Bit.\gls{online:analogread} Diese 1023 gilt es dann durch vier zu teilen, da ein Digital Potentiometer nur in 256 Stufen angesteuert werden kann. Der Wert wird dann über die \gls{acr:SPI} Schnittstelle an das Digital Potentiometer gesendet und verändert somit dessen Widerstandswert. Somit kann der Offsetwert extern in das Programm geschrieben werden. Dies ist so bedeutsam, da der Offset auch in der Amplituden-Regelung eine entscheidende Aufgabe hat. 
+Der analoge Pin A0 wird in der Arduino \gls{acr:IDE} durch die Funktion analogRead() eingelesen. Die Arduino-Boards beherbergen einen 10-Bit-Analog-zu-Digital-Konverter. Dies hat zur folge, dass das Board Eingangsspannungen zwischen 0 und 5 V auf Integer-Werte zwischen 0 und 1023 mappt. Die erreichte Auflösung ist damit auf dem gegebenen Arduino UNO etwa 4,9 mV per Bit.\gls{online:analogread} Diese 1023 Bit gilt es dann durch vier zu teilen, da das im Zuge dieser Abschlussarbeit verwendete Digitalpotentiometer nur in 256 Stufen angesteuert werden kann. Der Wert wird dann über die \gls{acr:SPI} Schnittstelle an das Digitalpotentiometer gesendet und verändert somit dessen Widerstandswert. Somit kann der Offsetwert extern in das Programm geschrieben werden. Dies ist notwendig um die Höhe des Offsets im Code zu hinterlegen. Somit kann der aktuelle Wert über das \gls{acr:LCD} ausgegeben werden. Das Anschlussschema des\gls{acr:LCD} wird in der folgenden Abbildung illustriert.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width =1 \textwidth ]{lcd.jpg}
+	\caption[Anschlussschema des \gls{acr:LCD}]{Anschlussschema des \gls{acr:LCD}} 
+	\gls{online:lcd}
+	\label{fig:lcd}
+\end{figure}
+
+Hierbei wird das \gls{acr:LCD} von der \gls{acr:I2C}-Bus-Schnittstelle des Arduino angesteuert. Zur Implementierung dieser Funktion ist in der Arduino \gls{acr:IDE} eine Beispielbibliothek zu finden. Beim \gls{acr:I2C}-Bus handelt es sich um einen Master-Slave Bus, bei welchem ein Datentransfer immer durch einen Master, hier den Arduino, initiiert wird. Das Bus-System arbeitet Bidirektional. Der \gls{acr:SDA}-Pin enthält hierbei die Daten und \gls{acr:SCL}- Pin sendet Takt-Impulse. Zuletzt benötigt das \gls{acr:LCD} noch eine 5V Spannungsversorgung und einen Masse Anschluss.\gls{online:I2C}
 \newpage
-\subsection{Automatisierte Amplituden-Regelung}
+\subsection{Automatisierte Amplitudenregelung}
 \label{subsec:autoamp}
 
-Um die Amplitudenregelung zu realisieren musste zunächst die Amplitude analogen Eingang des Arduino eingelesen werden. Hierbei wurde am Ausgang der ersten Verstärkerstufe, welche in Abbildung~\ref{fig:stufe1} illustriert wurde, ein Messpunkt vorgesehen welcher auf den Pin A1 des Arduino geführt wurde. Dieser kann Spannungen im Bereich von 0-5V auslesen, weshalb die Maximale Verstärkung der ersten Verstärkerstufe auf diesen gegebenen Bereich limitiert wurde. Abbildung ~\ref{fig:amplitudeanalog} illustiert die Schematisch ein solches auslesen eines Signals mit dem analogen Eingang eines Arduino. 
+Um die Amplitudenregelung zu realisieren, musste zunächst die Amplitude am analogen Eingang des Arduino eingelesen werden. Hierbei wurde am Ausgang der ersten Verstärkerstufe, welche in Abbildung~\ref{fig:stufe1} illustriert wurde, ein Messpunkt vorgesehen, welcher auf den Pin A1 des Arduino geführt wurde. Dieser kann Spannungen im Bereich von 0-5V auslesen, weshalb die maximale Verstärkung der ersten Verstärkerstufe auf diesen gegebenen Bereich limitiert wurde. Abbildung ~\ref{fig:amplitudeanalog} illustriert schematisch ein solches Auslesen eines Signals mit dem analogen Eingang eines Arduino. 
 
 \begin{figure}[H]
 	\centering
@@ -168,19 +175,26 @@ Um die Amplitudenregelung zu realisieren musste zunächst die Amplitude analogen
 	\label{fig:amplitudeanalog}
 \end{figure}
 
-Da die erste Verstärkerstufe ein maximales Eingangssignal von 1V \gls{acr:RMS} vorweist wird dieses mit einem Offset versehen und so weit verstärkt, dass es sich immernoch innerhalb der gesetzten Spannungsgrenzen befindet. Durch dieses Vorgehen kann hierbei der Spannungsbereich von 0V - 5V gut ausgenutzt werden. Wenn also eine zu kleine Amplitude gemessen wird, steuert der Arduino das Digitale Potentiometer so an, dass sich die Verstärkung des \gls{acr:OP}s und somit auch die Amplitude des Signals Schritt für Schritt erhöht. Dies geschieht bis diese wieder in dem vorher experimentell Ermittelten, für die Übertragung optimalen Amplitudenbereich liegt. Hierzu wurde von dem gemessenen Signal sowohl das Minimum, als auch das Maximum simuliert. Dadurch konnten Grenzen gebildet werden welche den optimalen Übertragungsbereich darstellen. 
+Da die erste Verstärkerstufe ein maximales Eingangssignal von 1V \gls{acr:RMS} vorweist, wird dieses mit einem Offset versehen und so weit verstärkt, dass es sich immer noch innerhalb der gesetzten Spannungsgrenzen befindet. Durch dieses Vorgehen kann hierbei der Spannungsbereich von 0V - 5V gut ausgenutzt werden. Wenn also eine zu kleine Amplitude gemessen wird, steuert der Arduino das digitale Potentiometer so an, dass sich die Verstärkung des \gls{acr:OP}s und somit auch die Amplitude des Signals Schritt für Schritt erhöhen. Dies geschieht bis diese wieder in dem vorher experimentell ermittelten, für die Übertragung optimalen, Amplitudenbereich liegen. Hierzu wurde von dem gemessenen Signal sowohl das Minimum, als auch das Maximum simuliert. Dadurch konnten Grenzen gebildet werden, welche den optimalen Übertragungsbereich darstellen. 
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width =1 \textwidth ]{amplitudegemessen.jpg}
+	\caption[Plot der gemessenen Amplitude im Seriellen Plotter der Arduino \gls{acr:IDE}]{Plot der gemessenen Amplitude im Seriellen Plotter des Arduino \gls{acr:IDE}} 
+	\gls{online:Eigen}
+	\label{fig:amplitudegemessen}
+\end{figure}
 
-
-
+Abbildung~\ref{fig:amplitudegemessen} veranschaulicht den optimalen Amplitudenbereich. Durch den fest eingestellten Offset von 2.5V, welcher ca. einer Digitalen $"127"$ entspricht, bewegt sich das über den analogen Eingang des Arduino gemessene Audio-Signal um genau diesen Wert. Im Programm wurde im Anschluss von immer 500 eingelesenen Werten, der Maximalwert ermittelt und dementsprechend die Amplitude, wenn nötig, nachgeregelt. Zudem wurde an den Amplitudengrenzen ein Schwellwert mit der Wertigkeit von $+"10"$ und $-"10"$ vorgesehen um einer zu hohen Empfindlichkeit in der Regelung vorzubeugen.
+ 
 \newpage
-\subsection{Modulation mit Dream 2.2.1}
+\subsection{Modulation mit Dream (Version 2.2.1)}
 \label{subsec:dream}
-Nun sollen Audio Echtzeitdaten in \gls{acr:DRM}-Format moduliert und über die projektierte Hardware versendet werden. Deshalb wird im folgenden erläutert wie die Dream Software (Version 2.2.1) zu verwenden ist. Sie verfügt über zwei verschiedene Möglichkeiten aufgerufen werden. Zum ersten im Sendemodus und zum zweiten im Empfangsmodus, wodurch bei einer Übertragung die Benutzung von zwei verschiedenen Computern vorausgesetzt wird. Für das interne Routing des Audiosignals wird zusätzlich noch ein Software namens \gls{acr:VAC} vorgestellt. Dream bietet zudem umfangreiche Einstellungsoptionen um sowohl Rauschen als auch andere Störungen zu minimieren. Die wichtigsten Parameter für die korrekte Benutzung und potentielle Fehlersuche werden in den folgenden zwei Kapiteln näher erläutert.
+Nun sollen Audio Echtzeitdaten in \gls{acr:DRM}-Format moduliert und über die projektierte Hardware versendet werden. Deshalb wird im folgenden erläutert, wie die Dream Software (Version 2.2.1) zu verwenden ist. Sie verfügt über zwei verschiedene Möglichkeiten, aufgerufen zu werden. Zum Ersten im Sendemodus und zum Zweiten im Empfangsmodus, wodurch bei einer Übertragung die Benutzung von zwei verschiedenen Computern vorausgesetzt wird. Für das interne Routing des Audiosignals wird zusätzlich noch eine Software namens \gls{acr:VAC} vorgestellt. "Dream" bietet zudem umfangreiche Einstellungsoptionen, um sowohl Rauschen als auch andere Störungen zu minimieren. Die wichtigsten Parameter für die korrekte Benutzung und potentielle Fehlersuche werden in den folgenden zwei Kapiteln näher erläutert.
 
 \subsubsection{Virtual Audio Cable}
 \label{subsubsec:routing}
-Virtual Audio Cable ist eine Software mit der man eine Vielzahl virtueller Audiogeräte auf dem Computer implementieren kann, um diese im Anschluss mit anderen Programmen ohne den geringsten Qualitätsverlust zu verwenden.\gls{online:vac} So wird dieses Programm in dieser Abschlussarbeit zum Routen der Audiodaten in die Dream Software verwendet. Der Vorgang muss jedoch nur auf der Sendeseite beachtet werden, da die Audio Daten hier dem Programm im Sendemodus zugeführt und dann über den \gls{acr:AUX} Anschluss ausgegeben werden müssen. Dieses Vorgehen ist in Abbildung~\ref{fig:dreamtxeinstellung} dargestellt. Beim Empfänger hingegen ist \gls{acr:VAC} nicht notwendig, da dort über den Mikrofon Eingang des Computers die Daten empfangen werden. Jener stellt in der Dream Software demnach den Eingang dar, wohingegen die Lautsprecher des Computers den Ausgang darstellen.
+Virtual Audio Cable ist eine Software, mit der man eine Vielzahl virtueller Audiogeräte auf dem Computer implementieren kann, um diese im Anschluss mit anderen Programmen ohne den geringsten Qualitätsverlust zu verwenden.\gls{online:vac} So wird dieses Programm in dieser Abschlussarbeit zum Routen der Audiodaten in der Dream Software verwendet. Der Vorgang muss jedoch nur auf der Sendeseite beachtet werden, da die Audio Daten hier dem Programm im Sendemodus zugeführt und dann über den \gls{acr:AUX} Anschluss ausgegeben werden müssen. Dieses Vorgehen ist in Abbildung~\ref{fig:dreamtxeinstellung} dargestellt. Beim Empfänger hingegen ist \gls{acr:VAC} nicht notwendig, da dort über den Mikrofoneingang des Computers die Daten empfangen werden. Jener stellt in der Dream Software demnach den Eingang dar, wohingegen die Lautsprecher des Computers den Ausgang darstellen.
 
 \begin{figure}[H]
 	\centering
@@ -230,13 +244,13 @@ Im Anschluss kann der Übertragungsmodus gestartet werden. Dieser ist durch eine
 			\textbf{Mode D}: Wie Robustheitsmodus B, jedoch mit starker Verzögerung und Dopplerspreizung.\newline
 			Die Bandbreite ist die Bruttobandbreite des aktuellen \gls{acr:DRM}-Signals. \\
 
-			\textbf{Interl. Depth} & Die Symbol-Interleavertiefe kann entweder kurz (ca. 400 ms) oder lang (ca. 2 s) sein. Je länger der Interleaver, desto besser kann der Kanaldecoder Fehler aus langsam schwindenden Signalen korrigieren. Aber je länger die Interleaver-Länge, desto länger die Verzögerung, bis Audio zu hören ist.\\
+			\textbf{Interl. Depth} & Die Symbol-Interleavertiefe kann entweder kurz (ca. 400 ms) oder lang (ca. 2 s) sein. Je länger der Interleaver, desto besser kann der Kanaldecoder Fehler aus langsam schwindenden Signalen korrigieren. Aber je länger die Interleaver-Länge, desto länger die Verzögerung bis Audio zu hören ist.\\
 				
-			\textbf{\gls{acr:SDC} / \gls{acr:MSC}} & Zeigt die Modulationsart des \gls{acr:SDC}- und \gls{acr:SDC}-Kanals an. Für den \gls{acr:MSC}-Kanal sind einige hierarchische Modi definiert, die einen sehr stark geschützten Dienstkanal bieten können.\\
+			\textbf{\gls{acr:SDC} / \gls{acr:MSC}} & Zeigt die Modulationsart des \gls{acr:MSC}- und \gls{acr:SDC}-Kanals an. Für den \gls{acr:MSC}-Kanal sind einige hierarchische Modi definiert, die einen sehr stark geschützten Dienstkanal bieten können.\\
 		
-			\textbf{Prot. Level} & Die Fehlerschutzstufe des Kanalcodierers. Für 64-QAM gibt es vier Schutzstufen, die im DRM-Standard definiert sind. Schutzstufe 0 hat den höchsten Schutz, während Stufe 3 den niedrigsten Schutz hat. Die Buchstaben A und B sind die Bezeichnungen für den höher und niedriger geschützten Teil eines DRM-Blocks, wenn \gls{acr:UEP} verwendet wird. Wenn \gls{acr:EEP} verwendet wird, gilt nur die Schutzstufe von Teil B.\\
+			\textbf{Prot. Level} & Die Fehlerschutzstufe des Kanalcodierers. Für 64-QAM gibt es vier Schutzstufen, die im \gls{acr:DRM}-Standard definiert sind. Schutzstufe 0 hat den höchsten Schutz, während Stufe 3 den niedrigsten Schutz hat. Die Buchstaben A und B sind die Bezeichnungen für den höher und niedriger geschützten Teil eines \gls{acr:DRM}-Blocks wenn \gls{acr:UEP} verwendet wird. Wenn \gls{acr:EEP} verwendet wird, gilt nur die Schutzstufe von Teil B.\\
 		
-			\textbf{No. of Services} & Hier wird die Anzahl der im DRM-Stream übertragenen Audio- und Datendienste angezeigt. Die maximale Anzahl der Streams beträgt vier.\\
+			\textbf{No. of Services} & Hier wird die Anzahl der im \gls{acr:DRM}-Stream übertragenen Audio- und Datendienste angezeigt. Die maximale Anzahl der Streams beträgt vier.\\
 		
 			\textbf{Received time} & Dieses Label zeigt die empfangene Zeit und das Datum in UTC an. Diese Information wird im \gls{acr:SDC}-Kanal übertragen.\\
 			\bottomrule
@@ -250,7 +264,7 @@ Im Anschluss kann der Übertragungsmodus gestartet werden. Dieser ist durch eine
 \subsubsection{Dream Receiver}
 \label{subsec:Unterabschnitt12}
 
-Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.exe standardmäßig geöffnet. Deshalb ist hierbei keinerlei spezielle Aufrufmethodik notwendig. Der Evaluation Dialog liefert detaillierte Informationen über die empfangenen \gls{acr:DRM}-Parameter und Visualisiert diese in verschiedenen Diagrammen. In Abbilfung~\ref{fig:dreamevaluation} wird beispielsweise ein Empfangenes \gls{acr:DRM}-Spektrum illustriert. Hierzu können demnach einige Eigenschaften eingelesen werden. In den folgenden Tabellen, werden für die Übertragung und das Verständnis des Evaluationsdialoges bedeutende Parameter näher erläutert.
+Das Gegenstück des Dream Transmitters, der Dream Receiver, wird durch die Dream.exe standardmäßig geöffnet. Deshalb ist hierbei keinerlei spezielle Aufrufmethodik notwendig. Der Evaluations Dialog liefert detaillierte Informationen über die empfangenen \gls{acr:DRM}-Parameter und visualisiert diese in verschiedenen Diagrammen. In Abbildung~\ref{fig:dreamevaluation} wird beispielsweise ein empfangenes \gls{acr:DRM}-Spektrum illustriert. Hierzu können demnach einige Eigenschaften eingelesen werden. In den folgenden Tabellen werden, für die Übertragung und das Verständnis des Evaluationsdialogs bedeutende, Parameter näher erläutert.
 
 
 \begin{figure}[H]
@@ -268,11 +282,11 @@ Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.
 			\toprule
 			\textbf{Chart} & \textbf{Beschreibung} \\
 			\midrule
-			\textbf{SNR} & Das \gls{acr:SNR} wird hier wert angegeben.\\
-			\textbf{Main Plot} & Die graphische veranschaulichung verschiedener Vectoren im \gls{acr:DRM}-Dekodierer. \\
+			\textbf{SNR} & Das \gls{acr:SNR} wird hier als wert angegeben.\\
+			\textbf{Main Plot} & Die graphische Darstellung verschiedener Parameter des empfangenen \gls{acr:DRM}-Signals. \\
 			\bottomrule
 		\end{tabular}
-		\caption{Beschreibung des \gls{acr:DRM}}Charts\gls{online:dream}
+		\caption{Beschreibung des \gls{acr:DRM}}Charts\gls{online:dream}\gls{online:drmpic}
 		\label{tab:drmchart}
 	\end{center}
 \end{table}
@@ -284,7 +298,7 @@ Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.
 			\toprule
 			\textbf{Measurements} & \textbf{Beschreibung} \\
 			\midrule
-			\textbf{\gls{acr:DC} Frequency Offset} & Dieser Offset entspricht der resultierenden Soundkarten-Zwischenfrequenz des Frontends. Diese Frequenz ist nicht auf einen bestimmten Wert beschränkt, sondern nur darauf, dass das DRM-Spektrum vollständig innerhalb der Bandbreite der Soundkarte liegen muss.\\
+			\textbf{\gls{acr:DC} Frequency Offset} & Dieser Offset entspricht der resultierenden Soundkarten-Zwischenfrequenz des Frontends. Diese Frequenz ist nicht auf einen bestimmten Wert beschränkt, sondern nur darauf, dass das \gls{acr:DRM}-Spektrum vollständig innerhalb der Bandbreite der Soundkarte liegen muss.\\
 			
 			\textbf{Sample Frequency Offset} & Offset der Abtastrate des lokalen Computers zum \gls{acr:DA}-Wandler im Sender. \\
 			
@@ -294,18 +308,18 @@ Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.
 			
 			\textbf{Time Sync Acq \gls{acr:LED}} &Diese \gls{acr:LED} zeigt den Zustand der Timing-Erfassung (suche nach dem Beginn eines \gls{acr:OFDM}-Symbols) an. Sobald die Erfassung abgeschlossen ist, bleibt diese LED grün.	\\
 			
-			\textbf{Frame Sync \gls{acr:LED}} & Der \gls{acr:DRM}-Frame-Synchronisationsstatus wird mit dieser \gls{acr:CRC} symbolisiert. Auch diese \gls{acr:LED} ist nur im Erfassungszustand des Dream-Empfängers aktiv. Im Tracking-Modus ist diese \gls{acr:LED} immer grün.\\
+			\textbf{Frame Sync \gls{acr:LED}} & Der \gls{acr:DRM}-Frame-Synchronisationsstatus wird mit dieser \gls{acr:CRC} \gls{acr:LED} symbolisiert. Auch diese \gls{acr:LED} ist nur im Erfassungszustand des Dream-Empfängers aktiv. Im Tracking-Modus ist diese \gls{acr:LED} immer grün.\\
 			
-			\textbf{FAC \gls{acr:CRC} \gls{acr:LED}} & Diese \gls{acr:LED} zeigt die zyklische Redundanzprüfung (\gls{acr:CRC}) des Fast Access Channel (FAC) des DRM an. Wenn die \gls{acr:CRC}-Prüfung des FAC erfolgreich war, wechselt der Empfänger in den Tracking-Modus. Die FAC-LED ist die Anzeige, ob der Empfänger auf eine DRM-Übertragung synchronisiert ist oder nicht. \\
+			\textbf{FAC \gls{acr:CRC} \gls{acr:LED}} & Diese \gls{acr:LED} zeigt die zyklische Redundanzprüfung (\gls{acr:CRC}) des Fast Access Channels (FAC) des \gls{acr:DRM} an. Wenn die \gls{acr:CRC}-Prüfung des FAC erfolgreich war, wechselt der Empfänger in den Tracking-Modus. Die FAC-LED ist die Anzeige dafür, ob der Empfänger auf eine \gls{acr:DRM}-Übertragung synchronisiert ist oder nicht. \\
 			
-			\textbf{SRC \gls{acr:CRC} \gls{acr:LED}} & 	Diese \gls{acr:LED} zeigt das \gls{acr:CRC}-Prüfergebnis des \gls{acr:SDC} an, der ein logischer Kanal des \gls{acr:DRM}-Streams ist. Diese Daten werden in ca. 1-Sekunden-Intervallen übertragen und enthalten Informationen über Senderkennung, Audio- und Datenformat usw. Der Fehlerschutz ist normalerweise geringer als der Schutz des \gls{acr:FAC}. \\
+			\textbf{\gls{acr:SDC} \gls{acr:CRC} \gls{acr:LED}} & 	Diese \gls{acr:LED} zeigt das \gls{acr:CRC}-Prüfergebnis des \gls{acr:SDC} an, der ein logischer Kanal des \gls{acr:DRM}-Streams ist. Diese Daten werden in ca. 1-Sekunden-Intervallen übertragen und enthalten Informationen über Senderkennung, Audio- und Datenformat usw. Der Fehlerschutz ist normalerweise geringer als der Schutz des \gls{acr:FAC}. \\
 			
-			\textbf{MSC \gls{acr:CRC} \gls{acr:LED}} & Diese \gls{acr:LED} zeigt den Status des \gls{acr:MSC}. Dieser Kanal enthält die eigentlichen Audio- und Datenbits. Die \gls{acr:LED} zeigt die \gls{acr:CRC}-Prüfung des AAC-Core-Decoders an.  Wenn die \gls{acr:SBR}-\gls{acr:CRC} falsch ist, aber die AAC-\gls{acr:CRC} in Ordnung ist, kann man immer noch etwas hören (die hohen Frequenzen sind in diesem Fall natürlich nicht vorhanden). Wenn diese \gls{acr:LED} rot leuchtet, sind Unterbrechungen des Tons zu hören. Leuchtet die \gls{acr:LED} gelb, bedeutet das, dass nur ein 40 ms Audio-Frame-\gls{acr:CRC} falsch war. Dies verursacht normalerweise keine hörbaren Störungen.\\
+			\textbf{MSC \gls{acr:CRC} \gls{acr:LED}} & Diese \gls{acr:LED} zeigt den Status des \gls{acr:MSC}. Dieser Kanal enthält die eigentlichen Audio- und Datenbits. Die \gls{acr:LED} zeigt den Status der \gls{acr:CRC}-Prüfung des AAC-Core-Decoders an.  Wenn die \gls{acr:SBR}-\gls{acr:CRC} falsch ist, aber die AAC-\gls{acr:CRC} in Ordnung ist, kann man immer noch etwas hören. Wenn diese \gls{acr:LED} rot leuchtet, sind Unterbrechungen des Tons zu hören. Leuchtet die \gls{acr:LED} gelb, bedeutet das, dass nur ein 40 ms Audio-Frame-\gls{acr:CRC} falsch war. Dies verursacht normalerweise keine hörbaren Störungen.\\
 			\bottomrule
 		\end{tabular}
-		\caption{Messeinheiten zur Evaluation des DRM-Empfangs}
+		\caption{Messeinheiten zur Evaluation des \gls{acr:DRM}-Empfangs}
 		\gls{online:dream}
-		\label{tab:drmmess}
+		\label{tab:drmmess}\gls{online:drmpic}
 	\end{center}
 \end{table}
 
@@ -316,15 +330,15 @@ Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.
 			\toprule
 			\textbf{Advanced Settings} & \textbf{Beschreibung}\\
 			\midrule
-			\textbf{Frequency Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung in Frequenzrichtung ausgewählt werden.\\
+			\textbf{Frequency Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung ausgewählt werden.\\
 			
 			\textbf{Time Interpolation} & Mit diesen Einstellungen kann das Verfahren zur Kanalschätzung in Zeitrichtung ausgewählt werden.\newline
 			\textbf{Wiener} - Die Wiener-Interpolation verwendet eine Schätzung der Statistik des Kanals, um einen optimalen Filter zur Rauschunterdrückung zu entwerfen.\newline
-			\textbf{Linear} - Enfache lineare Interpolationsmethode, um die Kanalschätzung zu erhalten. Die Real- und Imaginärteile des geschätzten Kanals werden linear interpoliert. Dieser Algorithmus verursacht die geringste CPU-Belastung und die Audiodaten werden schneller dekodiert, aber er schneidet im Allgemeinen schlechter ab als die Wiener Interpolation, insbesondere bei niedrigen \gls{acr:SNR}s.\\
+			\textbf{Linear} - Einfache lineare Interpolationsmethode, um die Kanalschätzung zu erhalten. Die Real- und Imaginärteile des geschätzten Kanals werden linear interpoliert. Dieser Algorithmus verursacht die geringste CPU-Belastung und die Audiodaten werden schneller dekodiert, aber er schneidet im Allgemeinen schlechter ab als die Wiener Interpolation, insbesondere bei niedrigen \gls{acr:SNR}s.\\
 			
-			\textbf{Time Sync Tracking} & 	Mit diesen Einstellungen können die Methoden zur Nachführung der Zeitsynchronisation ausgewählt werden. \\
+			\textbf{Time Sync Tracking} & 	Mit diesen Einstellungen können die Methoden zur Durchführung der Zeitsynchronisation ausgewählt werden. \\
 			
-			\textbf{Flip Input Spectrum} & Wenn Sie dieses Kontrollkästchen aktivieren, wird das Eingangsspektrum gespiegelt oder invertiert. Dies ist erforderlich, wenn der Mischer im Front-End das untere Seitenband verwendet.
+			\textbf{Flip Input Spectrum} & Wenn dieses Kontrollkästchen aktiviert wird, wird das Eingangsspektrum gespiegelt oder invertiert.
 			\\
 			
 			\textbf{Mute Audio} & Der Ton kann durch Aktivieren dieses Kontrollkästchens stumm geschaltet werden. Die Reaktion auf das Aktivieren oder Deaktivieren dieses Kontrollkästchens wird durch die Audiopuffer um ca. 1 Sekunde verzögert.
@@ -334,15 +348,15 @@ Das Gegenstück des Dream Transmitters, der Dream Receiver wird durch die Dream.
 			
 			\textbf{Log File} & Wenn dieses Kontrollkästchen aktiviert wird, schreibt Dream zwei Arten von Protokolldateien über den aktuellen Empfang eines Audiodienstes mit \gls{acr:AAC}-Quellcodierung, eine Standard- und eine lange Protokolldatei. Beide Dateien werden in das Verzeichnis geschrieben, in dem sich die Dream-Anwendung befindet.\\
 			
-			\textbf{Freq} & Im Textfeld kann die aktuell gewählte Frequenz am Frontend eingegeben werden. Diese Frequenz wird in die Protokolldatei geschrieben und in der Datei Dream.ini gespeichert.
+			\textbf{Freq} & Im Textfeld kann Trägerfrequenz im Front-End eingegeben werden. Diese Frequenz wird in die Protokolldatei geschrieben und in der Datei Dream.ini gespeichert.
 			\\
 			
-			\textbf{Save Audio as WAV} & Speichern Sie das Audiosignal als PCM-Wave-Datei in Stereo mit 16 Bit und 48 kHz Abtastrate. Wenn Sie dieses Kontrollkästchen aktivieren, kann der Benutzer einen Dateinamen für die Aufnahme wählen. \\
+			\textbf{Save Audio as WAV} & Speichern Sie das Audiosignal als PCM-Wave-Datei in Stereo mit 16 Bit und einer 48 kHz Abtastrate. Wenn Sie dieses Kontrollkästchen aktivieren, kann der Benutzer einen Dateinamen für die Aufnahme wählen. \\
 			
 			\textbf{Filter}& Wenn Sie das Kontrollkästchen aktivieren, wird ein Bandpassfilter aktiviert, um Störungen von Nachbarkanälen zu reduzieren. Die Filterbandbreite wird automatisch auf die Bandbreite des aktuellen \gls{acr:DRM}-Signals eingestellt.\\
 			\bottomrule
 		\end{tabular}
-		\caption{Erweiterte Einstellungen in Dream}\gls{online:dream}
+		\caption{Erweiterte Einstellungen in Dream}\gls{online:dream}\gls{online:drmpic}
 		\label{tab:advdream}
 	\end{center}
 \end{table}
