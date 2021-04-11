@@ -49,12 +49,12 @@ Empfehlenswert ist es also, das Shannon Theorem nur als absolute Untergrenze zu 
 
 \section{Einführung in die Übertagungstechnik}
 \label{subsec:uebertragung}
-In diesem Kapitel werden die Grundlagen der modernen Übertragungstechnik als Basis für die weiteren Ausführungen erklärt. Zunächst soll der generelle Aufbau eines Übertragungssystems erläutert werden, um anschließend einige gängige digitale Modulationsarten vorzustellen. Hierbei liegt der Fokus besonders auf der Heranführung an die \gls{acr:QAM}-Modulation, welche in der später diskutierten Dream-Software Verwendung findet. Der letzte Abschnitt beschäftigt sich mit den Themen der Bandbreitennutzung und des Mehrkanalzugriffs. Hier werden die aus der Mobilfunktechnik bekannten Begriffe \gls{acr:TDMA},\gls{acr:CDMA} und \gls{acr:FDMA} eingeführt und beschrieben. Ein besonderes Augenmerk liegt hier auf dem \gls{acr:OFDM} einer weiterentwickelten Form des \gls{acr:FDMA}. Zuletzt wird der zentrale Baustein der digitalen Signalverarbeitung in dieser Abschlussarbeit erläutert, das sogenannte \gls{acr:DRM}.
+In diesem Kapitel werden die Grundlagen der modernen Übertragungstechnik als Basis für die weiteren Ausführungen erklärt. Zunächst soll der generelle Aufbau eines Übertragungssystems erläutert werden, um anschließend einige gängige digitale Modulationsarten vorzustellen. Hierbei liegt der Fokus besonders auf der Heranführung an die \gls{acr:QAM}-Modulation, welche in der später diskutierten Dream-Software Verwendung findet. Der letzte Abschnitt beschäftigt sich mit den Themen der Bandbreitennutzung und des Mehrkanalzugriffs. Hier werden die aus der Mobilfunktechnik bekannten Begriffe \gls{acr:TDM}, \gls{acr:SDM} und \gls{acr:FDM} eingeführt und beschrieben. Ein besonderes Augenmerk liegt hier auf dem \gls{acr:OFDM}, einer weiterentwickelten Form des \gls{acr:FDM}. Zuletzt wird der zentrale Baustein der digitalen Signalverarbeitung in dieser Abschlussarbeit erläutert, das sogenannte \gls{acr:DRM}.
 
 \subsection{Übertragungssystem}
 \label{subsec:aufbauueber}
 
-Ein Übertragungssystem ergibt sich vereinfacht dargestellt aus fünf verschiedenen Komponenten. In Abbildung~\ref{fig:komsystem} ist eine Skizze eines solchen Übertragungssystems zu sehen. Zunächst ist eine Quelle vonnöten, welche ein zeitkontinuierliches Signal (z.B. Sprache, Musik, Bilddaten, analoge Messwerte) oder ein zeitdiskretes Signal (z.B. Buchstaben, Datensequenzen, abgetastete analoge Signale) zur Verfügung stellt. Die Informationsquelle (information source) übergibt die Nachricht (message) dem Sender (transmitter). Der Sender übernimmt im System die Aufgabe, die Informationsquelle in ein für die Übertragung geeignetes Format umzuwandeln. Dieses muss auf den später zur Weiterleitung des Signals genutzten Kanal abgestimmt werden, welcher dann das entsprechende Sendesignal (signal) für den Kanal (channel) generiert. Im Kanal addiert sich, falls vorhanden, das Signal einer Störquelle (noise source) hinzu, sodass sich das Empfangssignal (received signal) am Empfänger (receiver) ergibt. Dabei gilt es darauf zu achten, den zur Verfügung stehenden Kanal und seine Eigenschaften möglichst effizient zu nutzen und die Störquelle zu minimieren. Sendekanäle sind physikalischer Natur und allgemein fehlerbehaftet. Es wird zwischen drahtlosen Kanälen (elektromagnetisch, akustisch, Infrarot) und drahtgebundenen Kanälen (Kupferleitungen, Glasfaserkabel) unterschieden. Im Anschluss generiert der Empfänger daraus dann die empfangene Nachricht (received message) und leitet jene schließlich der Informationssenke (destination) weiter. In Anbetracht ihrer Anwendung werden diese einzelnen Blöcke des Kommunikationsmodells in weitere Komponenten zerlegt und somit weiter spezialisiert. \cite{NT}
+Ein Übertragungssystem ergibt sich vereinfacht dargestellt aus fünf verschiedenen Komponenten. In Abbildung~\ref{fig:komsystem} ist eine Skizze eines solchen Übertragungssystems zu sehen. Zunächst ist eine Quelle vonnöten, welche ein zeitkontinuierliches Signal (z.B. Sprache, Musik, Bilddaten, analoge Messwerte) oder ein zeitdiskretes Signal (z.B. Buchstaben, Datensequenzen, abgetastete analoge Signale) zur Verfügung stellt. Die Informationsquelle (information source) übergibt die Nachricht (message) dem Sender (transmitter). Der Sender übernimmt im System die Aufgabe, die Informationsquelle in ein für die Übertragung geeignetes Format umzuwandeln. Dieses muss auf den später zur Weiterleitung des Signals genutzten Kanal abgestimmt werden, welcher dann das entsprechende Sendesignal (signal) für den Kanal (channel) generiert. Im Kanal addiert sich, falls vorhanden, das Signal einer Störquelle (noise source) hinzu, sodass sich das Empfangssignal (received signal) am Empfänger (receiver) ergibt. Dabei gilt es darauf zu achten, den zur Verfügung stehenden Kanal und seine Eigenschaften möglichst effizient zu nutzen und die Störquelle zu minimieren. Sendekanäle sind physikalischer Natur und allgemein fehlerbehaftet. Es wird zwischen drahtlosen Kanälen (elektromagnetisch, akustisch, optisch) und drahtgebundenen Kanälen (Kupferleitungen, Glasfaserkabel) unterschieden. Im Anschluss generiert der Empfänger daraus dann die empfangene Nachricht (received message) und leitet jene schließlich der Informationssenke (destination) weiter. In Anbetracht ihrer Anwendung werden diese einzelnen Blöcke des Kommunikationsmodells in weitere Komponenten zerlegt und somit weiter spezialisiert.\cite{NT}
 
 \begin{figure}[H]
 	\centering
@@ -64,8 +64,7 @@ Ein Übertragungssystem ergibt sich vereinfacht dargestellt aus fünf verschiede
 	\label{fig:komsystem}
 \end{figure}
 
-Aufgrund der Thematik dieser Abschlussarbeit soll das Augenmerk nun auf ein drahtloses Übertragungssystem gelegt werden. Zur Projektierung eines solchen müssen zunächst der physikalische Kanal und die Signalform festgelegt werden.
-Daher eignet sie sich beispielsweise nicht für den Mobilfunk. Hier werden üblicherweise elektromagnetische Wellen in Megahertz bis Gigahertz Frequenzbereichen appliziert. Diese Wellen bestehen aus einem magnetischen Feld ($\vec{B}$) und einem elektrischen Feld ($\vec{E}$). Zudem breiten sich jene Felder orthogonal zueinander aus, wie in Abbildung ~\ref{fig:elektromag} veranschaulicht wird.\gls{online:elektromag} 
+Aufgrund der Thematik dieser Abschlussarbeit soll das Augenmerk nun auf ein drahtloses Übertragungssystem gelegt werden. Zur Projektierung eines solchen müssen zunächst der physikalische Kanal und die Signalform festgelegt werden. Da hierbei der optische Kanal als Übertragungsmedium dient, eignet sich \gls{acr:VLC} beispielsweise nicht für den Mobilfunk. Hier werden üblicherweise elektromagnetische Wellen in Megahertz bis Gigahertz Frequenzbereichen appliziert. Diese Wellen bestehen aus einem magnetischen Feld ($\vec{B}$) und einem elektrischen Feld ($\vec{E}$). Zudem breiten sich jene Felder orthogonal zueinander aus, wie in Abbildung ~\ref{fig:elektromag} veranschaulicht wird.\gls{online:elektromag} 
 
 \begin{figure}[H]
 	\centering
@@ -93,22 +92,22 @@ In Kapitel~\ref{subsec:aufbauueber} wurden die Struktur und die Komponenten näh
 	\cite{NT}
 	\label{fig:traeger}
 \end{figure}
-Liegt nun also ein Signal im Basisband vor, wobei es sich beispielsweise um ein Audiosignal als elektrische Spannung am Ausgang eines Mikrofons handeln könnte, wird es normalerweise in einen höheren Frequenzbereich verschoben um über eine größere Entfernung übertragen zu werden. Beim Basisband handelt es sich um den natürlichen Frequenzbereich eines Nutzsignals.\gls{online:basis} Radio-Rundfunk liefert ein Beispiel für eine solche Trägermodulation. Hierbei werden sich die drei variablen Parameter eines sinusförmigen Trägersignales zu eigen gemacht. Dabei handelt es sich um die Frequenz, Amplitude und Phase eines jenen. In Abhängigkeit der benutzten Verfahren ist die Rede von \gls{acr:AM}, \gls{acr:FM} oder \gls{acr:PM}.\cite{NT} Diese Theorie der Trägermodulation soll nun am Beispiel eines AM-Signals und eines FM-Signals veranschaulicht werden. 
+Liegt nun also ein Signal im Basisband vor, wobei es sich beispielsweise um ein Audiosignal als elektrische Spannung am Ausgang eines Mikrofons handeln könnte, wird es normalerweise in einen höheren Frequenzbereich verschoben um über eine größere Entfernung übertragen zu werden. Beim Basisband handelt es sich um den natürlichen Frequenzbereich eines Nutzsignals.\gls{online:basis} Radio-Rundfunk liefert ein Beispiel für eine solche Trägermodulation. Hierbei werden sich die drei variablen Parameter eines sinusförmigen Trägersignales zu eigen gemacht. Dabei handelt es sich um die Frequenz, Amplitude und Phase eines jenen. In Abhängigkeit der benutzten Verfahren ist die Rede von \gls{acr:AM}, \gls{acr:FM} oder \gls{acr:PM}.\cite{NT} Diese Theorie der Trägermodulation soll nun am Beispiel eines \gls{acr:AM}-Signals und eines \gls{acr:FM}-Signals veranschaulicht werden. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85 \textwidth]{fmam.jpg}
-	\caption[AM- und FM-Modulation eines Sinusträgers mit einem Eintonsignal]{AM- und FM-Modulation eines Sinusträgers mit einem Eintonsignal} 
+	\caption[\gls{acr:AM}- und \gls{acr:FM}-Modulation eines Sinusträgers mit einem Eintonsignal]{\gls{acr:AM}- und \gls{acr:FM}-Modulation eines Sinusträgers mit einem Eintonsignal} 
 	\cite{NT}
 	\label{fig:fmam}
 \end{figure}
 
-Hierbei wird ein analoges Ausgangssignal verwendet. Es findet also keine Wandlung in ein digitales Signal statt. Bei der \gls{acr:AM} wird die sinusförmige Trägerfrequenz mithilfe eines Mischers auf das Signal multipliziert. Dabei gibt das Eintonsignal, wie in Abbildung~\ref{fig:fmam} die Amplitude der hochfrequenten Trägerfrequenz vor und bildet somit die Einhüllende Kurve. Durch diesen Vorgang erlangt das Signal eine adäquate Frequenz zur Ablösung einer Antenne.\cite{klostermeyerDigitaleModulation2001}\cite{hftech}
+Hierbei wird ein analoges Eingangssignal $u_1(t)$ verwendet. Es findet also keine Wandlung in ein digitales Signal statt. Bei der \gls{acr:AM} wird die sinusförmige Trägerfrequenz mithilfe eines Mischers auf das Signal multipliziert. Dabei gibt das Eintonsignal, wie in Abbildung~\ref{fig:fmam} die Amplitude der hochfrequenten Trägerfrequenz vor und bildet somit die Einhüllende Kurve. Durch diesen Vorgang erlangt das Signal eine adäquate Frequenz zur Ablösung einer Antenne.\cite{klostermeyerDigitaleModulation2001}\cite{hftech}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.3 \textwidth]{Mischer.jpg}
-	\caption[Trägermultiplikation bei AM]{Trägermultiplikation bei AM} 
+	\caption[Trägermultiplikation bei \gls{acr:AM}]{Trägermultiplikation bei \gls{acr:AM}} 
 	\cite{NT}
 	\label{fig:mischer}
 \end{figure}
@@ -158,7 +157,7 @@ Da sich durch die konstante Amplitude die Symbole auf einem Kreis befinden, wird
 		\label{tab:qpsk}
 \end{table}
 
-Ein Konstellationsdiagramm illustriert die verschiedenen Symbole, mit Betrag und Phasenlage, im komplexen Raum. Zur Verringerung der Bitfehler wird hier der Gray Code für die Zuordnung von Bits gewählt. Dies hat zu Folge, dass wenn ein Symbol fälschlicherweise dem benachbarten Symbol zugeordnet wird, nur ein Bit fehlerhaft ist. Bei einer Binären Codierung könnte beispielsweise die 00 der 11 zugeordnet werden, wodurch zwei Bitfehler in einem Symbol inkorrekt wären. Die Anzahl der differierenden Bit zweier benachbarter Symbole wird auch Hamming Abstand genannt.\gls{online:ham}
+Ein Konstellationsdiagramm illustriert die verschiedenen Symbole, mit Betrag und Phasenlage, im komplexen Raum. Zur Verringerung der Bitfehler wird hier der Gray Code für die Zuordnung von Bits gewählt. Dies hat zu Folge, dass wenn ein Symbol fälschlicherweise dem benachbarten Symbol zugeordnet wird, nur ein Bit fehlerhaft ist. Bei einer Binären Codierung könnte beispielsweise die 00 der 11 zugeordnet werden, wodurch zwei Bit in einem Symbol inkorrekt wären. Die Anzahl der differierenden Bit zweier benachbarter Symbole wird auch Hamming Abstand genannt.\gls{online:ham}
 
 \begin{figure}[H]
 	\centering
@@ -168,7 +167,7 @@ Ein Konstellationsdiagramm illustriert die verschiedenen Symbole, mit Betrag und
 	\label{fig:konstqpsk}
 \end{figure}
 
-In Abbildung~\ref{fig:konstqpsk} sind zwei Konstellationsdiagramme zu erkennen. Konstellationsdiagramm $(a)$ ist hierbei ein klares rauschfrei empfangenes Signal, $(b)$ hingegen wurde über einen verrauschten Kanal gesendet. Alle empfangenen Symbole häufen sich um die vier Symbolpunkte. Aufgrund des hier nur schwach verrauschten Kanals, können die Symbole noch problemlos zugeordnet werden. Bei einem einem sehr stark verrauschten Kanal jedoch, wäre diese Entscheidung unmöglich, wie in Abbildung~\ref{fig:verrauscht} zu sehen ist. Daher werden klare Entscheidungsgrenzen definiert, im gegeben Fall sind das die reelle und die imaginären Achse.\gls{online:quint}
+In Abbildung~\ref{fig:konstqpsk} sind zwei Konstellationsdiagramme zu erkennen. Konstellationsdiagramm $(a)$ ist hierbei ein klares rauschfrei empfangenes Signal, $(b)$ hingegen wurde über einen verrauschten Kanal gesendet. Alle empfangenen Symbole häufen sich um die vier Symbolpunkte. Aufgrund des hier nur schwach verrauschten Kanals, können die Symbole noch problemlos zugeordnet werden. Bei einem sehr stark verrauschten Kanal jedoch, wäre diese Entscheidung unmöglich, wie in Abbildung~\ref{fig:verrauscht} zu sehen ist. Daher werden klare Entscheidungsgrenzen definiert, im gegeben Fall sind das die reelle und die imaginären Achse.\gls{online:quint}
 
 \begin{figure}[H]
 	\centering
@@ -178,7 +177,7 @@ In Abbildung~\ref{fig:konstqpsk} sind zwei Konstellationsdiagramme zu erkennen. 
 	\label{fig:verrauscht}
 \end{figure}
 
-Ein solches Vorgehen ist jedoch bei höherwertigen \gls{acr:PSK}-Modulationen nicht mehr sinnvoll, da die Symbolabstände immer geringer werden würden und die Übertragung somit störanfälliger wird. Durch die konstante Amplitude würden sich der Symbolabstand auf der Kreisbahn mit steigender Symbolzahl verringern. Sinnvoller ist es also die \gls{acr:QPSK} so zu erweitern, dass in der Wellengleichung nicht nur $\varphi_{i}$ variiert wird, sondern auch die Amplitude $A$. Durch diese Erweiterung kann die Bitrate enorm gesteigert werden. Exemplarisch hierfür sind die in Abbildung~\ref{fig:qam} gezeigten 16-\gls{acr:QAM} und die 64-\gls{acr:QAM} welche im Laufe dieser Abschlussarbeit noch Verwendung findet.
+Ein solches Vorgehen ist jedoch bei höherwertigen \gls{acr:PSK}-Modulationen nicht mehr sinnvoll, da die Symbolabstände immer geringer werden würden und die Übertragung somit störanfälliger wird. Durch die konstante Amplitude würden sich der Symbolabstand auf der Kreisbahn mit steigender Symbolzahl verringern. Sinnvoller ist es also die \gls{acr:QPSK} so zu erweitern, dass in der Wellengleichung nicht nur $\varphi_{i}$ variiert wird, sondern auch die Amplitude $A$. Durch diese Erweiterung kann die Bitrate enorm gesteigert werden. Exemplarisch hierfür sind die in Abbildung~\ref{fig:qam} gezeigten 16-\gls{acr:QAM} und die 64-\gls{acr:QAM} welche im Laufe dieser Abschlussarbeit noch Verwendung finden.
 
 \begin{figure}[H]
 	\centering
@@ -192,7 +191,9 @@ Ein solches Vorgehen ist jedoch bei höherwertigen \gls{acr:PSK}-Modulationen ni
 
 \subsection{Orthogonales-Frequenzmultiplexverfahren}
 \label{subsec:ofdm}
-Bevor im Verlauf dieses Kapitels das \gls{acr:OFDM} erläutert wird, muss vorher noch ein weiterer Begriff eingeführt werden. Hierbei handelt es sich um die Bandbreite. Die Bandbreite ist in der Signalverarbeitung eine Kenngröße, welche im Frequenzspektrum die Breite des Intervalls festlegt, in dem die bestimmenden Frequenzanteile eines zu übertragenden Signals liegen. Im vorausgehenden Abschnitt wurden Signale nur im komplexen Basisband betrachtet. Um jedoch Signale drahtlos zu übertragen, müssen diese in Bandpasslage transformiert werden in welcher sie durch obere und untere Grenzfrequenzen charakterisiert werden. ?Basisband und Bandpass? Da Signale meist nicht endlich sind, sondern eine unendliche Ausbreitung im Frequenzspektrum besitzen, wird die Bandbreite durch eine Kenngröße markiert. Dabei markiert die 3-dB-Bandbreite die Grenzfrequenz, da das Signal dort weniger als die
+Bevor im Verlauf dieses Kapitels das \gls{acr:OFDM} erläutert wird, muss vorher noch ein weiterer Begriff eingeführt werden. Hierbei handelt es sich um die Bandbreite. Die Bandbreite ist in der Signalverarbeitung eine Kenngröße, welche im Frequenzspektrum die Breite des Intervalls festlegt, in dem die bestimmenden Frequenzanteile eines zu übertragenden Signals liegen. Im vorausgehenden Abschnitt wurden Signale nur im komplexen Basisband betrachtet. Um jedoch Signale drahtlos zu übertragen, müssen diese in Bandpasslage transformiert werden in welcher sie durch obere und untere Grenzfrequenzen charakterisiert werden.\cite{hftech} Da es sich beim Basisband um den natürlichen Frequenzbereich eines Nutzsignals handelt muss der Bandpassbereich noch näher ausgeführt werden. Im Falle dieser Abschlussarbeit bei Audiosignalen also zwischen 0Hz und 20kHz, was als Bandbreite B bezeichnet wird. Reelle Basisbandsignale wie Audio, weisen jedoch sowohl positive als auch negative spektrale Anteile auf. Aufgrund dessen erstreckt sich die Bandbreite daher symmetrisch von $-B$ bis $+B$. Bei digitalen Modulationsarten hingegen werden meist im komplexen Basisband verarbeitet, welches sich asymmetrisch von $-B/2$ bis $+B/2$ erstreckt. Vor der Modulation und nach der Demodulation liegt das Signal im Basisband. Nach der Modulation und vor der Demodulation jedoch, ist das Nutzsignal nicht mehr in der Basisbandlage, sondern auf einen Träger aufmoduliert. Es befindet sich dann im Trägerfrequenzbereich, beziehungsweise dem sogenannten Bandpassbereich.\gls{online:basis} 
+
+Da Signale meist nicht endlich sind, sondern eine unendliche Ausbreitung im Frequenzspektrum besitzen, wird die Bandbreite durch eine Kenngröße markiert. Dabei markiert die 3-dB-Bandbreite die Grenzfrequenz, da das Signal dort weniger als die
 Hälfte der maximalen Leistung beherbergt.\gls{online:bandbreite} Hierbei wird das Spektrum des zu sendenden Signals sowohl in positiver als auch in negativer Richtung an den Ort der Trägerfrequenz verschoben. Die benötigte Bandbreite eines Signals wird durch das Nyquist-Theorem definiert. Dabei steht $B$ für die Bandbreite und $f_{s}$ für die Symbolfrequenz des Signals.
 
 \begin{equation}
@@ -200,7 +201,7 @@ Hälfte der maximalen Leistung beherbergt.\gls{online:bandbreite} Hierbei wird d
 	B = 2 \cdot f_{s}
 \end{equation}
 
-Die Bandbreite ist in der Kommunikationstechnik außerdem sehr begrenzt weshalb die Optimierung der Bandbreiteneffizienz eine große Rolle spielt. So werden hier möglichst schmalbandige Pulsformungen verwendet um diese Effizienz zu steigern.\cite{howwireless} Zudem muss die Bandbreite von  beispielsweise dem Netzbetreiber unter sehr vielen Teilnehmern so aufgeteilt werden, dass jeder möglichst störungsfrei nur das empfängt was er Empfangen soll. Um dies zu realisieren wurde der Mehrkanalzugriff entwickelt. Hierbei gibt es einige verschiedene Verfahren welche und Tabelle~\ref{tab:multiplex} näher erläutert werden und diesen Ansatz verfolgen. 
+Die Bandbreite ist in der Kommunikationstechnik außerdem sehr begrenzt weshalb die Optimierung der Bandbreiteneffizienz eine große Rolle spielt. So werden hier möglichst schmalbandige Pulsformungen verwendet um diese Effizienz zu steigern.\cite{howwireless} Zudem muss die Bandbreite von  beispielsweise dem Netzbetreiber unter sehr vielen Teilnehmern so aufgeteilt werden, dass jeder möglichst störungsfrei nur das empfängt was er Empfangen soll. Um dies zu realisieren wurde der Mehrkanalzugriff entwickelt. Hierbei gibt es einige verschiedene Verfahren welche in Tabelle~\ref{tab:multiplex} näher erläutert werden und diesen Ansatz verfolgen. 
 
 \begin{table}[htb]
 	\begin{center}
@@ -220,9 +221,9 @@ Die Bandbreite ist in der Kommunikationstechnik außerdem sehr begrenzt weshalb 
 \end{center}
 \end{table}
 
-Allerdings wurde das in Tabelle~\ref{tab:multiplex} ausgeführte \gls{acr:FDMA} noch weiterentwickelt und modifiziert. Beim normalen FDMA können die Teilnehmer parallel Daten übertragen, dabei wird die Datenrate jedoch reduziert, da die zur Verfügung stehende Bandbreite kleiner wird und somit zwangsweise die Symbolfrequenz sinkt. Des Weiteren ist in Abbildung~\ref{fig:ofdm} zu erkennen, dass die Teilbänder nicht direkt nebeneinander positioniert sind. Dementsprechend entstehen Lücken im Spektrum, welche von keinem Teilnehmer belegt werden, wodurch die Bandbreite nicht effizient genutzt wird. Diese Lücken werden auch Sicherheitsband genannt und dienen der Vermeidung von Interkanal-Interferenzen. Diese entstehen, wenn zwei Kanäle zu nahe aneinander positioniert sind und sich deshalb gegenseitig stören. Der Nachteil ist jedoch, dass diese Sicherheitsbänder gleichzeitig auch die genutzte Bandbreite verringern und somit auch den Durchsatz. Zur Optimierung dieses Verfahrens wurde das Orthogonale-Frequenzmultiplexverfahren entwickelt.
+Allerdings wurde das in Tabelle~\ref{tab:multiplex} ausgeführte \gls{acr:FDM} noch weiterentwickelt und modifiziert. Beim normalen \gls{acr:FDM} können die Teilnehmer parallel Daten übertragen, dabei wird die Datenrate jedoch reduziert, da die zur Verfügung stehende Bandbreite kleiner wird und somit zwangsweise die Symbolfrequenz sinkt. Des Weiteren ist in Abbildung~\ref{fig:ofdm} zu erkennen, dass die Teilbänder nicht direkt nebeneinander positioniert sind. Dementsprechend entstehen Lücken im Spektrum, welche von keinem Teilnehmer belegt werden, wodurch die Bandbreite nicht effizient genutzt wird. Diese Lücken werden auch Sicherheitsband genannt und dienen der Vermeidung von Interkanal-Interferenzen. Diese entstehen, wenn zwei Kanäle zu nahe aneinander positioniert sind und sich deshalb gegenseitig stören. Der Nachteil ist jedoch, dass diese Sicherheitsbänder gleichzeitig auch die genutzte Bandbreite verringern und somit auch den Durchsatz an Daten. Zur Optimierung dieses Verfahrens wurde das Orthogonale-Frequenzmultiplexverfahren (\gls{acr:OFDM}) entwickelt.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=0.75\textwidth]{ofdm.jpg}
 	\caption[Spektrale Effizienz des Orthogonalen-Frequenzmultiplexverfahren]{Spektrale Effizienz des Orthogonalen-Frequenzmultiplexverfahren} 
@@ -230,11 +231,11 @@ Allerdings wurde das in Tabelle~\ref{tab:multiplex} ausgeführte \gls{acr:FDMA} 
 	\label{fig:ofdm}
 \end{figure}
 
-Bei diesem Verfahren werden die Tägerwellen so angeordnet, dass ein Maximum eines Trägers bei seinen Nachbarträgern jedes Mal auf einem Nulldurchgang liegt. Aus dieser orthogonalen Trägerbeziehung ergibt sich der Name dieses Verfahrens. Zudem wird es nicht nur verwendet, um die Bandbreite für diverse Teilnehmer aufzuspalten, sondern unterteilt entsprechend die einzelnen Teilbänder in viele kleinere Bänder, welche von mehreren Teilnehmern genutzt werden können. Datenpakete werden also nicht Seriell sondern Parallel versendet.\gls{online:ofdm} Kommt es innerhalb des \gls{acr:OFDM}-Signalspektrums zu einer schmalbandigen Störung, können die von der Störung betroffenen Träger von der Datenübertragung ausgenommen werden, wodurch die Datenrate nur minimal sinkt. Bei einer \gls{acr:QAM} welche breitbandig mit nur einem Träger übertragen wird, kann dahingegen eine schmalbandige Störung im Übertragungskanal die ganze Datenübertragung gefährden.\cite{butlerWirelessNetworkingDeveloping2013} Bei der \gls{acr:OFDM} wird demnach durch das realisieren schmalerer Bänder die Fehlerwahrscheinlichkeit gesenkt werden. So werden beim \gls{acr:OFDM}-Verfahren jeweils nur einzelne Träger durch Interferenzen aufgrund von Mehrwegeausbreitung betroffen.\cite{NT}
+Bei diesem Verfahren werden die Tägerwellen so angeordnet, dass ein Maximum eines Trägers bei seinen Nachbarträgern jedes Mal auf einem Nulldurchgang liegt. Aus dieser orthogonalen Trägerbeziehung ergibt sich der Name dieses Verfahrens. Zudem wird es nicht nur verwendet, um die Bandbreite für diverse Teilnehmer aufzuspalten, sondern unterteilt entsprechend die einzelnen Teilbänder in viele kleinere Bänder, welche von mehreren Teilnehmern genutzt werden können. Datenpakete werden also nicht Seriell sondern Parallel versendet.\gls{online:ofdm} Kommt es innerhalb des \gls{acr:OFDM}-Signalspektrums zu einer schmalbandigen Störung, können die von der Störung betroffenen Träger von der Datenübertragung ausgenommen werden, wodurch die Datenrate nur minimal sinkt. Bei einer \gls{acr:QAM} welche breitbandig mit nur einem Träger übertragen wird, kann dahingegen eine schmalbandige Störung im Übertragungskanal die ganze Datenübertragung gefährden.\cite{butlerWirelessNetworkingDeveloping2013} Bei der \gls{acr:OFDM} wird demnach durch das realisieren schmalerer Bänder die Fehlerwahrscheinlichkeit gesenkt. So werden beim \gls{acr:OFDM}-Verfahren jeweils nur einzelne Träger durch Interferenzen aufgrund von Mehrwegeausbreitung betroffen.\cite{NT}
 
 \subsection{Digital Radio Mondiale}
 \label{subsec:drm}
-Seit Anbeginn des Rundfunks verwenden fast alle Mittelwellen- und Langwellensender die \gls{acr:AM} zur Übertragung von Audiosignalen. Das Problem hierbei ist, dass das Modulationsschema und die geringe Kanalbandbreite von 10 kHz die Audioqualität einschränken. Deshalb werden in diesen Bändern üblicherweise Sprachsignale übertragen. Ende 2003 veröffentlichte das \gls{acr:ETSI} die Spezifikation für den digitalen Rundfunk bei 30 MHz unter Verwendung des \gls{acr:OFDM} Mehrträgerverfahrens. Das System wurde \gls{acr:DRM} genannt. 
+Seit Anbeginn des Rundfunks verwenden fast alle Mittelwellen- und Langwellensender die \gls{acr:AM} zur Übertragung von Audiosignalen. Das Problem hierbei ist, dass das Modulationsschema und die geringe Kanalbandbreite von 10 kHz die Audioqualität immens einschränken. Deshalb werden in diesen Bändern üblicherweise Sprachsignale übertragen. Ende 2003 veröffentlichte das \gls{acr:ETSI} die Spezifikation für den digitalen Rundfunk bei 30 MHz unter Verwendung des \gls{acr:OFDM} Mehrträgerverfahrens. Das System wurde \gls{acr:DRM} genannt. 
 
 \begin{figure}[H]
 	\centering
@@ -246,34 +247,32 @@ Seit Anbeginn des Rundfunks verwenden fast alle Mittelwellen- und Langwellensend
 
 Bezogen auf die Kanalbandbreite von 10 kHz ist die Datenrate der gestreamten Medien auf etwa 35 kBit/s bei einem Kanal und 72 kBit/s bei Verwendung von zwei Kanälen beschränkt. Obwohl die Bitrate nicht sehr hoch ist, übertrifft die Audioqualität der Streams die Qualität von \gls{acr:FM}-Mono-Übertragungen bei weitem. Der erweiterte Audio-Codierungsstandard \gls{acr:AAC} in Kombination mit \gls{acr:SBR} (eine Verlustbehaftete Audiodatenkompression) und parametrischem Stereo bietet hohe Audioqualität bei sehr niedrigen Bitraten (z. B. 22 kBit/s). Und ist somit ein qualitativ hochwertiger digitaler Ersatz für den derzeitigen analogen Hörfunk in den \gls{acr:AM}- und \gls{acr:FM}/\gls{acr:VHF}-Bändern. Eine Übersicht über die Frequenzbänder, in welchen \gls{acr:DRM} arbeitet, wird in Abbildung ~\ref{fig:drmfreq} Dargestellt. Zudem ist die \gls{acr:DRM}-Übertragungskette durch die drei Kanäle \gls{acr:MSC}, \gls{acr:SDC} und \gls{acr:FAC} gekennzeichnet. Diese werden in Abildung~\ref{fig:drm} illustriert.\gls{online:drm}
 
+
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1 \textwidth]{drm.jpg}
+	\includegraphics[width=0.85 \textwidth]{drm.jpg}
 	\caption[DRM - Struktur]{DRM - Struktur} 
 	\gls{online:Eigen}
 	\label{fig:drm}
 \end{figure}
+Hierbei wird der \gls{acr:FAC} vom Empfänger verwendet, um Informationen über die \gls{acr:OFDM}-Signaleigenschaften und die \gls{acr:SDC}/\gls{acr:MSC}-Konfiguration zu erhalten. Für die korrekte Synchronisation und \gls{acr:SDC}/\gls{acr:MSC}-Interpretation liest ein Empfänger die Belegung des Spektrums, den Trägerabstand und die \gls{acr:QAM}-Auflösungsinformationen im \gls{acr:FAC}-Datenblock. Die feste Coderate von 0,6 und die Verwendung von \gls{acr:QAM}-Codierung machen den \gls{acr:FAC} sehr robust gegenüber Fehlern. \gls{online:drm}\gls{online:drmpic} Die Coderate steht hierbei für das Verhältnis der Informationssymbole zur Länge der übertragenen Wörter.
 
-
-Hierbei wird der Fast Access Channel vom Empfänger verwendet, um Informationen über die \gls{acr:OFDM}-Signaleigenschaften und die \gls{acr:SDC}/\gls{acr:MSC}-Konfiguration zu erhalten. Für die korrekte Synchronisation und \gls{acr:SDC}/\gls{acr:MSC}-Interpretation liest ein Empfänger die Belegung des Spektrums, den Trägerabstand und die \gls{acr:QAM}-Auflösungsinformationen im \gls{acr:FAC}-Datenblock. Die feste Coderate von 0,6 und die Verwendung von \gls{acr:QAM}-Codierung machen den \gls{acr:FAC} sehr robust gegenüber Fehlern. \gls{online:drm}\gls{online:drmpic} Die Coderate steht hierbei für das Verhältnis der Informationssymbole zur Länge der übertragenen Wörter.
-
-Der \gls{acr:SDC} enthält die für die \gls{acr:MSC}-Dekodierung benötigten Informationen, wie die Multiplex-Frame-Struktur und weitere Zusatzinformationen. Diese werden in einer sequentiellen Liste von Datenentitäten übertragen. Jeder Daten-Entitätstyp hat eine eindeutige Nummer, welche seine Datenstruktur definiert. Der Channel Encoder verwendet ein Standard-Mapping mit einer Modulation von 4-\gls{acr:PSK} oder 16-\gls{acr:QAM} und einer Gesamtcoderate von 0,5. Ebenso wie der \gls{acr:FAC} ist auch der \gls{acr:SDC} mit  \gls{acr:UEP}-kodiert und hat keinen hoch geschützten Bestandteil. Normalerweise wird der höher geschützte Teil mit einer höheren Coderate kodiert, was zu mehr Redundanz führt und somit die Wahrscheinlichkeit von Bitfehlern in schlechten Übertragungsszenarien verringert.\gls{online:drm}\gls{online:drmpic} 
+Der \gls{acr:SDC} enthält die für die \gls{acr:MSC}-Dekodierung benötigten Informationen, wie die Multiplex-Frame-Struktur und weitere Zusatzinformationen. Diese werden in einer sequentiellen Liste von Datenentitäten übertragen. Jeder Datenentitätstyp hat eine eindeutige Nummer, welche seine Datenstruktur definiert. Der Channel Encoder verwendet ein Standard-Mapping mit einer Modulation von 4-\gls{acr:PSK} oder 16-\gls{acr:QAM} und einer Gesamtcoderate von 0,5. Ebenso wie der \gls{acr:FAC} ist auch der \gls{acr:SDC} mit  \gls{acr:EEP}-kodiert und hat keinen hoch geschützten Bestandteil. Normalerweise wird der höher geschützte Teil mit einer höheren Coderate kodiert, was zu mehr Redundanz führt und somit die Wahrscheinlichkeit von Bitfehlern in schlechten Übertragungsszenarien verringert.\gls{online:drm}\gls{online:drmpic} 
 
 Der \gls{acr:MSC} enthält die eigentlichen Audio- und Datenbits. Dieser kodiert den vom Multiplexer erzeugten Multiplexrahmen und verwendet, je nach Wahl des Users, entweder eine 16- oder 64-\gls{acr:QAM} mit verschiedenen Mapping-Schemata. Es besteht die Wahl zwischen Standard-Mapping, symetrisch-hierarchischem oder gemischt-hierarchischem Mapping, wobei nur das Standard-Mapping 16 \gls{acr:QAM} zulässt. Bei hierarchischer Modulation wird jedes Bit eines hierarchischen Multiplexrahmens auf einen komplexen Zellenquadranten abgebildet, was bei zu hoher Fehlerrate eine 4-\gls{acr:QAM}-Dekodierung der \gls{acr:MSC}-Zellen ermöglicht. Um das \gls{acr:MSC} noch fehlerresistenter zu machen, ist es möglich, \gls{acr:UEP} zu verwenden und den Multiplex-Rahmen in einen höher oder niedriger geschützten Datenteil aufzuteilen. Ein sogenanntes Cell-Interleaving von entweder 2s (lang) oder 400ms (kurz) schützt die \gls{acr:MSC}-Daten zusätzlich vor Fehlerbursts. \gls{online:drm}\gls{online:drmpic}  Burstfehler (auch Bündelfehler genannt) beschreiben blockweise Störungen eines Signals. Durch diese gestörten Blöcke, könnte es passieren das eine ganze Folge von Übertragenen Bits nicht mehr die gewünschte Information enthalten.\gls{online:burst} Abbildung~\ref{fig:burst} illustriert eine solche gestört Bitfolge.
-
  \begin{figure}[H]
  	\centering
- 	\includegraphics[width=1 \textwidth]{burst.jpg}
+ 	\includegraphics[width=0.7 \textwidth]{burst.jpg}
  	\caption[Burstfehler Beispiel]{Burstfehler Beispiel} 
  	\gls{online:burst}
  	\label{fig:burst}
  \end{figure}
-
 Das \gls{acr:MDI} ermöglicht eine räumlich entfernte Verbindung zwischen dem \gls{acr:DRM}-Inhaltsserver und dem Basisbandmodulator (\gls{acr:MDI}-Empfänger) über Ethernet. Daher kann das analoge Basisbandsignal sehr nah am Sender erzeugt werden und es besteht keine Notwendigkeit für \gls{acr:HF}-Verbindungen über große Entfernungen, die dem Ausgangssignal viel Rauschen hinzufügen könnten.\gls{online:drm}\gls{online:drmpic} Um eine solche Struktur aufzubauen und \gls{acr:DRM} zu übertragen, wurde ein Programm namens Dream \gls{acr:DRM} verwendet. Dieses wird im weiteren Verlauf dieser Abschlussarbeit noch näher erläutert. 
 \newpage
 \section{Hardwarekomponenten}
 \label{subsec:elbau}
-Im letzten Kapitel wurden grundlegende Bestandteile einer digitalen Signalmodulation erörtert. Nun sollen relevante Bauteile eines \gls{acr:VLC}-Senders dargestellt und näher ausgeführt werden. Hierbei handelt es sich nun um jene Komponenten, welche als Sender und Kanal in Abbildung~\ref{fig:komsystem} charakterisiert wurden. Diese Hardwarekomponenten sind essenziell, um sowohl die analoge Signalverarbeitung, als auch die Datenübertragung mittels eines optischen Kanals zu ermöglichen. Es werden im Folgenden demnach verschiedene Bauteile und deren Bedeutung im Kontext zu dieser Abschlussarbeit verdeutlicht.
+Im letzten Kapitel wurden grundlegende Bestandteile einer digitalen Signalmodulation erörtert und das \gls{acr:DRM} eingeführt. Nun sollen relevante Bauteile eines \gls{acr:VLC}-Senders dargestellt und näher ausgeführt werden. Hierbei handelt es sich nun um jene Komponenten, welche als Sender und Kanal in Abbildung~\ref{fig:komsystem} charakterisiert wurden. Diese Hardwarekomponenten sind essenziell, um sowohl die analoge Signalverarbeitung, als auch die Datenübertragung mittels eines optischen Kanals zu ermöglichen. Es werden im Folgenden demnach verschiedene Bauteile und deren Bedeutung im Kontext zu dieser Abschlussarbeit verdeutlicht.
 
 \subsection{Leuchtdiode}
 \label{sub:led}
@@ -287,7 +286,7 @@ Eine \gls{acr:LED} ist ein Licht-emittierendes Halbleiter-Bauelement mit einem p
 	\label{fig:LED}
 \end{figure}
 
-Der Grundsatz der Lichterzeugung in einer \gls{acr:LED} beruht auf einem Halbleiterkristall, der durch das Einbringen von Fremdatomen so dotiert ist, dass in der Diode zwei Gebiete entstehen. In einem Gebiet entsteht ein Elektronenüberschuss und in dem anderen Gebiet entstehen Löcher. Durch das Injizieren von Elektronen aus der positiv dotierten Seite in die Sperrschicht rekombinieren sich Löcher und Elektronen, wodurch Energie in Form von Licht abgegeben wird.\cite{slabke} Die Farbe hängt dabei vom Halbleitermaterial und der genauen Dotierung ab. Zudem ist dieser Rekombinationsprozess stark temperaturabhängig.\cite{heringElektrotechnikUndElektronik2018} Dies wird in einem noch folgenden Kapitel näher erläutert.
+Der Grundsatz der Lichterzeugung in einer \gls{acr:LED} beruht auf einem Halbleiterkristall, der durch das Einbringen von Fremdatomen so dotiert ist, dass in der Diode zwei Gebiete entstehen. In einem Gebiet entsteht ein Elektronenüberschuss und in dem anderen Gebiet entstehen Löcher. Durch das Injizieren von Elektronen aus der positiv dotierten Seite in die Sperrschicht rekombinieren sich Löcher und Elektronen, wodurch Energie in Form von Licht abgegeben wird.\cite{slabke} Die Farbe hängt dabei vom Halbleitermaterial und der genauen Dotierung ab. Zudem ist dieser Rekombinationsprozess stark temperaturabhängig.\cite{heringElektrotechnikUndElektronik2018}  Wie dieser thermische Faktor jedoch gedämpft wird, wird in einem noch folgenden Kapitel näher erläutert.
 
 \begin{figure}[H]
 	\centering
@@ -296,7 +295,6 @@ Der Grundsatz der Lichterzeugung in einer \gls{acr:LED} beruht auf einem Halblei
 	\gls{online:elektronik}
 	\label{fig:Kennlinie}
 \end{figure}
-
 
 In der Abbildung ~\ref{fig:Kennlinie} ist die Strom-/Spannungskennlinie einer Diode in Durchlassrichtung
 dargestellt. Die Kennlinie einer LED hat den selben Verlauf, jedoch liegt die Durchlassspannung je nach gewählter Farbe nicht bei ca. 0.7V sondern im Bereich von 1,6V (rote \gls{acr:LED}) bis zu 4V (blaue \gls{acr:LED}) .\gls{online:elektronik} 
@@ -309,7 +307,7 @@ dargestellt. Die Kennlinie einer LED hat den selben Verlauf, jedoch liegt die Du
 	\label{fig:Flussspannung}
 \end{figure}
 
-Wie in Abbildung ~\ref{fig:Kennlinie} illustriert ist, ändert sich die Spannung in ihrem Verlauf ab einem gewissen Punkt nur noch minimal. Das bedeutet, dass sich ab einer gewissen angelegten Spannung lediglich der Strom noch weiter erhöhen kann. Da die Leuchtintensität der \gls{acr:LED} von dieser Höhe des Stromdurchflusses abhängt, führt dies zu dem Schluss, den durchfließenden Strom statt der angelegten Spannung zu regulieren. Wird nun der durch die \gls{acr:LED} fließende Strom mit der Ausgangsleistung ins Verhältnis gestellt, ergibt sich ein Zusammenhang wie ihn Abbildung ~\ref{fig:Helligkeit} zeigt. 
+Wie in Abbildung ~\ref{fig:Kennlinie} illustriert ist, ändert sich die Spannung in ihrem Verlauf ab einem gewissen Punkt nur noch minimal. Das bedeutet, dass sich ab einer gewissen angelegten Spannung lediglich der Strom noch weiter erhöhen kann. Da die Leuchtintensität der \gls{acr:LED} von dieser Höhe des Stromdurchflusses abhängt, führt dies zu dem Schluss, den durchfließenden Strom statt der angelegten Spannung zu regulieren. Wird nun der durch die \gls{acr:LED} fließende Strom mit der Ausgangsleistung ins Verhältnis gesetzt, ergibt sich ein Zusammenhang wie ihn Abbildung ~\ref{fig:Helligkeit} zeigt. 
 
 \begin{figure}[H]
 	\centering
@@ -319,7 +317,7 @@ Wie in Abbildung ~\ref{fig:Kennlinie} illustriert ist, ändert sich die Spannung
 	\label{fig:Helligkeit}
 \end{figure}
 
-An dieser Stelle wird ersichtlich, dass es einen stark nicht-linearen Abschnitt in der Kennlinie gibt, welcher sich durch seine nicht-linearität keineswegs zur Datenübertragung eignet. Des weiteren existieren zwei lineare Bereiche, wobei einer dieser Bereiche keine Steigung hat und sich somit nicht für die Übertragung eignet. Um die etwa mittlere Lichtleistung, gibt es jedoch einen linearen Bereich der eine hohe Steigung vorweist, welcher sich ausgezeichnet für die Übertragung von Daten eignet. Dies bedeutet, dass die LED auf einem  \gls{acr:AP} innerhalb diesen linearen Bereichs betrieben werden muss. Dieser Arbeitspunkt liefert der Diode einen immensen Aktionsradius, wodurch eine maximale Aussteuerung der Amplitude des Signals und somit eine verbesserte Konstellation zur Signalübertragung gewährleistet wird. \cite{kavehradVisibleLightCommunication2019}
+An dieser Stelle wird ersichtlich, dass es einen stark nicht-linearen Abschnitt in der Kennlinie gibt, welcher sich durch seine nicht-linearität keineswegs zur Datenübertragung eignet. Des weiteren existieren zwei lineare Bereiche, wobei einer dieser Bereiche keine Steigung hat und sich somit nicht für die Übertragung eignet. Um die etwa mittlere Lichtleistung, gibt es jedoch einen linearen Bereich der eine hohe Steigung vorweist, welcher sich ausgezeichnet für die Übertragung von Daten eignet. Dies bedeutet, dass die LED auf einem  \gls{acr:AP} innerhalb diesen linearen Bereichs betrieben werden muss. Dieser Arbeitspunkt liefert der Diode einen immensen Aktionsradius, wodurch eine maximale Aussteuerung der Amplitude des Signals und somit eine verbesserte Konstellation zur Signalübertragung gewährleistet wird.\cite{vlc2}
 
 
 \subsection{Operationsverstärker}
@@ -337,7 +335,7 @@ Ein \gls{acr:OP} kann also mit einem Differenzverstärker von theoretisch unendl
 	\label{fig:OPV}
 \end{figure}
 
-Sie werden im Allgemeinen in Form einer integrierten Schaltung (\gls{acr:IC}) hergestellt. Die in dem Datenblatt eines Operationsverstärkers angegebenen Werte beschrieben seine Eigenschaften ausreichend. Zudem verfügt der \gls{acr:OP} über einen invertierenden (-) und nicht-invertierenden (+) Eingang.\cite{OP} Daraus können zwei der \gls{acr:OP}-Grundschaltungen extrahiert werden. Um das Verhältnis zwischen der Ausgangsspannung $U_{a}$ und der Eingangsspannung $U_{e}$ zu berechnen werden häufig die Parameter A oder G verwendet.\cite{tietzeElectronicCircuits2008}
+Sie werden im Allgemeinen in Form einer integrierten Schaltung (\gls{acr:IC}) hergestellt. Die in dem Datenblatt eines Operationsverstärkers angegebenen Werte beschrieben seine Eigenschaften ausreichend. Zudem verfügt der \gls{acr:OP} über einen invertierenden $(-)$ und nicht-invertierenden $(+)$ Eingang.\cite{OP} Daraus können zwei der \gls{acr:OP}-Grundschaltungen extrahiert werden. Um das Verhältnis zwischen der Ausgangsspannung $U_{a}$ und der Eingangsspannung $U_{e}$ zu berechnen werden häufig die Parameter A oder G verwendet.\cite{tietzeElectronicCircuits2008}
 
 \begin{equation}
 	\label{equ:bsp1}
@@ -394,7 +392,7 @@ Es zeigt auch die maximale Aussteuerbarkeit am Ausgang der \gls{acr:OP}s, welche
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85 \textwidth]{aussteuer.jpg}
-	\caption[Operationsverstärker]{Operationsverstärker} 
+	\caption[Theoretische Aussteuergrenze von \gls{acr:OP}s]{Theoretische Aussteuergrenze von \gls{acr:OP}s} 
 	\gls{online:Eigen}
 	\label{fig:aussteuer}
 \end{figure} 
@@ -402,9 +400,7 @@ Es zeigt auch die maximale Aussteuerbarkeit am Ausgang der \gls{acr:OP}s, welche
 \newpage
 \subsection{Feldeffekttransistor}
 \label{subsec:mosfet}
-Die am häufigsten eingesetzten Leistungsschutzschalter im Spannungsbereich bis etwa 250V sind \gls{acr:MOSFET}.\gls{online:mosfet} Hierbei handelt es sich um eine Sonderform der Transistoren, welche auch unipolare Transistoren genannt werden. Sie besitzen einen Kanal aus Halbleitermaterial, auf dem horizontal zur Stromrichtung ein elektrisches Feld entsteht, welches den Querschnitt des Kanals verändert. Damit wird der Stromfluss durch das Bauteil geregelt. In einem \gls{acr:MOSFET} wird der Strom durch eine Spannung gesteuert. Es gibt vier Grundbauformen von \gls{acr:MOSFET}. Einen \gls{acr:NMOS} und einen \gls{acr:PMOS} Typus und davon jeweils eine selbstsperrende und eine selbst leitende Variante. Im Anwendungsfall dieser Abschlussarbeit wird ein \gls{acr:NMOS} verwendet.\cite{heringElektrotechnikUndElektronik2018} 
-\newline
-\newline
+Der am häufigsten eingesetzte Leistungsschutzschalter im Spannungsbereich bis etwa 250V ist der \gls{acr:MOSFET}.\gls{online:mosfet} Hierbei handelt es sich um eine Sonderform der Transistoren, welche auch unipolare Transistoren genannt werden. Sie besitzen einen Kanal aus Halbleitermaterial, auf dem horizontal zur Stromrichtung ein elektrisches Feld entsteht, welches den Querschnitt des Kanals verändert. Damit wird der Stromfluss durch das Bauteil geregelt. In einem \gls{acr:MOSFET} wird der Strom durch eine Spannung gesteuert. Dies ist eine Eigenschaft, welche sich im Rahmen dieser Abschlussarbeit zu Nutzen gemacht wird. Es gibt vier Grundbauformen von \gls{acr:MOSFET}. Einen \gls{acr:NMOS} und einen \gls{acr:PMOS} Typus und davon jeweils eine selbstsperrende und eine selbst leitende Variante. Im Anwendungsfall dieser Abschlussarbeit wird ein \gls{acr:NMOS} verwendet.\cite{heringElektrotechnikUndElektronik2018} 
 
 \begin{figure}[H]
 	\centering
@@ -419,17 +415,17 @@ In Abbildung~\ref{fig:nmos} ist unter $(a)$ das Schaltsymbol, sowie Spannungs- u
 \subsection{Digital Potentiometer}
 \label{subsec:digipot}
 
-Um den Strom durch die \gls{acr:LED} nun digital zu regulieren und zudem die Helligkeit der \gls{acr:LED} für die Datenübertragung zu variieren, wird ein Digitalpotentiometer benötigt. Hierfür wurde der \gls{acr:IC} MCP42010 in der 10k$\ohm$–Variante mit 2 Kanälen ausgewählt. Dieses Digitalpotentiometer kann über ein sogenanntes \gls{acr:SPI} mittels eines Arduino angesteuert werden, um dessen Widerstandswert in 256 Schritten zu verändern. Dies ermöglicht eine Variation des Widerstandes in einem Bereich zwischen 52$\ohm$ (00h) und 10k$\ohm$ (FFh) in 39$\ohm$ Schritten. Dieses \gls{acr:SPI} ist ein Bussystem das aus drei Leitungen besteht und für eine synchrone serielle Datenübertragung zwischen verschiedenen \gls{acr:IC}s konzipiert ist. Die vom \gls{acr:IC} vorgeschriebene Versorgungsspannung von 5V stellt der Spannungsversorgungspin des Arduino bereit. Außerdem kann dem Datenblatt des \gls{acr:IC}s entnommen werden, dass dessen Eingangsspannungsbereich an den Widerstandseingängen maximal zwischen -0.5V und 6V liegen darf. Da der \gls{acr:IC} in dieser Schaltung mit 5V betrieben wird, dürfen die Widerstandseingänge mit einer Spannung von maximal -0.6V bis 6V belastet werden. Das ist ein äußerst wichtiges Kriterium für die Auslegung der Schaltung, da hier über die Grenzen der maximalen Amplitude entschieden werden muss, um unerwünschten Nebeneffekten oder gar einem Schaden an dem Bauteil vorzubeugen.
+Um den Strom durch die \gls{acr:LED} nun digital zu regulieren und zudem die Helligkeit der \gls{acr:LED} für die Datenübertragung zu variieren, wird ein Digitalpotentiometer benötigt. Hierfür wurde der \gls{acr:IC} MCP42010 in der 10k$\ohm$–Variante mit zwei Kanälen ausgewählt. Dieses Digitalpotentiometer verfügt über eine sogenannte \gls{acr:SPI}-Schnittstelle und kann mittels eines Arduino zur Laufzeit angesteuert werden, um dessen Widerstandswert in 256 Schritten zu verändern. Dies ermöglicht eine Variation des Widerstandes in einem Bereich zwischen 52$\ohm$ (00h) und 10k$\ohm$ (FFh) in 39$\ohm$ Schritten. Bei diesem \gls{acr:SPI} handelt es sich um ein Bussystem das aus drei Leitungen besteht und für eine synchrone serielle Datenübertragung zwischen verschiedenen \gls{acr:IC}s konzipiert ist. Die vom \gls{acr:IC} vorgeschriebene Versorgungsspannung von 5V stellt der Spannungsversorgungspin des Arduino bereit. Außerdem kann dem Datenblatt des \gls{acr:IC}s entnommen werden, dass dessen Eingangsspannungsbereich an den Widerstandseingängen maximal zwischen -0,6V und +1V über der Versorgungsspannung des Bauteils liegen darf. Da der \gls{acr:IC} in dieser Schaltung mit 5V betrieben wird, dürfen die Widerstandseingänge mit einer Spannung von maximal -0,6V bis 6V belastet werden. Das ist ein äußerst wichtiges Kriterium für die Auslegung der Schaltung, da hier über die Grenzen der maximalen Amplitude entschieden werden muss, um unerwünschten Nebeneffekten oder gar einem Schaden an dem Bauteil vorzubeugen.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7 \textwidth]{MCP.jpg}
 	\caption[Aufbau des MCP42010]{Aufbau des MCP42010} 
-	\cite{MCP42}
+	\gls{online:MCP42}
 	\label{fig:MCP}
 \end{figure}
 
-Die Funktion der einzelnen Pins sowie die Ansteuerung des \gls{acr:IC}s durch den Arduino, wird in nachfolgender Tabelle~\ref{tab:pinmcp} dargestellt. 
+Die Funktion der einzelnen Pins die in Abbildung~\ref{fig:MCP} sowie die Ansteuerung des \gls{acr:IC}s durch den Arduino, wird in nachfolgender Tabelle~\ref{tab:pinmcp} dargestellt. 
 
 \begin{table}[htb]
 	\begin{center}
@@ -453,19 +449,19 @@ Die Funktion der einzelnen Pins sowie die Ansteuerung des \gls{acr:IC}s durch de
 			14 & $V_{DD}$ & Power & 5V \\
 			\bottomrule
 		\end{tabular}
-		\caption{Anschlussinformation und Pinbelegung des MCP42010 aus dem Datenblatt}
+		\caption{Anschlussinformation und Pinbelegung des MCP42010 \gls{online:MCP42}}
 		\label{tab:pinmcp}
 	\end{center}
 \end{table}
 
-Aufgrund des Anwendungsfalls in dieser Abschlussarbeit, werden Pin 11 und Pin 12 des MCP42010 nicht benötigt und aus diesem Grund nicht am Arduino angeschlossen. 
+Aufgrund des Anwendungsfalls in dieser Abschlussarbeit, werden einige Pins des MCP42010 nicht benötigt und aus diesem Grund in Tabelle~\ref{tab:pinmcp} mit einem $"X"$ markiert nicht am Arduino angeschlossen.
 
 \subsection{DC/DC Spannungswandler}
 \label{subsec:dcdc}
 
 Ein Gleichspannungswandler, oder auch DC-DC-Wandler, wandelt eine der Schaltung zugeführte Eingangsgleichspannung in eine geregelte Ausgangsgleichspannung, welche ein anderes Spannungsniveau als die Eingangsspannung aufweist. Diese kann beispielsweise niedriger, höher oder auch invertiert sein.
 Da die zu übertragenden Daten am Ausgang der Soundkarte als reine Wechselspannung anliegen, wird eine negative Spannungsquelle für die vorhandenen Operationsverstärker benötigt, um kein Risiko auf Datenverluste einzugehen. Hierdurch wird gewährleistet, dass die \gls{acr:OP}s auch die negativen Halbwellen des Wechselstromsignals verarbeiten können.
-Gleichspannungswandler werden grundsätzlich immer dort eingesetzt, wo die zu Verfügung stehende Eingangsspannung nicht zur Versorgung der im Schaltkreis folgenden elektronischen Bauteile passt.[AbcderPowerModuleGrundlagen.pdf?] Aufgrund der Unkonventionalität, sowohl eine negative als auch eine positive Spannungsquelle simultan an die Platine anzuschließen, wandelt der DC/DC-Spannungswandler diese negative Spannung direkt auf der Platine um. Der LT1054 wird auch ”negative voltage generator” genannt. Das ist ein Bauteil, welches eine negative Ausgangsspannung erzeugt. Diese ist proportional zur Eingangsspannung $V_{CC}$. Laut typischer Beschaltung des Bauteils als einfacher DC-DC-Wandler sind im Datenblatt an den Ausgängen zusätzliche Kondensatoren vorgesehen. Aufgrund dessen, dass der DC-DC-Wandler mit negativen Spannungen arbeitet, ist es signifikant, im Falle der Nutzung von Elektrolytkondensatoren, auf die Polung der Kondensatoren zu achten. Jene sind unidirektional, was in Abbildung~\ref{fig:DCDC} illustriert ist. Zusätzlich ist zu erkennen, dass am negativen Ausgang des DC-DC-Wandlers nicht genau -12V anliegen sondern etwa -11.35V. Dies ist auf den Wirkungsgrad des DC-DC-Wandlers zurückzuführen und ist unter - Voltage Loss - im Datenblatt zu finden. 
+Gleichspannungswandler werden grundsätzlich immer dort eingesetzt, wo die zu Verfügung stehende Eingangsspannung nicht zur Versorgung der im Schaltkreis folgenden elektronischen Bauteile passt.\cite{abc} Aufgrund der Unkonventionalität, sowohl eine negative als auch eine positive Spannungsquelle simultan an die Platine anzuschließen, wandelt der DC/DC-Spannungswandler diese negative Spannung direkt auf der Platine um. Der LT1054 wird auch ”negative voltage generator” genannt. Das ist ein Bauteil, welches eine negative Ausgangsspannung erzeugt. Diese ist proportional zur Eingangsspannung $V_{CC}$. Laut typischer Beschaltung des Bauteils als einfacher DC-DC-Wandler sind im Datenblatt an den Ausgängen zusätzliche Kondensatoren vorgesehen. Aufgrund dessen, dass der DC-DC-Wandler mit negativen Spannungen arbeitet, ist es signifikant, im Falle der Nutzung von Elektrolytkondensatoren, auf die Polung der Kondensatoren zu achten. Jene sind unidirektional, was in Abbildung~\ref{fig:DCDC} illustriert ist. Zusätzlich ist zu erkennen, dass am negativen Ausgang des DC-DC-Wandlers nicht genau -12V anliegen sondern etwa -11.35V. Dies ist auf den Wirkungsgrad des DC-DC-Wandlers zurückzuführen und ist unter - Voltage Loss - im Datenblatt zu finden. 
 
 \begin{figure}[H]
 	\centering
@@ -502,7 +498,6 @@ LT-Spice ist eine \gls{acr:SPICE}-basierte Computersoftware zur Simulation analo
 \label{subsec:eagle}
 
 \gls{acr:EAGLE} ist eine Software zum Designen und Erstellen von Leiterplattenlayouts und Schaltplänen. Die Software verfügt über einen Schaltplan- und einen Layouteditor, sowie über eine sehr umfassende Bibliothek an Bauteilen, welche sehr unkompliziert und individuell erweiterbar ist.\gls{online:eagle1}\gls{online:eagle2}
-
 
 \subsection{Arduino IDE}
 \label{subsec:ide}

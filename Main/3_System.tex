@@ -150,7 +150,7 @@ Um ein Potentiometer mit dem Arduino einlesen zu können, muss einer der analoge
 	\label{fig:digipot}
 \end{figure}
 
-Der analoge Pin A0 wird in der Arduino \gls{acr:IDE} durch die Funktion analogRead() eingelesen. Die Arduino-Boards beherbergen einen 10-Bit-Analog-zu-Digital-Konverter. Dies hat zur folge, dass das Board Eingangsspannungen zwischen 0 und 5 V auf Integer-Werte zwischen 0 und 1023 mappt. Die erreichte Auflösung ist damit auf dem gegebenen Arduino UNO etwa 4,9 mV per Bit.\gls{online:analogread} Diese 1023 Bit gilt es dann durch vier zu teilen, da das im Zuge dieser Abschlussarbeit verwendete Digitalpotentiometer nur in 256 Stufen angesteuert werden kann. Der Wert wird dann über die \gls{acr:SPI} Schnittstelle an das Digitalpotentiometer gesendet und verändert somit dessen Widerstandswert. Somit kann der Offsetwert extern in das Programm geschrieben werden. Dies ist notwendig um die Höhe des Offsets im Code zu hinterlegen. Somit kann der aktuelle Wert über das \gls{acr:LCD} ausgegeben werden. Das Anschlussschema des\gls{acr:LCD} wird in der folgenden Abbildung illustriert.
+Der analoge Pin A0 wird in der Arduino \gls{acr:IDE} durch die Funktion analogRead() eingelesen. Die Arduino-Boards beherbergen einen 10-Bit-Analog-zu-Digital-Konverter. Dies hat zur folge, dass das Board Eingangsspannungen zwischen 0 und 5 V auf Integer-Werte zwischen 0 und 1023 mappt. Die erreichte Auflösung ist damit auf dem gegebenen Arduino UNO etwa 4,9 mV per Bit.\gls{online:analogread} Diese 1023 Bit gilt es dann durch vier zu teilen, da das im Zuge dieser Abschlussarbeit verwendete Digitalpotentiometer nur in 256 Stufen angesteuert werden kann. Der Wert wird dann über die \gls{acr:SPI} Schnittstelle an das Digitalpotentiometer gesendet und verändert somit dessen Widerstandswert. Somit kann der Offsetwert extern in das Programm geschrieben werden. Dies ist notwendig um die Höhe des Offsets im Code zu hinterlegen. Somit kann der aktuelle Wert über das \gls{acr:LCD} ausgegeben werden. Das Anschlussschema des \gls{acr:LCD} wird in der folgenden Abbildung illustriert.
 
 \begin{figure}[H]
 	\centering
@@ -160,7 +160,7 @@ Der analoge Pin A0 wird in der Arduino \gls{acr:IDE} durch die Funktion analogRe
 	\label{fig:lcd}
 \end{figure}
 
-Hierbei wird das \gls{acr:LCD} von der \gls{acr:I2C}-Bus-Schnittstelle des Arduino angesteuert. Zur Implementierung dieser Funktion ist in der Arduino \gls{acr:IDE} eine Beispielbibliothek zu finden. Beim \gls{acr:I2C}-Bus handelt es sich um einen Master-Slave Bus, bei welchem ein Datentransfer immer durch einen Master, hier den Arduino, initiiert wird. Das Bus-System arbeitet Bidirektional. Der \gls{acr:SDA}-Pin enthält hierbei die Daten und \gls{acr:SCL}- Pin sendet Takt-Impulse. Zuletzt benötigt das \gls{acr:LCD} noch eine 5V Spannungsversorgung und einen Masse Anschluss.\gls{online:I2C}
+Hierbei wird das \gls{acr:LCD} von der \gls{acr:I2C}-Bus-Schnittstelle des Arduino angesteuert. Zur Implementierung dieser Funktion ist in der Arduino \gls{acr:IDE} eine Beispielbibliothek zu finden. Beim \gls{acr:I2C}-Bus handelt es sich um einen Master-Slave Bus, bei welchem ein Datentransfer immer durch einen Master, hier den Arduino, initiiert wird. Das Bus-System arbeitet als Zweidraht-System. Der \gls{acr:SDA}-Pin sendet hierbei bidirektional die Daten und \gls{acr:SCL}- Pin sendet Takt-Impulse welche symbolisieren, wann welcher Teilnehmer angesprochen wird. Zuletzt benötigt das \gls{acr:LCD} noch eine 5V Spannungsversorgung und einen Masse Anschluss.\gls{online:I2C}
 \newpage
 \subsection{Automatisierte Amplitudenregelung}
 \label{subsec:autoamp}
@@ -185,7 +185,7 @@ Da die erste Verstärkerstufe ein maximales Eingangssignal von 1V \gls{acr:RMS} 
 	\label{fig:amplitudegemessen}
 \end{figure}
 
-Abbildung~\ref{fig:amplitudegemessen} veranschaulicht den optimalen Amplitudenbereich. Durch den fest eingestellten Offset von 2.5V, welcher ca. einer Digitalen $"127"$ entspricht, bewegt sich das über den analogen Eingang des Arduino gemessene Audio-Signal um genau diesen Wert. Im Programm wurde im Anschluss von immer 500 eingelesenen Werten, der Maximalwert ermittelt und dementsprechend die Amplitude, wenn nötig, nachgeregelt. Zudem wurde an den Amplitudengrenzen ein Schwellwert mit der Wertigkeit von $+"10"$ und $-"10"$ vorgesehen um einer zu hohen Empfindlichkeit in der Regelung vorzubeugen.
+Abbildung~\ref{fig:amplitudegemessen} veranschaulicht den optimalen Amplitudenbereich. Durch den fest eingestellten Offset von 2.5V, welcher einer digitalen $"127"$ entspricht, bewegt sich das über den analogen Eingang des Arduino gemessene Audio-Signal, um genau diesen Wert. Zudem nutzt das Programm eine Datenstruktur um das Maximum in einem Fenster von gemessenen Daten zu bestimmen. Abhängig von diesem ermittelten momentanen Maximum wird der Regelzyklus eingeleitet. Bei Überschreitung der Oberen Grenze wird das Signal demnach gedämpft und bei einer Unterschreitung verstärkt. In Folge dessen wurde an den Amplitudengrenzen ein Schwellwert mit der digitalen Wertigkeit von $+"10"$ und $-"10"$ vorgesehen um einer zu hohen Empfindlichkeit in der Regelung vorzubeugen.
  
 \newpage
 \subsection{Modulation mit Dream (Version 2.2.1)}
